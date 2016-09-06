@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration version="1.0.8.7">
+  <General>
+    <HarmonyPath path="../../../../../../../microchip/harmony/v1_08_01"/>
+    <Processor name=""/>
+    <ForceOptimization flag="true"/>
+    <MergeStrategy flag="USER_ALL"/>
+  </General>
+  <Manifest>
+    <Files>
+      <File>
+        <Name>ISR_Support.h</Name>
+        <Path>Header Files/FreeRTOS/portable/MPLAB/PIC32MX</Path>
+      </File>
+      <File>
+        <Name>drv_tmr_mapping.h</Name>
+        <Path>Header Files/framework/driver/tmr</Path>
+      </File>
+      <File>
+        <Name>semphr.h</Name>
+        <Path>Header Files/FreeRTOS</Path>
+      </File>
+      <File>
+        <Name>drv_tmr_local.h</Name>
+        <Path>Header Files/framework/driver/tmr/src</Path>
+      </File>
+      <File>
+        <Name>driver_common.h</Name>
+        <Path>Header Files/framework/driver</Path>
+      </File>
+      <File>
+        <Name>queue.h</Name>
+        <Path>Header Files/FreeRTOS</Path>
+      </File>
+      <File>
+        <Name>portmacro.h</Name>
+        <Path>Header Files/FreeRTOS/portable/MPLAB/PIC32MX</Path>
+      </File>
+      <File>
+        <Name>drv_usart_byte_model.c</Name>
+        <Path>Source Files/framework/driver/usart/src/dynamic</Path>
+      </File>
+      <File>
+        <Name>croutine.c</Name>
+        <Path>Source Files/FreeRTOS</Path>
+      </File>
+      <File>
+        <Name>port_asm.S</Name>
+        <Path>Source Files/FreeRTOS/portable/MPLAB/PIC32MX</Path>
+      </File>
+      <File>
+        <Name>list.h</Name>
+        <Path>Header Files/FreeRTOS</Path>
+      </File>
+      <File>
+        <Name>driver.h</Name>
+        <Path>Header Files/framework/driver</Path>
+      </File>
+      <File>
+        <Name>peripheral_common.h</Name>
+        <Path>Header Files/framework/peripheral</Path>
+      </File>
+      <File>
+        <Name>sys_int_pic32.c</Name>
+        <Path>Source Files/framework/system/int/src</Path>
+      </File>
+      <File>
+        <Name>sys_clk.h</Name>
+        <Path>Header Files/framework/system/clk</Path>
+      </File>
+      <File>
+        <Name>port.c</Name>
+        <Path>Source Files/FreeRTOS/portable/MPLAB/PIC32MX</Path>
+      </File>
+      <File>
+        <Name>drv_tmr.c</Name>
+        <Path>Source Files/framework/driver/tmr/src/dynamic</Path>
+      </File>
+      <File>
+        <Name>sys_int_private.h</Name>
+        <Path>Header Files/framework/system/int/src</Path>
+      </File>
+      <File>
+        <Name>deprecated_definitions.h</Name>
+        <Path>Header Files/FreeRTOS</Path>
+      </File>
+      <File>
+        <Name>drv_tmr_compatibility.h</Name>
+        <Path>Header Files/framework/driver/tmr</Path>
+      </File>
+      <File>
+        <Name>system.h</Name>
+        <Path>Header Files/framework/system</Path>
+      </File>
+      <File>
+        <Name>drv_usart.h</Name>
+        <Path>Header Files/framework/driver/usart</Path>
+      </File>
+      <File>
+        <Name>timers.h</Name>
+        <Path>Header Files/FreeRTOS</Path>
+      </File>
+      <File>
+        <Name>heap_1.c</Name>
+        <Path>Source Files/FreeRTOS/portable/MemMang</Path>
+      </File>
+      <File>
+        <Name>task.h</Name>
+        <Path>Header Files/FreeRTOS</Path>
+      </File>
+      <File>
+        <Name>sys_int.h</Name>
+        <Path>Header Files/framework/system/int</Path>
+      </File>
+      <File>
+        <Name>osal_freertos.h</Name>
+        <Path>Header Files/framework/osal/src</Path>
+      </File>
+      <File>
+        <Name>osal_impl_basic.h</Name>
+        <Path>Header Files/framework/osal/src</Path>
+      </File>
+      <File>
+        <Name>peripheral_common_32bit.h</Name>
+        <Path>Header Files/framework/peripheral</Path>
+      </File>
+      <File>
+        <Name>drv_tmr_variant_mapping.h</Name>
+        <Path>Header Files/framework/driver/tmr/src</Path>
+      </File>
+      <File>
+        <Name>list.c</Name>
+        <Path>Source Files/FreeRTOS</Path>
+      </File>
+      <File>
+        <Name>drv_tmr.h</Name>
+        <Path>Header Files/framework/driver/tmr</Path>
+      </File>
+      <File>
+        <Name>sys_devcon.c</Name>
+        <Path>Source Files/framework/system/devcon/src</Path>
+      </File>
+      <File>
+        <Name>osal.h</Name>
+        <Path>Header Files/framework/osal</Path>
+      </File>
+      <File>
+        <Name>StackMacros.h</Name>
+        <Path>Header Files/FreeRTOS</Path>
+      </File>
+      <File>
+        <Name>drv_usart_local.h</Name>
+        <Path>Header Files/framework/driver/usart/src</Path>
+      </File>
+      <File>
+        <Name>osal_freertos.c</Name>
+        <Path>Source Files/framework/osal/src</Path>
+      </File>
+      <File>
+        <Name>tasks.c</Name>
+        <Path>Source Files/FreeRTOS</Path>
+      </File>
+      <File>
+        <Name>sys_ports.h</Name>
+        <Path>Header Files/framework/system/ports</Path>
+      </File>
+      <File>
+        <Name>projdefs.h</Name>
+        <Path>Header Files/FreeRTOS</Path>
+      </File>
+      <File>
+        <Name>portable.h</Name>
+        <Path>Header Files/FreeRTOS</Path>
+      </File>
+      <File>
+        <Name>drv_usart.c</Name>
+        <Path>Source Files/framework/driver/usart/src/dynamic</Path>
+      </File>
+      <File>
+        <Name>croutine.h</Name>
+        <Path>Header Files/FreeRTOS</Path>
+      </File>
+      <File>
+        <Name>sys_common.h</Name>
+        <Path>Header Files/framework/system/common</Path>
+      </File>
+      <File>
+        <Name>sys_buffer.h</Name>
+        <Path>Header Files/framework/system/common</Path>
+      </File>
+      <File>
+        <Name>event_groups.h</Name>
+        <Path>Header Files/FreeRTOS</Path>
+      </File>
+      <File>
+        <Name>osal_impl_none.h</Name>
+        <Path>Header Files/framework/osal/src</Path>
+      </File>
+      <File>
+        <Name>sys_clk_mapping.h</Name>
+        <Path>Header Files/framework/system/clk</Path>
+      </File>
+      <File>
+        <Name>osal_definitions.h</Name>
+        <Path>Header Files/framework/osal</Path>
+      </File>
+      <File>
+        <Name>sys_int_mapping.h</Name>
+        <Path>Header Files/framework/system/int</Path>
+      </File>
+      <File>
+        <Name>FreeRTOS.h</Name>
+        <Path>Header Files/FreeRTOS</Path>
+      </File>
+      <File>
+        <Name>gfx_palette.h</Name>
+        <Path>Header Files/framework/gfx</Path>
+      </File>
+      <File>
+        <Name>sys_devcon.h</Name>
+        <Path>Header Files/framework/system/devcon</Path>
+      </File>
+      <File>
+        <Name>event_groups.c</Name>
+        <Path>Source Files/FreeRTOS</Path>
+      </File>
+      <File>
+        <Name>sys_debug.h</Name>
+        <Path>Header Files/framework/system/debug</Path>
+      </File>
+      <File>
+        <Name>drv_usart_variant_mapping.h</Name>
+        <Path>Header Files/framework/driver/usart/src</Path>
+      </File>
+      <File>
+        <Name>sys_module.h</Name>
+        <Path>Header Files/framework/system/common</Path>
+      </File>
+      <File>
+        <Name>sys_devcon_pic32mx.c</Name>
+        <Path>Source Files/framework/system/devcon/src</Path>
+      </File>
+      <File>
+        <Name>sys_devcon_local.h</Name>
+        <Path>Header Files/framework/system/devcon/src</Path>
+      </File>
+      <File>
+        <Name>timers.c</Name>
+        <Path>Source Files/FreeRTOS</Path>
+      </File>
+      <File>
+        <Name>mpu_wrappers.h</Name>
+        <Path>Header Files/FreeRTOS</Path>
+      </File>
+      <File>
+        <Name>peripheral.h</Name>
+        <Path>Header Files/framework/peripheral</Path>
+      </File>
+      <File>
+        <Name>sys_queue.h</Name>
+        <Path>Header Files/framework/system/common</Path>
+      </File>
+      <File>
+        <Name>queue.c</Name>
+        <Path>Source Files/FreeRTOS</Path>
+      </File>
+    </Files>
+    <Templates>
+      <Template>
+        <Name>sys_ports_static.c</Name>
+        <Path>Source Files/app/system_config/default/framework/system/ports/src</Path>
+        <Checksum>C61B926A7AC823250A40C878C9CD51F9</Checksum>
+      </Template>
+      <Template>
+        <Name>system_init.c</Name>
+        <Path>Source Files/app/system_config/default</Path>
+        <Checksum>8EEE92A1FEF97F344672B8A399246A59</Checksum>
+      </Template>
+      <Template>
+        <Name>main.c</Name>
+        <Path>Source Files/app</Path>
+        <Checksum>81A51474D8A80D41AD749DEAE4C1A7A3</Checksum>
+      </Template>
+      <Template>
+        <Name>system_interrupt_a.S</Name>
+        <Path>Source Files/app/system_config/default</Path>
+        <Checksum>5C0D911C19B5E425D7F0FB89E579F457</Checksum>
+      </Template>
+      <Template>
+        <Name>system_definitions.h</Name>
+        <Path>Header Files/app/system_config/default</Path>
+        <Checksum>4E4CFF405DD5D05B33095EC12D148A4C</Checksum>
+      </Template>
+      <Template>
+        <Name>system_exceptions.c</Name>
+        <Path>Source Files/app/system_config/default</Path>
+        <Checksum>C111969CA43D6CEA1E9E33A6164E7AE0</Checksum>
+      </Template>
+      <Template>
+        <Name>app.c</Name>
+        <Path>Source Files/app</Path>
+        <Checksum>2EA9C7A61411B0084997488862835150</Checksum>
+        <ProjectFileChecksum>C5F483E7013559126EBB0791BCBB4A54</ProjectFileChecksum>
+      </Template>
+      <Template>
+        <Name>FreeRTOSConfig.h</Name>
+        <Path>Header Files/app/system_config/default</Path>
+        <Checksum>943465F780064E7477175780D24DC772</Checksum>
+        <ProjectFileChecksum>6DA4629D3ADE9DAA95655DC10330AC78</ProjectFileChecksum>
+      </Template>
+      <Template>
+        <Name>system_tasks.c</Name>
+        <Path>Source Files/app/system_config/default</Path>
+        <Checksum>15D8F14DCE2A31DD1F0C89A5772F0585</Checksum>
+      </Template>
+      <Template>
+        <Name>system_config.h</Name>
+        <Path>Header Files/app/system_config/default</Path>
+        <Checksum>2B1FF82FBF9204DB14348612CE1A8693</Checksum>
+      </Template>
+      <Template>
+        <Name>app.h</Name>
+        <Path>Header Files/app</Path>
+        <Checksum>D52D223200829142F808C7FA5CC84EC6</Checksum>
+        <ProjectFileChecksum>4F7D4745A7B5385E6646C3D5FA3DD412</ProjectFileChecksum>
+      </Template>
+      <Template>
+        <Name>sys_clk_static.h</Name>
+        <Path>Header Files/app/system_config/default/framework/system/clk</Path>
+        <Checksum>B4BD59D8D7C4DA95DC5E3B57755FD352</Checksum>
+      </Template>
+      <Template>
+        <Name>system_interrupt.c</Name>
+        <Path>Source Files/app/system_config/default</Path>
+        <Checksum>31EDE1F6472E4420F67A3882C9200F81</Checksum>
+      </Template>
+      <Template>
+        <Name>rtos_hooks.c</Name>
+        <Path>Source Files/app/system_config/default</Path>
+        <Checksum>FA52743264536E5207D2ADBE57B48D05</Checksum>
+      </Template>
+      <Template>
+        <Name>sys_clk_static.c</Name>
+        <Path>Source Files/app/system_config/default/framework/system/clk/src</Path>
+        <Checksum>E8C935BED4628875A8C3428DDD07355C</Checksum>
+      </Template>
+    </Templates>
+    <CompilerItems>
+      <C32-AS>
+        <Include value="../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX"/>
+        <Include value="../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include"/>
+        <Include value="../src/system_config/default"/>
+      </C32-AS>
+      <C32>
+        <Include value="/home/john/MEGA/__SCHOOL/Embedded Systems/ECE4534---Team-18-Plassman---Fall-2016/milestones/m1/john-m1/firmware/src"/>
+        <Include value="/home/john/MEGA/__SCHOOL/Embedded Systems/ECE4534---Team-18-Plassman---Fall-2016/milestones/m1/john-m1/firmware/src/system_config/default"/>
+        <Include value="/home/john/MEGA/__SCHOOL/Embedded Systems/ECE4534---Team-18-Plassman---Fall-2016/milestones/m1/john-m1/firmware/src/default"/>
+        <Include value="/home/john/microchip/harmony/v1_08_01/framework"/>
+        <Include value="/home/john/MEGA/__SCHOOL/Embedded Systems/ECE4534---Team-18-Plassman---Fall-2016/milestones/m1/john-m1/firmware/src/system_config/default/framework"/>
+        <Include value="../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX"/>
+        <Include value="../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include"/>
+        <Include value="../src/system_config/default"/>
+        <Define value="__XC"/>
+      </C32>
+    </CompilerItems>
+    <Libraries>
+      <Library value="../../../../../../../../../microchip/harmony/v1_08_01/framework/tcpip/src/crypto/aes_pic32mx.a"/>
+      <Library value="../../../../../../../../../microchip/harmony/v1_08_01/bin/framework/peripheral/PIC32MX795F512L_peripherals.a"/>
+    </Libraries>
+  </Manifest>
+</configuration>
