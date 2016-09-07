@@ -85,16 +85,6 @@ APP_DATA appData;
 // *****************************************************************************
 
 /* Application's Timer Callback Function */
-static void TimerCallback (  uintptr_t context, uint32_t alarmCount )
-{
-    appData.timeEllapsed += 50;
-    int val = appSendTimerValToMQ(appData.appQHandle, appData.timeEllapsed );
-    
-    if(val != true)
-    {
-        // do some error
-    }
-}
 
 /* TODO:  Add any necessary callback functions.
 */
@@ -107,16 +97,7 @@ static void TimerCallback (  uintptr_t context, uint32_t alarmCount )
 
 
 /* Application's Timer Setup Function */
-static void TimerSetup( void )
-{
-    DRV_TMR_AlarmRegister(
-        appData.handleTimer0, 
-        APP_TMR_DRV_PERIOD, 
-        APP_TMR_DRV_IS_PERIODIC,
-        (uintptr_t)NULL, 
-        TimerCallback);
-    DRV_TMR_Start(appData.handleTimer0);
-}
+
 
 /* TODO:  Add any necessary local functions.
 */
@@ -143,12 +124,9 @@ void APP_Initialize ( void )
     
     // Timer stuff
     
-    appData.handleTimer0 = DRV_HANDLE_INVALID;
     appData.timerCount = 0;
     appData.timeEllapsed = 0;
-
-    TimerSetup();
-    
+  
     // Initialize the timer queue
     QueueHandle_t  qH = appInitTimerMQ();
     

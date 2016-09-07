@@ -116,8 +116,6 @@ typedef struct
     /* The application's current state */
     APP_STATES state;
     
-    DRV_HANDLE handleTimer0;
-    
     unsigned int timerCount;
     
     unsigned int timeEllapsed;

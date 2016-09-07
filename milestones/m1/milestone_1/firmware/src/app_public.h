@@ -16,10 +16,10 @@ extern "C" {
 #endif
 
 #define QLENGTH 50
-    
+
     // Inits the queue for this timing system
     QueueHandle_t appInitTimerMQ();
-            
+
     // Sends current time to queue
     int appSendTimerValToMQ(QueueHandle_t q, unsigned int milliElapsed); 
     

@@ -13,16 +13,8 @@
         <Path>Header Files/FreeRTOS/portable/MPLAB/PIC32MX</Path>
       </File>
       <File>
-        <Name>drv_tmr_mapping.h</Name>
-        <Path>Header Files/framework/driver/tmr</Path>
-      </File>
-      <File>
         <Name>semphr.h</Name>
         <Path>Header Files/FreeRTOS</Path>
-      </File>
-      <File>
-        <Name>drv_tmr_local.h</Name>
-        <Path>Header Files/framework/driver/tmr/src</Path>
       </File>
       <File>
         <Name>driver_common.h</Name>
@@ -73,20 +65,12 @@
         <Path>Source Files/FreeRTOS/portable/MPLAB/PIC32MX</Path>
       </File>
       <File>
-        <Name>drv_tmr.c</Name>
-        <Path>Source Files/framework/driver/tmr/src/dynamic</Path>
-      </File>
-      <File>
         <Name>sys_int_private.h</Name>
         <Path>Header Files/framework/system/int/src</Path>
       </File>
       <File>
         <Name>deprecated_definitions.h</Name>
         <Path>Header Files/FreeRTOS</Path>
-      </File>
-      <File>
-        <Name>drv_tmr_compatibility.h</Name>
-        <Path>Header Files/framework/driver/tmr</Path>
       </File>
       <File>
         <Name>system.h</Name>
@@ -125,16 +109,8 @@
         <Path>Header Files/framework/peripheral</Path>
       </File>
       <File>
-        <Name>drv_tmr_variant_mapping.h</Name>
-        <Path>Header Files/framework/driver/tmr/src</Path>
-      </File>
-      <File>
         <Name>list.c</Name>
         <Path>Source Files/FreeRTOS</Path>
-      </File>
-      <File>
-        <Name>drv_tmr.h</Name>
-        <Path>Header Files/framework/driver/tmr</Path>
       </File>
       <File>
         <Name>sys_devcon.c</Name>
@@ -274,12 +250,11 @@
       <Template>
         <Name>system_init.c</Name>
         <Path>Source Files/app/system_config/default</Path>
-        <Checksum>8EEE92A1FEF97F344672B8A399246A59</Checksum>
+        <Checksum>7EE20F6BF310BED31ADFA646932CA1A5</Checksum>
       </Template>
       <Template>
         <Name>main.c</Name>
         <Path>Source Files/app</Path>
-        <Checksum>81A51474D8A80D41AD749DEAE4C1A7A3</Checksum>
       </Template>
       <Template>
         <Name>system_interrupt_a.S</Name>
@@ -289,7 +264,7 @@
       <Template>
         <Name>system_definitions.h</Name>
         <Path>Header Files/app/system_config/default</Path>
-        <Checksum>4E4CFF405DD5D05B33095EC12D148A4C</Checksum>
+        <Checksum>C22F26D452F855EEB15A0144251F6C53</Checksum>
       </Template>
       <Template>
         <Name>system_exceptions.c</Name>
@@ -299,14 +274,12 @@
       <Template>
         <Name>app.c</Name>
         <Path>Source Files/app</Path>
-        <Checksum>2EA9C7A61411B0084997488862835150</Checksum>
-        <ProjectFileChecksum>C5F483E7013559126EBB0791BCBB4A54</ProjectFileChecksum>
       </Template>
       <Template>
         <Name>FreeRTOSConfig.h</Name>
         <Path>Header Files/app/system_config/default</Path>
-        <Checksum>943465F780064E7477175780D24DC772</Checksum>
-        <ProjectFileChecksum>6DA4629D3ADE9DAA95655DC10330AC78</ProjectFileChecksum>
+        <Checksum>274D1370B2891D82E834E21059B0AF97</Checksum>
+        <ProjectFileChecksum>5FD066BB8869784264624A55B7FC285D</ProjectFileChecksum>
       </Template>
       <Template>
         <Name>system_tasks.c</Name>
@@ -316,18 +289,17 @@
       <Template>
         <Name>system_config.h</Name>
         <Path>Header Files/app/system_config/default</Path>
-        <Checksum>2B1FF82FBF9204DB14348612CE1A8693</Checksum>
+        <Checksum>768FEB93D1CB54FCD42AB13E2B032570</Checksum>
       </Template>
       <Template>
         <Name>app.h</Name>
         <Path>Header Files/app</Path>
-        <Checksum>D52D223200829142F808C7FA5CC84EC6</Checksum>
-        <ProjectFileChecksum>4F7D4745A7B5385E6646C3D5FA3DD412</ProjectFileChecksum>
       </Template>
       <Template>
         <Name>sys_clk_static.h</Name>
         <Path>Header Files/app/system_config/default/framework/system/clk</Path>
         <Checksum>B4BD59D8D7C4DA95DC5E3B57755FD352</Checksum>
+        <ProjectFileChecksum>ADBE7CBAC9333D298BE56F61513A2B87</ProjectFileChecksum>
       </Template>
       <Template>
         <Name>system_interrupt.c</Name>
@@ -343,6 +315,7 @@
         <Name>sys_clk_static.c</Name>
         <Path>Source Files/app/system_config/default/framework/system/clk/src</Path>
         <Checksum>E8C935BED4628875A8C3428DDD07355C</Checksum>
+        <ProjectFileChecksum>B89F32808981BB4E64B5CCADD697B6CA</ProjectFileChecksum>
       </Template>
     </Templates>
     <CompilerItems>
@@ -352,11 +325,11 @@
         <Include value="../src/system_config/default"/>
       </C32-AS>
       <C32>
-        <Include value="/home/john/MEGA/__SCHOOL/Embedded Systems/ECE4534---Team-18-Plassman---Fall-2016/milestones/m1/john-m1/firmware/src"/>
-        <Include value="/home/john/MEGA/__SCHOOL/Embedded Systems/ECE4534---Team-18-Plassman---Fall-2016/milestones/m1/john-m1/firmware/src/system_config/default"/>
-        <Include value="/home/john/MEGA/__SCHOOL/Embedded Systems/ECE4534---Team-18-Plassman---Fall-2016/milestones/m1/john-m1/firmware/src/default"/>
+        <Include value="/home/john/MEGA/__SCHOOL/Embedded Systems/ECE4534---Team-18-Plassman---Fall-2016/milestones/m1/milestone_1/firmware/src"/>
+        <Include value="/home/john/MEGA/__SCHOOL/Embedded Systems/ECE4534---Team-18-Plassman---Fall-2016/milestones/m1/milestone_1/firmware/src/system_config/default"/>
+        <Include value="/home/john/MEGA/__SCHOOL/Embedded Systems/ECE4534---Team-18-Plassman---Fall-2016/milestones/m1/milestone_1/firmware/src/default"/>
         <Include value="/home/john/microchip/harmony/v1_08_01/framework"/>
-        <Include value="/home/john/MEGA/__SCHOOL/Embedded Systems/ECE4534---Team-18-Plassman---Fall-2016/milestones/m1/john-m1/firmware/src/system_config/default/framework"/>
+        <Include value="/home/john/MEGA/__SCHOOL/Embedded Systems/ECE4534---Team-18-Plassman---Fall-2016/milestones/m1/milestone_1/firmware/src/system_config/default/framework"/>
         <Include value="../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX"/>
         <Include value="../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include"/>
         <Include value="../src/system_config/default"/>

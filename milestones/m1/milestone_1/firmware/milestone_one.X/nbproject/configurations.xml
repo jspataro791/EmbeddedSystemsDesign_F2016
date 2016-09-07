@@ -25,16 +25,7 @@
       </logicalFolder>
       <logicalFolder name="f1" displayName="framework" projectFiles="true">
         <logicalFolder name="f1" displayName="driver" projectFiles="true">
-          <logicalFolder name="f1" displayName="tmr" projectFiles="true">
-            <logicalFolder name="f1" displayName="src" projectFiles="true">
-              <itemPath>../../../../../../../../../microchip/harmony/v1_08_01/framework/driver/tmr/src/drv_tmr_variant_mapping.h</itemPath>
-              <itemPath>../../../../../../../../../microchip/harmony/v1_08_01/framework/driver/tmr/src/drv_tmr_local.h</itemPath>
-            </logicalFolder>
-            <itemPath>../../../../../../../../../microchip/harmony/v1_08_01/framework/driver/tmr/drv_tmr.h</itemPath>
-            <itemPath>../../../../../../../../../microchip/harmony/v1_08_01/framework/driver/tmr/drv_tmr_mapping.h</itemPath>
-            <itemPath>../../../../../../../../../microchip/harmony/v1_08_01/framework/driver/tmr/drv_tmr_compatibility.h</itemPath>
-          </logicalFolder>
-          <logicalFolder name="f2" displayName="usart" projectFiles="true">
+          <logicalFolder name="f1" displayName="usart" projectFiles="true">
             <logicalFolder name="f1" displayName="src" projectFiles="true">
               <itemPath>../../../../../../../../../microchip/harmony/v1_08_01/framework/driver/usart/src/drv_usart_local.h</itemPath>
               <itemPath>../../../../../../../../../microchip/harmony/v1_08_01/framework/driver/usart/src/drv_usart_variant_mapping.h</itemPath>
@@ -156,14 +147,7 @@
       </logicalFolder>
       <logicalFolder name="f1" displayName="framework" projectFiles="true">
         <logicalFolder name="f1" displayName="driver" projectFiles="true">
-          <logicalFolder name="f1" displayName="tmr" projectFiles="true">
-            <logicalFolder name="f1" displayName="src" projectFiles="true">
-              <logicalFolder name="f1" displayName="dynamic" projectFiles="true">
-                <itemPath>../../../../../../../../../microchip/harmony/v1_08_01/framework/driver/tmr/src/dynamic/drv_tmr.c</itemPath>
-              </logicalFolder>
-            </logicalFolder>
-          </logicalFolder>
-          <logicalFolder name="f2" displayName="usart" projectFiles="true">
+          <logicalFolder name="f1" displayName="usart" projectFiles="true">
             <logicalFolder name="f1" displayName="src" projectFiles="true">
               <logicalFolder name="f1" displayName="dynamic" projectFiles="true">
                 <itemPath>../../../../../../../../../microchip/harmony/v1_08_01/framework/driver/usart/src/dynamic/drv_usart.c</itemPath>
@@ -269,7 +253,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/system_config/default;../src/default;../../../../../../../../../microchip/harmony/v1_08_01/framework;../src/system_config/default/framework;../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include"/>
+                  value=";../src;../src/system_config/default;../src/default;../../../../../../../../../microchip/harmony/v1_08_01/framework;../src/system_config/default/framework;../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>

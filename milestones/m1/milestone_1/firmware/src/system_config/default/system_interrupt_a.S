@@ -48,8 +48,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "ISR_Support.h"
 
 
-
-
 /* USART Instance 0 Interrupt */
 
    .extern  IntHandlerDrvUsartInstance0

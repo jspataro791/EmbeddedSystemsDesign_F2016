@@ -104,12 +104,7 @@ extern "C" {
 // Section: Driver Configuration
 // *****************************************************************************
 // *****************************************************************************
-/*** Timer Driver Configuration ***/
-#define DRV_TMR_INTERRUPT_MODE             true
-#define DRV_TMR_INSTANCES_NUMBER           1
-#define DRV_TMR_CLIENTS_NUMBER             1
-
- // *****************************************************************************
+// *****************************************************************************
 /* USART Driver Configuration Options
 */
 #define DRV_USART_INTERRUPT_MODE                    true
@@ -164,9 +159,6 @@ extern "C" {
 // *****************************************************************************
 
 /*** Application Instance 0 Configuration ***/
-#define APP_TMR_DRV                       0
-#define APP_TMR_DRV_IS_PERIODIC           true
-#define APP_TMR_DRV_PERIOD                0x3d09
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
