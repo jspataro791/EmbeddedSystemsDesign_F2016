@@ -118,6 +118,10 @@ typedef struct
     /* The application's current state */
     APP_STATES state;
     
+    /* TODO: Define any additional data used by the application. */
+    DRV_HANDLE handleUSART0;
+	int tx_count;
+    
     unsigned int timerCount;
     
     unsigned int timeEllapsed;

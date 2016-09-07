@@ -91,6 +91,8 @@ build/default/production/_ext/1688732426/system_tasks.o:  \
  ../../../../../../../../../microchip/harmony/v1_08_01/framework/system/common/sys_queue.h  \
  ../../../../../../../../../microchip/harmony/v1_08_01/framework/system/console/src/sys_console_local.h  \
  ../../../../../../../../../microchip/harmony/v1_08_01/framework/driver/driver_common.h  \
+ ../src/system_config/default/framework/driver/usart/drv_usart_static.h  \
+ ../src/system_config/default/framework/driver/usart/src/drv_usart_static_local.h  \
  ../../../../../../../../../microchip/harmony/v1_08_01/framework/driver/usart/drv_usart.h  \
  ../../../../../../../../../microchip/harmony/v1_08_01/framework/peripheral/usart/plib_usart.h  \
  ../../../../../../../../../microchip/harmony/v1_08_01/framework/peripheral/usart/processor/usart_processor.h  \
@@ -184,6 +186,23 @@ build/default/production/_ext/1688732426/system_tasks.o:  \
  ../../../../../../../../../microchip/harmony/v1_08_01/framework/peripheral/dma/processor/../templates/dma_ChannelXCellSize_Default.h  \
  ../../../../../../../../../microchip/harmony/v1_08_01/framework/peripheral/dma/processor/../templates/dma_ChannelXCellProgressPointer_Default.h  \
  ../../../../../../../../../microchip/harmony/v1_08_01/framework/peripheral/dma/processor/../templates/dma_ChannelXPatternData_Default.h  \
+ ../../../../../../../../../microchip/harmony/v1_08_01/framework/driver/usart/src/drv_usart_variant_mapping.h  \
+ ../../../../../../../../../microchip/harmony/v1_08_01/framework/osal/osal.h  \
+ ../../../../../../../../../microchip/harmony/v1_08_01/framework/osal/osal_definitions.h  \
+ ../../../../../../../../../microchip/harmony/v1_08_01/framework/osal/src/osal_freertos.h  \
+ ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include/FreeRTOS.h  \
+ ../src/system_config/default/FreeRTOSConfig.h  \
+ ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include/projdefs.h  \
+ ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include/portable.h  \
+ ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include/deprecated_definitions.h  \
+ ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX/portmacro.h  \
+ ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include/mpu_wrappers.h  \
+ ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include/queue.h  \
+ ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include/semphr.h  \
+ ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include/queue.h  \
+ ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include/task.h  \
+ ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include/list.h  \
+ ../../../../../../../../../microchip/harmony/v1_08_01/framework/system/debug/sys_debug.h  \
  ../../../../../../../../../microchip/harmony/v1_08_01/framework/system/ports/sys_ports.h  \
  ../../../../../../../../../microchip/harmony/v1_08_01/framework/peripheral/ports/plib_ports.h  \
  ../../../../../../../../../microchip/harmony/v1_08_01/framework/peripheral/ports/processor/ports_processor.h  \
@@ -213,20 +232,9 @@ build/default/production/_ext/1688732426/system_tasks.o:  \
  ../../../../../../../../../microchip/harmony/v1_08_01/framework/peripheral/ports/processor/../templates/ports_ChannelChangeNoticeMethod_Unsupported.h  \
  ../../../../../../../../../microchip/harmony/v1_08_01/framework/peripheral/ports/processor/../templates/ports_ChangeNoticeEdgeControl_Unsupported.h  \
  ../../../../../../../../../microchip/harmony/v1_08_01/framework/peripheral/ports/processor/../templates/ports_ChangeNoticeEdgeStatus_Unsupported.h  \
- ../../../../../../../../../microchip/harmony/v1_08_01/framework/system/debug/sys_debug.h  \
- ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include/FreeRTOS.h  \
- ../src/system_config/default/FreeRTOSConfig.h  \
- ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include/projdefs.h  \
- ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include/portable.h  \
- ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include/deprecated_definitions.h  \
- ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX/portmacro.h  \
- ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include/mpu_wrappers.h  \
- ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include/task.h  \
- ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include/list.h  \
  ../src/app.h  \
 ../src/system_config/default/system_definitions.h  \
  ../src/app_public.h  \
- ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include/queue.h  \
  ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include/timers.h  \
  ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include/task.h  \
  ../src/debug.h 

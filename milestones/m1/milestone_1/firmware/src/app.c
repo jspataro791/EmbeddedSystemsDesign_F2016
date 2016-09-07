@@ -78,6 +78,14 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 APP_DATA appData;
 
+static uint8_t app_tx_buf[255];
+static enum 
+{
+    USART_BM_INIT,
+    USART_BM_WORKING,
+    USART_BM_DONE,
+} usartBMState;
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Functions
@@ -88,24 +96,62 @@ APP_DATA appData;
 /* Application's Timer Callback Function */
 void vTimerCallback1(TimerHandle_t xTimer)
 {
-    
-        PLIB_PORTS_PinToggle(PORTS_ID_0, DBG_LED_PORT, DBG_LED_PIN);
-    
-    
-    
+       
     appData.timeEllapsed += 50;
     
-    //int goodSend = appSendTimerValToMQ(appData.appQHandle, appData.timeEllapsed);
+    int goodSend = appSendTimerValToMQ(appData.appQHandle, appData.timeEllapsed);
     
-    /*if(goodSend != true)
+    if(goodSend != true)
     {
-        // do some error stop
-    }*/
-   
-    
-    
+        //PLIB_PORTS_PinToggle(PORTS_ID_0, DBG_LED_PORT, DBG_LED_PIN);
+    }
+     
 }
+/******************************************************************************
+  Function:
+    static void USART_Task (void)
+    
+   Remarks:
+    Feeds the USART transmitter by reading characters from a specified pipe.  The pipeRead function is a 
+    standard interface that allows data to be exchanged between different automatically 
+    generated application modules.  Typically, the pipe is connected to the application's
+    USART receive function, but could be any other Harmony module which supports the pipe interface. 
+*/
+static void USART_Task (void)
+{
+    switch (usartBMState)
+    {
+        default:
+        case USART_BM_INIT:
+        {
+            appData.tx_count = 0;
+            usartBMState = USART_BM_WORKING;
+            break;
+        }
 
+        case USART_BM_WORKING:
+        {
+            
+            /* Have we finished? */
+            if (app_tx_buf[appData.tx_count] == '\0')
+            {
+                //usartBMState = USART_BM_INIT;
+                appData.tx_count = 0;
+            }
+            
+            if (appData.tx_count < sizeof(app_tx_buf)) 
+            {
+                if(!DRV_USART_TransmitBufferIsFull(appData.handleUSART0))
+                {
+                    DRV_USART_WriteByte(appData.handleUSART0, app_tx_buf[appData.tx_count]);
+                    appData.tx_count++;
+                }
+            }
+  
+            break;
+        }
+    }
+}
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Local Functions
@@ -139,6 +185,10 @@ void APP_Initialize ( void )
     /* Place the App state machine in its initial state. */
     appData.state = APP_STATE_INIT;
     
+    // USART init
+    appData.handleUSART0 = DRV_HANDLE_INVALID;
+    
+    // Set LED pin to out
     PLIB_PORTS_PinDirectionOutputSet(PORTS_ID_0, DBG_LED_PORT, DBG_LED_PIN);
       
     // Timer stuff
@@ -147,19 +197,15 @@ void APP_Initialize ( void )
     appData.timeEllapsed = 0;
     
     TimerHandle_t tmr1 = xTimerCreate("tmr1",
-                                      pdMS_TO_TICKS(1000),
+                                      pdMS_TO_TICKS(50),
                                       pdTRUE,
                                       (void*) 0,
                                       vTimerCallback1);
     
     xTimerStart(tmr1, 0);
-    
-    
-  
+      
     // Initialize the timer queue
    QueueHandle_t  qH = appInitTimerMQ();
-    
-    //PLIB_PORTS_PinSet(PORTS_ID_0, DBG_LED_PORT, DBG_LED_PIN);
     
     if(qH == NULL)
     {
@@ -193,9 +239,16 @@ void APP_Tasks ( void )
         {
             bool appInitialized = true;
        
+            if (appData.handleUSART0 == DRV_HANDLE_INVALID)
+            {
+                appData.handleUSART0 = DRV_USART_Open(APP_DRV_USART, DRV_IO_INTENT_READWRITE|DRV_IO_INTENT_NONBLOCKING);
+                appInitialized &= ( DRV_HANDLE_INVALID != appData.handleUSART0 );
+            }
         
             if (appInitialized)
             {
+                /* initialize the USART state machine */
+                usartBMState = USART_BM_INIT;
             
                 appData.state = APP_STATE_SERVICE_TASKS;
             }
@@ -204,6 +257,28 @@ void APP_Tasks ( void )
 
         case APP_STATE_SERVICE_TASKS:
         {
+            
+            
+            // main task loop, blocks on message recv
+            //while(1)
+            //{
+               unsigned int rcv; // msg Q copy buffer
+               int rcvGood = xQueueReceive(appData.appQHandle,
+                                            (void*) &rcv,
+                                            portMAX_DELAY);
+               // Is the msg Q recv good?
+               if(rcvGood == pdTRUE)
+               {
+                   // do error stuff
+                   PLIB_PORTS_PinToggle(PORTS_ID_0, DBG_LED_PORT, DBG_LED_PIN);
+               }
+               
+               // USART stuff
+               strcpy(app_tx_buf, PRINTNAMES);
+                              
+               USART_Task();
+               
+          //  }
             
             break;
         }

@@ -18,6 +18,8 @@ extern "C" {
 #define DBG_LED_PORT PORT_CHANNEL_A
 #define DBG_LED_PIN PORTS_BIT_POS_3
     
+#define PRINTNAMES "JohnSpataro DannyDutton AndrewBryant BenjaminSingleton "
+    
     
     
 
