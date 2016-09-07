@@ -84,10 +84,27 @@ APP_DATA appData;
 // *****************************************************************************
 // *****************************************************************************
 
-/* Application's Timer Callback Function */
 
-/* TODO:  Add any necessary callback functions.
-*/
+/* Application's Timer Callback Function */
+void vTimerCallback1(TimerHandle_t xTimer)
+{
+    
+        PLIB_PORTS_PinToggle(PORTS_ID_0, DBG_LED_PORT, DBG_LED_PIN);
+    
+    
+    
+    appData.timeEllapsed += 50;
+    
+    //int goodSend = appSendTimerValToMQ(appData.appQHandle, appData.timeEllapsed);
+    
+    /*if(goodSend != true)
+    {
+        // do some error stop
+    }*/
+   
+    
+    
+}
 
 // *****************************************************************************
 // *****************************************************************************
@@ -122,13 +139,27 @@ void APP_Initialize ( void )
     /* Place the App state machine in its initial state. */
     appData.state = APP_STATE_INIT;
     
+    PLIB_PORTS_PinDirectionOutputSet(PORTS_ID_0, DBG_LED_PORT, DBG_LED_PIN);
+      
     // Timer stuff
     
     appData.timerCount = 0;
     appData.timeEllapsed = 0;
+    
+    TimerHandle_t tmr1 = xTimerCreate("tmr1",
+                                      pdMS_TO_TICKS(1000),
+                                      pdTRUE,
+                                      (void*) 0,
+                                      vTimerCallback1);
+    
+    xTimerStart(tmr1, 0);
+    
+    
   
     // Initialize the timer queue
-    QueueHandle_t  qH = appInitTimerMQ();
+   QueueHandle_t  qH = appInitTimerMQ();
+    
+    //PLIB_PORTS_PinSet(PORTS_ID_0, DBG_LED_PORT, DBG_LED_PIN);
     
     if(qH == NULL)
     {

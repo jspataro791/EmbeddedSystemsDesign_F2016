@@ -98,6 +98,38 @@ extern "C" {
 #define SYS_PORT_A_LAT          0x0
 #define SYS_PORT_A_ODC          0x0
 
+#define SYS_PORT_B_TRIS         0xdfff
+#define SYS_PORT_B_LAT          0x0
+#define SYS_PORT_B_ODC          0x0
+
+#define SYS_PORT_D_TRIS         0xdfff
+#define SYS_PORT_D_LAT          0x0
+#define SYS_PORT_D_ODC          0x0
+
+#define SYS_PORT_F_TRIS         0x113f
+#define SYS_PORT_F_LAT          0x0
+#define SYS_PORT_F_ODC          0x0
+
+#define SYS_PORT_G_TRIS         0xd3cf
+#define SYS_PORT_G_LAT          0x0
+#define SYS_PORT_G_ODC          0x0
+
+/*** Console System Service Configuration ***/
+
+#define SYS_CONSOLE_OVERRIDE_STDIO
+#define SYS_CONSOLE_DEVICE_MAX_INSTANCES        2
+#define SYS_CONSOLE_INSTANCES_NUMBER            1
+#define SYS_CONSOLE_APPIO_RD_QUEUE_DEPTH    8
+#define SYS_CONSOLE_APPIO_WR_QUEUE_DEPTH    128
+#define SYS_CONSOLE_BUFFER_DMA_READY
+
+
+
+/*** Debug System Service Configuration ***/
+#define SYS_DEBUG_ENABLE
+#define DEBUG_PRINT_BUFFER_SIZE       8192
+#define SYS_DEBUG_BUFFER_DMA_READY
+#define SYS_DEBUG_USE_CONSOLE
 
 // *****************************************************************************
 // *****************************************************************************

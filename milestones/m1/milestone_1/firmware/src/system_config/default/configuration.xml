@@ -61,6 +61,10 @@
         <Path>Header Files/framework/system/clk</Path>
       </File>
       <File>
+        <Name>sys_console_appio.h</Name>
+        <Path>Header Files/framework/system/console/src</Path>
+      </File>
+      <File>
         <Name>port.c</Name>
         <Path>Source Files/FreeRTOS/portable/MPLAB/PIC32MX</Path>
       </File>
@@ -79,6 +83,14 @@
       <File>
         <Name>drv_usart.h</Name>
         <Path>Header Files/framework/driver/usart</Path>
+      </File>
+      <File>
+        <Name>sys_console.h</Name>
+        <Path>Header Files/framework/system/console</Path>
+      </File>
+      <File>
+        <Name>sys_console_appio.c</Name>
+        <Path>Source Files/framework/system/console/src</Path>
       </File>
       <File>
         <Name>timers.h</Name>
@@ -115,6 +127,10 @@
       <File>
         <Name>sys_devcon.c</Name>
         <Path>Source Files/framework/system/devcon/src</Path>
+      </File>
+      <File>
+        <Name>sys_console.c</Name>
+        <Path>Source Files/framework/system/console/src</Path>
       </File>
       <File>
         <Name>osal.h</Name>
@@ -155,6 +171,10 @@
       <File>
         <Name>croutine.h</Name>
         <Path>Header Files/FreeRTOS</Path>
+      </File>
+      <File>
+        <Name>sys_debug_local.h</Name>
+        <Path>Header Files/framework/system/debug/src</Path>
       </File>
       <File>
         <Name>sys_common.h</Name>
@@ -201,6 +221,10 @@
         <Path>Source Files/FreeRTOS</Path>
       </File>
       <File>
+        <Name>sys_debug.c</Name>
+        <Path>Source Files/framework/system/debug/src</Path>
+      </File>
+      <File>
         <Name>sys_debug.h</Name>
         <Path>Header Files/framework/system/debug</Path>
       </File>
@@ -237,6 +261,10 @@
         <Path>Header Files/framework/system/common</Path>
       </File>
       <File>
+        <Name>sys_console_local.h</Name>
+        <Path>Header Files/framework/system/console/src</Path>
+      </File>
+      <File>
         <Name>queue.c</Name>
         <Path>Source Files/FreeRTOS</Path>
       </File>
@@ -245,12 +273,12 @@
       <Template>
         <Name>sys_ports_static.c</Name>
         <Path>Source Files/app/system_config/default/framework/system/ports/src</Path>
-        <Checksum>C61B926A7AC823250A40C878C9CD51F9</Checksum>
+        <Checksum>574D98A8D199FA32858A0481696833EB</Checksum>
       </Template>
       <Template>
         <Name>system_init.c</Name>
         <Path>Source Files/app/system_config/default</Path>
-        <Checksum>7EE20F6BF310BED31ADFA646932CA1A5</Checksum>
+        <Checksum>FC2933793500DEE54697A1104FB1C4AB</Checksum>
       </Template>
       <Template>
         <Name>main.c</Name>
@@ -264,7 +292,7 @@
       <Template>
         <Name>system_definitions.h</Name>
         <Path>Header Files/app/system_config/default</Path>
-        <Checksum>C22F26D452F855EEB15A0144251F6C53</Checksum>
+        <Checksum>6BD1A91B21C4E330927B4161C6BBD621</Checksum>
       </Template>
       <Template>
         <Name>system_exceptions.c</Name>
@@ -278,18 +306,18 @@
       <Template>
         <Name>FreeRTOSConfig.h</Name>
         <Path>Header Files/app/system_config/default</Path>
-        <Checksum>274D1370B2891D82E834E21059B0AF97</Checksum>
+        <Checksum>64A7CE7C568B5E6DC7E77A33CA5ED7B6</Checksum>
         <ProjectFileChecksum>5FD066BB8869784264624A55B7FC285D</ProjectFileChecksum>
       </Template>
       <Template>
         <Name>system_tasks.c</Name>
         <Path>Source Files/app/system_config/default</Path>
-        <Checksum>15D8F14DCE2A31DD1F0C89A5772F0585</Checksum>
+        <Checksum>C573F41796E311187A92AD1359EA4BCD</Checksum>
       </Template>
       <Template>
         <Name>system_config.h</Name>
         <Path>Header Files/app/system_config/default</Path>
-        <Checksum>768FEB93D1CB54FCD42AB13E2B032570</Checksum>
+        <Checksum>C32B8E6A290F13D54938DB70E3F0B34C</Checksum>
       </Template>
       <Template>
         <Name>app.h</Name>
@@ -299,7 +327,6 @@
         <Name>sys_clk_static.h</Name>
         <Path>Header Files/app/system_config/default/framework/system/clk</Path>
         <Checksum>B4BD59D8D7C4DA95DC5E3B57755FD352</Checksum>
-        <ProjectFileChecksum>ADBE7CBAC9333D298BE56F61513A2B87</ProjectFileChecksum>
       </Template>
       <Template>
         <Name>system_interrupt.c</Name>
@@ -315,7 +342,6 @@
         <Name>sys_clk_static.c</Name>
         <Path>Source Files/app/system_config/default/framework/system/clk/src</Path>
         <Checksum>E8C935BED4628875A8C3428DDD07355C</Checksum>
-        <ProjectFileChecksum>B89F32808981BB4E64B5CCADD697B6CA</ProjectFileChecksum>
       </Template>
     </Templates>
     <CompilerItems>

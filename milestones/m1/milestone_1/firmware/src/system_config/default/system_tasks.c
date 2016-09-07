@@ -115,6 +115,7 @@ static void _SYS_Tasks ( void)
     {
         /* Maintain system services */
         SYS_DEVCON_Tasks(sysObj.sysDevcon);
+    SYS_CONSOLE_Tasks(sysObj.sysConsole0);
 
         /* Maintain Device Drivers */
 
