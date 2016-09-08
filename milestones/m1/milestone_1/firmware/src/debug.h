@@ -23,8 +23,10 @@ extern "C" {
 #define ERR_GOOD 0xFF
 #define ERR_GENERIC_BAD 0x00
 #define ERR_BAD_MQ_RECV 1
-#define ERR_BAD_MQ_CREATE 2
-#define ERR_BAD_TIMER_INIT 3
+#define ERR_BAD_MQ_SEND 2
+#define ERR_BAD_MQ_CREATE 3
+#define ERR_BAD_TIMER_INIT 4
+#define ERR_BAD_TASK_STATE 5
   
     // GPIO PORT AND PIN
 #define ERR_GPIO_PORT PORT_CHANNEL_E

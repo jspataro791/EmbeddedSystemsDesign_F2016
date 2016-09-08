@@ -9,7 +9,7 @@ void vTimerCallback1(TimerHandle_t xTimer)
     
     if(goodSend != true)
     {
-        //PLIB_PORTS_PinToggle(PORTS_ID_0, DBG_LED_PORT, DBG_LED_PIN);
+        sendGPIOError(ERR_BAD_MQ_SEND);
     }
      
 }

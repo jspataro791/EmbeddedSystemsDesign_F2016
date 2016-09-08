@@ -16,11 +16,13 @@
 extern "C" {
 #endif
 
-    // TIMER Defines
+// TIMER Defines
 #define QLENGTH 50
     
+// Names to print
 #define PRINTNAMES "JohnSpataro DannyDutton AndrewBryant BenjaminSingleton "
     
+// Applications states
 typedef enum
 {
 	/* Application's state machine's initial state. */
@@ -32,26 +34,25 @@ typedef enum
 
 } APP_STATES;
 
-
+// Application data
 typedef struct
 {
     /* The application's current state */
     APP_STATES state;
     
-    /* TODO: Define any additional data used by the application. */
-    DRV_HANDLE handleUSART0;
-	int tx_count;
+    DRV_HANDLE handleUSART0; // USART driver handle
+	int tx_count; // transmit byte
     
-    unsigned int timerCount;
+    unsigned int timerCount; // count of number of times timer has fired
     
-    unsigned int timeEllapsed;
+    unsigned int timeEllapsed; // count of number of milliseconds that has ellapsed
 
     // handle for the msg queue
     QueueHandle_t appQHandle; 
 
 } APP_DATA;
 
-APP_DATA appData;
+APP_DATA appData; // appdata instance
 
     // TIMER QUEUE STUFF
 

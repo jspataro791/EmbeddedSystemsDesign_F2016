@@ -14,6 +14,7 @@ extern "C" {
     
 #include "system_definitions.h"
 #include "app_public.h"
+#include "debug.h"
 
 /* Application's Timer Callback Function */
 void vTimerCallback1(TimerHandle_t xTimer);
