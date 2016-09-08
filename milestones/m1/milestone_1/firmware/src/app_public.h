@@ -19,21 +19,39 @@ extern "C" {
     // TIMER Defines
 #define QLENGTH 50
     
-    // USART Defines
+#define PRINTNAMES "JohnSpataro DannyDutton AndrewBryant BenjaminSingleton "
     
-/*#define USART_BAUD 300
-#define USART_FLAGS DRV_USART_INIT_FLAG_NONE
-#define USART_HANDSHAKE DRV_USART_HANDSHAKE_NONE
-#define USART_INTERROR INT_SOURCE_USART_2_ERROR
-#define USART_INTRECV INT_SOURCE_USART_2_RECEIVE
-#define USART_INTTRANS INT_SOURCE_USART_2_TRANSMIT
-#define USART_LINECONTROL DRV_USART_LINE_CONTROL_8NONE1
-#define USART_MODE DRV_USART_OPERATION_MODE_NORMAL
-#define USART_BRGCLOCK 80000000
-#define USART_MODULE_VALUE SYS_MODULE_POWER_RUN_FULL
-#define USART_QUEUESIZERX 2
-#define USART_QUEUESIZETX 3
-#define USART_ID USART_ID_2*/
+typedef enum
+{
+	/* Application's state machine's initial state. */
+	APP_STATE_INIT=0,
+	APP_STATE_SERVICE_TASKS,
+    APP_STATE_IDLE,
+
+	/* TODO: Define states used by the application state machine. */
+
+} APP_STATES;
+
+
+typedef struct
+{
+    /* The application's current state */
+    APP_STATES state;
+    
+    /* TODO: Define any additional data used by the application. */
+    DRV_HANDLE handleUSART0;
+	int tx_count;
+    
+    unsigned int timerCount;
+    
+    unsigned int timeEllapsed;
+
+    // handle for the msg queue
+    QueueHandle_t appQHandle; 
+
+} APP_DATA;
+
+APP_DATA appData;
 
     // TIMER QUEUE STUFF
 
@@ -43,15 +61,7 @@ extern "C" {
     // Sends current time to queue
     int appSendTimerValToMQ(QueueHandle_t q, unsigned int milliElapsed);
     
-    // USART STUFF
-    
-    // usart initialization
-    //DRV_HANDLE usartInit();
-    
-    
-    
-
-#ifdef	__cplusplus
+    #ifdef	__cplusplus
 }
 #endif
 

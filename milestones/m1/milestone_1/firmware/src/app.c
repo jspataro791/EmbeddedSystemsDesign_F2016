@@ -76,7 +76,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     Application strings and buffers are be defined outside this structure.
 */
 
-APP_DATA appData;
+
 
 static uint8_t app_tx_buf[255];
 static enum 
@@ -93,20 +93,7 @@ static enum
 // *****************************************************************************
 
 
-/* Application's Timer Callback Function */
-void vTimerCallback1(TimerHandle_t xTimer)
-{
-       
-    appData.timeEllapsed += 50;
-    
-    int goodSend = appSendTimerValToMQ(appData.appQHandle, appData.timeEllapsed);
-    
-    if(goodSend != true)
-    {
-        //PLIB_PORTS_PinToggle(PORTS_ID_0, DBG_LED_PORT, DBG_LED_PIN);
-    }
-     
-}
+
 /******************************************************************************
   Function:
     static void USART_Task (void)
@@ -188,6 +175,10 @@ void APP_Initialize ( void )
     // USART init
     appData.handleUSART0 = DRV_HANDLE_INVALID;
     
+    // Error GPIO init
+    initGPIOError();
+    sendGPIOError(ERR_GOOD);
+    
     // Set LED pin to out
     PLIB_PORTS_PinDirectionOutputSet(PORTS_ID_0, DBG_LED_PORT, DBG_LED_PIN);
       
@@ -202,16 +193,21 @@ void APP_Initialize ( void )
                                       (void*) 0,
                                       vTimerCallback1);
     
+    if(tmr1 == NULL) // did the timer get created?
+    {
+        sendGPIOError(ERR_BAD_TIMER_INIT);
+    }
+    
     xTimerStart(tmr1, 0);
       
     // Initialize the timer queue
    QueueHandle_t  qH = appInitTimerMQ();
     
-    if(qH == NULL)
+    if(qH == NULL) // did the queue init ok?
     {
-        // do some error
+        sendGPIOError(ERR_BAD_MQ_CREATE);
     }
-    else
+    else // if so, set the app's queue handle
     {
         appData.appQHandle = qH;
     }
@@ -267,11 +263,14 @@ void APP_Tasks ( void )
                                             (void*) &rcv,
                                             portMAX_DELAY);
                // Is the msg Q recv good?
-               if(rcvGood == pdTRUE)
+               if(rcvGood != pdTRUE)
                {
                    // do error stuff
-                   PLIB_PORTS_PinToggle(PORTS_ID_0, DBG_LED_PORT, DBG_LED_PIN);
+                   sendGPIOError(ERR_BAD_MQ_RECV);
                }
+               
+               // blink the LED for shits
+               PLIB_PORTS_PinToggle(PORTS_ID_0, DBG_LED_PORT, DBG_LED_PIN);
                
                // USART stuff
                strcpy(app_tx_buf, PRINTNAMES);

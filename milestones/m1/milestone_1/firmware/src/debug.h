@@ -15,12 +15,25 @@
 extern "C" {
 #endif
 
+    // LED DEBUG PORT AND PIN
 #define DBG_LED_PORT PORT_CHANNEL_A
 #define DBG_LED_PIN PORTS_BIT_POS_3
     
-#define PRINTNAMES "JohnSpataro DannyDutton AndrewBryant BenjaminSingleton "
+    // GPIO ERROR DEFINES
+#define ERR_GOOD 0xFF
+#define ERR_GENERIC_BAD 0x00
+#define ERR_BAD_MQ_RECV 1
+#define ERR_BAD_MQ_CREATE 2
+#define ERR_BAD_TIMER_INIT 3
+  
+    // GPIO PORT AND PIN
+#define ERR_GPIO_PORT PORT_CHANNEL_E
     
-    
+    // initialize GPIO error port
+    void initGPIOError();
+
+    // send error to GPIO
+    void sendGPIOError(uint8_t errCode);
     
 
 #ifdef	__cplusplus

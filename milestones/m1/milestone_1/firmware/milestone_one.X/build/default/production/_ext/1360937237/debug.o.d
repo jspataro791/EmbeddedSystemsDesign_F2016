@@ -1,6 +1,7 @@
-build/default/production/_ext/1360937237/main.o:  \
-../src/main.c  \
- ../src/system_config/default/system_definitions.h  \
+build/default/production/_ext/1360937237/debug.o:  \
+../src/debug.c  \
+ ../src/debug.h  \
+../src/system_config/default/system_definitions.h  \
  ../../../../../../../../../microchip/harmony/v1_08_01/framework/system/common/sys_common.h  \
  ../../../../../../../../../microchip/harmony/v1_08_01/framework/system/common/sys_module.h  \
  ../../../../../../../../../microchip/harmony/v1_08_01/framework/system/clk/sys_clk.h  \
@@ -235,5 +236,4 @@ build/default/production/_ext/1360937237/main.o:  \
 ../src/app_public.h  \
  ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include/timers.h  \
  ../../../../../../../../../microchip/harmony/v1_08_01/third_party/rtos/FreeRTOS/Source/include/task.h  \
- ../src/debug.h  \
-../src/tmr_callbk.h 
+ ../src/tmr_callbk.h 
