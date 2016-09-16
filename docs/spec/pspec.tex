@@ -1,0 +1,34 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\title{Team 18 Project Specifications}
+
+\begin{document}
+\maketitle
+
+\section{Overview}
+The project uses two rovers to create a game similar to Pacman. One rover plays the role of Pacman. The other rover acts as a ghost. The Pacman rover takes user input, while the ghost rover is completely autonomous. Both rovers are confined to preset paths, designated by lines on the play field. 
+
+\paragraph{}
+The play field is a rectangular area marked with contrasted lines to designate valid paths which the rovers can take. Lines meet at 90 degree intersections, with up to four possible directions. The board is large enough to accomodate the size of the rovers while still maintaining enough paths to make the game interesting.
+
+\section{Pacman Rover}
+The Pacman rover is user controlled. User input is confined to choosing a next-intersection direction on the board. For instance, if the rover is headed towards a 4-way intersection, the user must choose before it reaches that intersection which direction the rover will take, otherwise the rover will continue on its current path. Therefore, user input for the rover is a simple set of four buttons mapping to the orientation of the board, and not the rover.
+
+\section{Ghost Rover}
+The ghost rover is autonomous. Its goal is to intercept the Pacman rover. It performs intelligent pathfinding to determine the optimum route to reach Pacman. Because the ghost rover and the Pacman rover have the same top speed, the ghost rover must intercept by getting ahead rather than chasing. 
+
+\paragraph{}
+The speed of the ghost rover increases as a way to enhance the difficulty of the game. This increase occurs over time as the game is played.
+
+\section{Game Conditions}
+\subsection{Interception}
+The ghost rover has intercepted the Pacman rover when both rovers have essentially "collided". This is not a hard collision of the physical rovers, but is defined as an event monitored by softare and sensors and flagged when the rovers are within a very small proximity to eachother (0.25 to 0.5 inches). 
+
+\subsection{Role Reversal}
+Tokens, or fruits, are placed on the play field at some locations to signal that the role of the Pacman and ghost rovers have reversed. When a fruit is detected, the Pacman is now the chaser and the ghost must move to keep away from the Pacman rover for a period of time (1 minute). After the time ellapses, the roles of the rovers swap back to the default. 
+
+\end{document}
