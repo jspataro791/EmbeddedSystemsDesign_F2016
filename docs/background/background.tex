@@ -17,7 +17,7 @@ The LFA is attached to the front of the rover. Its maximum detectable line width
 
 The protocol for the LFA is I2C. Example code is given in a Github repository provided with the LFA. Features of the LFA include a physically adjustable sensitivity potentiometer and toggleable sensors. 
 
-Sunlight and shadowing can cause issues with LFA devices. Shadowing presents a false-contrast condition, while sunlight can overwhelm the sensor array with UV light, causing sporadic readings. In fact, it is useful to low-pass filter the results of the sensor in software to prevent such issues.
+Sunlight and shadowing can cause issues with LFA devices. Shadowing presents a false-contrast condition, while sunlight can overwhelm the sensor array with UV light, causing sporadic readings. In fact, it is useful to low-pass filter the results of the sensor in software to prevent such issues and tightly control the lighting environment.
 
 Another issue with LFA devices is the case where no line is detected at all. In this case, information about the last known line position needs to be taken into account, or the LFA will cause a rover to lose its location. This is usually done by keeping a record of some previous sensor states, and when the "no detection" state occurs the record must be accessed to determine the best route to relocation.
 
