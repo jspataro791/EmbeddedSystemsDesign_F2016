@@ -9,6 +9,17 @@
 \maketitle
 
 \section{Network Communication}
+For two devices to communicate over WiFi, a application layer protocol is needed to run on top of the already existing TCP/IP layer provided by the WiFly and WiPi peripherals. For the two rovers to talk, they need to pass messages containing a chunk of data along with a description of the data. 
+
+There are many types of existing protocols that can perform the type of message passing needed but they all have caveats. Passing simple JSON messages inside of TCP packets is one of the most intuitive methods. However, this means there needs to be handlers running on all the devices that can decode the data into the JSON format as well as decode the format down into the parts the device actually cares about. Google's Protocol Buffer is similar to JSON but allows for more customization. Again, this would need additional resources to encode and decode the data.
+
+Due to how simple the messages sent between rovers and devices will most likely be, having a simple TCP packet containing a string of a yet to be determined length.  In this string, the first chunk of bits can be used as an initial description of what's being sent (e.g. position of a rover) or can be used as a basic instruction (e.g. turn left). The number of bits used for this chunk determines how many types of instructions or descriptions are possible.
+
+Following this first chunk of bits is the data section. It contains whatever data is to be passed to the device, described by the first chunk. If more instructions or descriptions are needed, a type of instruction would be used that allows for a second description section that follows the first.
+
+In effect, this works similar to machine code, the instructions and literals are encoded in a single message. Due to the nature of TCP packets, the sender address can be determined such that the name of the device sending the packet doesn't need to be encoded in it, freeing space for more data.
+
+Additionally, these messages can be sniffed on the network using a tool like Wireshark. The tool can be supplied with the schema for the message such that they can be easily be viewed for debugging as they are being transmitted.
 
 \section{Line Following}
 The SparkFun Line Following Array (LFA) is a device designed to provide information on the location of a line within the array. The sensor works by relaying information about the eight sensor "eyes", specifically which eye is currently sensing a contrasted line. 
