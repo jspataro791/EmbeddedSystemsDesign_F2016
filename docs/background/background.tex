@@ -21,6 +21,15 @@ Sunlight and shadowing can cause issues with LFA devices. Shadowing presents a f
 
 Another issue with LFA devices is the case where no line is detected at all. In this case, information about the last known line position needs to be taken into account, or the LFA will cause a rover to lose its location. This is usually done by keeping a record of some previous sensor states, and when the "no detection" state occurs the record must be accessed to determine the best route to relocation.
 
+The Pixycam is a small camera that allows you to interpret your surroundings. It can differentiate colors, and can be programmed to look for specific shapes and color cues, as well as calculating angles. It was developed by Carnegie Mellon University and Charmed Labs, and can interpret its surroundings using much less processing power than interpreting a normal camera’s input. 
+
+The Pixycam would be attached to the ceiling above the playing field. It will be used to tell the location and direction of the rovers. This will allow the ‘ghost’ rover to make intelligent decisions about how to best chase the ‘Pacman’ rover. 
+
+The Pixycam can be used with a variety of communication protocols, including I2C and UART. The Pixycam comes with software that can already interpret things such as balls or blocks, but is also programmable to look for user defined objects. It is compatible with a variety of devices, including most microprocessors. 
+
+There are some potential problems and limitations to the Pixycam that must be accounted for. It provides fifty frames per second, so if the Pixycam misreads something one frame, code needs to be used to prevent the anomalies from misdirecting the ‘ghost’ rover. Also, since the Pixycam will be used from a relatively moderate distance, there must be measures taken to tell the true distance an object is using mostly basic trigonometry. 
+
+
 
 
 \section{Path Finding}
