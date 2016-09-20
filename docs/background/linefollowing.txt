@@ -1,3 +1,0 @@
-Typical line following schemes for autonomous robots involve using a reflectivity sensor. The sensors contains some light emitter and light detector--usually and array of these--to detect a line by contrast. Each emitter/detector pair is called a cell, and the number of cells and distance between cells is critical to the resolution of detection. 
-
-

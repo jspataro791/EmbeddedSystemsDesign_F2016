@@ -29,10 +29,6 @@
         <Path>Header Files/FreeRTOS/portable/MPLAB/PIC32MX</Path>
       </File>
       <File>
-        <Name>drv_usart_byte_model.c</Name>
-        <Path>Source Files/framework/driver/usart/src/dynamic</Path>
-      </File>
-      <File>
         <Name>croutine.c</Name>
         <Path>Source Files/FreeRTOS</Path>
       </File>
@@ -61,6 +57,10 @@
         <Path>Header Files/framework/system/clk</Path>
       </File>
       <File>
+        <Name>sys_console_appio.h</Name>
+        <Path>Header Files/framework/system/console/src</Path>
+      </File>
+      <File>
         <Name>port.c</Name>
         <Path>Source Files/FreeRTOS/portable/MPLAB/PIC32MX</Path>
       </File>
@@ -77,8 +77,12 @@
         <Path>Header Files/framework/system</Path>
       </File>
       <File>
-        <Name>drv_usart.h</Name>
-        <Path>Header Files/framework/driver/usart</Path>
+        <Name>sys_console.h</Name>
+        <Path>Header Files/framework/system/console</Path>
+      </File>
+      <File>
+        <Name>sys_console_appio.c</Name>
+        <Path>Source Files/framework/system/console/src</Path>
       </File>
       <File>
         <Name>timers.h</Name>
@@ -117,16 +121,16 @@
         <Path>Source Files/framework/system/devcon/src</Path>
       </File>
       <File>
+        <Name>sys_console.c</Name>
+        <Path>Source Files/framework/system/console/src</Path>
+      </File>
+      <File>
         <Name>osal.h</Name>
         <Path>Header Files/framework/osal</Path>
       </File>
       <File>
         <Name>StackMacros.h</Name>
         <Path>Header Files/FreeRTOS</Path>
-      </File>
-      <File>
-        <Name>drv_usart_local.h</Name>
-        <Path>Header Files/framework/driver/usart/src</Path>
       </File>
       <File>
         <Name>osal_freertos.c</Name>
@@ -149,12 +153,12 @@
         <Path>Header Files/FreeRTOS</Path>
       </File>
       <File>
-        <Name>drv_usart.c</Name>
-        <Path>Source Files/framework/driver/usart/src/dynamic</Path>
-      </File>
-      <File>
         <Name>croutine.h</Name>
         <Path>Header Files/FreeRTOS</Path>
+      </File>
+      <File>
+        <Name>sys_debug_local.h</Name>
+        <Path>Header Files/framework/system/debug/src</Path>
       </File>
       <File>
         <Name>sys_common.h</Name>
@@ -201,12 +205,12 @@
         <Path>Source Files/FreeRTOS</Path>
       </File>
       <File>
-        <Name>sys_debug.h</Name>
-        <Path>Header Files/framework/system/debug</Path>
+        <Name>sys_debug.c</Name>
+        <Path>Source Files/framework/system/debug/src</Path>
       </File>
       <File>
-        <Name>drv_usart_variant_mapping.h</Name>
-        <Path>Header Files/framework/driver/usart/src</Path>
+        <Name>sys_debug.h</Name>
+        <Path>Header Files/framework/system/debug</Path>
       </File>
       <File>
         <Name>sys_module.h</Name>
@@ -237,34 +241,45 @@
         <Path>Header Files/framework/system/common</Path>
       </File>
       <File>
+        <Name>sys_console_local.h</Name>
+        <Path>Header Files/framework/system/console/src</Path>
+      </File>
+      <File>
         <Name>queue.c</Name>
         <Path>Source Files/FreeRTOS</Path>
       </File>
     </Files>
     <Templates>
       <Template>
+        <Name>drv_usart_static.c</Name>
+        <Path>Source Files/app/system_config/default/framework/driver/usart/src</Path>
+        <Checksum>7B14D6E9ABF39809DFD8546B042813BA</Checksum>
+      </Template>
+      <Template>
         <Name>sys_ports_static.c</Name>
         <Path>Source Files/app/system_config/default/framework/system/ports/src</Path>
-        <Checksum>C61B926A7AC823250A40C878C9CD51F9</Checksum>
+        <Checksum>574D98A8D199FA32858A0481696833EB</Checksum>
       </Template>
       <Template>
         <Name>system_init.c</Name>
         <Path>Source Files/app/system_config/default</Path>
-        <Checksum>7EE20F6BF310BED31ADFA646932CA1A5</Checksum>
+        <Checksum>353E23B54D6C8F17331852FB16AE547D</Checksum>
       </Template>
       <Template>
         <Name>main.c</Name>
         <Path>Source Files/app</Path>
+        <Checksum>81A51474D8A80D41AD749DEAE4C1A7A3</Checksum>
+        <ProjectFileChecksum>AB76023697B241EDCA34C3C0BCB5AC34</ProjectFileChecksum>
       </Template>
       <Template>
         <Name>system_interrupt_a.S</Name>
         <Path>Source Files/app/system_config/default</Path>
-        <Checksum>5C0D911C19B5E425D7F0FB89E579F457</Checksum>
+        <Checksum>F8E29721D7D91213A568F3DC060408EC</Checksum>
       </Template>
       <Template>
         <Name>system_definitions.h</Name>
         <Path>Header Files/app/system_config/default</Path>
-        <Checksum>C22F26D452F855EEB15A0144251F6C53</Checksum>
+        <Checksum>CF9B5D0FBB2AF1B890DD996E75C7D840</Checksum>
       </Template>
       <Template>
         <Name>system_exceptions.c</Name>
@@ -274,37 +289,55 @@
       <Template>
         <Name>app.c</Name>
         <Path>Source Files/app</Path>
+        <Checksum>71915A014CF582FD8DE063FE9F4EDAFD</Checksum>
+        <ProjectFileChecksum>E25A7334483963B3012FB23670CD9C57</ProjectFileChecksum>
+      </Template>
+      <Template>
+        <Name>drv_usart_mapping.c</Name>
+        <Path>Source Files/app/system_config/default/framework/driver/usart/src</Path>
+        <Checksum>99B1234D6368258201525EBAE6D7FADE</Checksum>
+      </Template>
+      <Template>
+        <Name>drv_usart_static.h</Name>
+        <Path>Header Files/app/system_config/default/framework/driver/usart</Path>
+        <Checksum>AE37BD63B6EC9F6ADD6B8006CE192FCB</Checksum>
       </Template>
       <Template>
         <Name>FreeRTOSConfig.h</Name>
         <Path>Header Files/app/system_config/default</Path>
-        <Checksum>274D1370B2891D82E834E21059B0AF97</Checksum>
+        <Checksum>64A7CE7C568B5E6DC7E77A33CA5ED7B6</Checksum>
         <ProjectFileChecksum>5FD066BB8869784264624A55B7FC285D</ProjectFileChecksum>
       </Template>
       <Template>
         <Name>system_tasks.c</Name>
         <Path>Source Files/app/system_config/default</Path>
-        <Checksum>15D8F14DCE2A31DD1F0C89A5772F0585</Checksum>
+        <Checksum>A893C978552594F8B74480986C028C9A</Checksum>
+      </Template>
+      <Template>
+        <Name>drv_usart_static_byte_model.c</Name>
+        <Path>Source Files/app/system_config/default/framework/driver/usart/src</Path>
+        <Checksum>2079F96AE5FA15CA8BD20354C16FDA44</Checksum>
       </Template>
       <Template>
         <Name>system_config.h</Name>
         <Path>Header Files/app/system_config/default</Path>
-        <Checksum>768FEB93D1CB54FCD42AB13E2B032570</Checksum>
+        <Checksum>B9BD21DCEBEFEF388ED41288BFC357CF</Checksum>
       </Template>
       <Template>
         <Name>app.h</Name>
         <Path>Header Files/app</Path>
+        <Checksum>DEADCBE41D674FBA394C3E2672799F4C</Checksum>
+        <ProjectFileChecksum>F976666EB2DA0A99121F75F61F1D1520</ProjectFileChecksum>
       </Template>
       <Template>
         <Name>sys_clk_static.h</Name>
         <Path>Header Files/app/system_config/default/framework/system/clk</Path>
         <Checksum>B4BD59D8D7C4DA95DC5E3B57755FD352</Checksum>
-        <ProjectFileChecksum>ADBE7CBAC9333D298BE56F61513A2B87</ProjectFileChecksum>
       </Template>
       <Template>
         <Name>system_interrupt.c</Name>
         <Path>Source Files/app/system_config/default</Path>
-        <Checksum>31EDE1F6472E4420F67A3882C9200F81</Checksum>
+        <Checksum>C934CFD980878E57EE336D976F540A07</Checksum>
       </Template>
       <Template>
         <Name>rtos_hooks.c</Name>
@@ -315,7 +348,11 @@
         <Name>sys_clk_static.c</Name>
         <Path>Source Files/app/system_config/default/framework/system/clk/src</Path>
         <Checksum>E8C935BED4628875A8C3428DDD07355C</Checksum>
-        <ProjectFileChecksum>B89F32808981BB4E64B5CCADD697B6CA</ProjectFileChecksum>
+      </Template>
+      <Template>
+        <Name>drv_usart_static_local.h</Name>
+        <Path>Header Files/app/system_config/default/framework/driver/usart/src</Path>
+        <Checksum>2C3E6EE85E05512BB9836B81EB3DB0E4</Checksum>
       </Template>
     </Templates>
     <CompilerItems>

@@ -98,6 +98,38 @@ extern "C" {
 #define SYS_PORT_A_LAT          0x0
 #define SYS_PORT_A_ODC          0x0
 
+#define SYS_PORT_B_TRIS         0xdfff
+#define SYS_PORT_B_LAT          0x0
+#define SYS_PORT_B_ODC          0x0
+
+#define SYS_PORT_D_TRIS         0xdfff
+#define SYS_PORT_D_LAT          0x0
+#define SYS_PORT_D_ODC          0x0
+
+#define SYS_PORT_F_TRIS         0x113f
+#define SYS_PORT_F_LAT          0x0
+#define SYS_PORT_F_ODC          0x0
+
+#define SYS_PORT_G_TRIS         0xd3cf
+#define SYS_PORT_G_LAT          0x0
+#define SYS_PORT_G_ODC          0x0
+
+/*** Console System Service Configuration ***/
+
+#define SYS_CONSOLE_OVERRIDE_STDIO
+#define SYS_CONSOLE_DEVICE_MAX_INSTANCES        2
+#define SYS_CONSOLE_INSTANCES_NUMBER            1
+#define SYS_CONSOLE_APPIO_RD_QUEUE_DEPTH    8
+#define SYS_CONSOLE_APPIO_WR_QUEUE_DEPTH    128
+#define SYS_CONSOLE_BUFFER_DMA_READY
+
+
+
+/*** Debug System Service Configuration ***/
+#define SYS_DEBUG_ENABLE
+#define DEBUG_PRINT_BUFFER_SIZE       8192
+#define SYS_DEBUG_BUFFER_DMA_READY
+#define SYS_DEBUG_USE_CONSOLE
 
 // *****************************************************************************
 // *****************************************************************************
@@ -107,40 +139,14 @@ extern "C" {
 // *****************************************************************************
 /* USART Driver Configuration Options
 */
-#define DRV_USART_INTERRUPT_MODE                    true
-
-#define DRV_USART_BYTE_MODEL_SUPPORT                true
-
-#define DRV_USART_READ_WRITE_MODEL_SUPPORT          false
-
-#define DRV_USART_BUFFER_QUEUE_SUPPORT              false
-
+#define DRV_USART_INSTANCES_NUMBER                  1
 #define DRV_USART_CLIENTS_NUMBER                    1
+#define DRV_USART_INTERRUPT_MODE                    false
+#define DRV_USART_BYTE_MODEL_SUPPORT                true
+#define DRV_USART_READ_WRITE_MODEL_SUPPORT          false
+#define DRV_USART_BUFFER_QUEUE_SUPPORT              false
 #define DRV_USART_SUPPORT_TRANSMIT_DMA              false
 #define DRV_USART_SUPPORT_RECEIVE_DMA               false
-#define DRV_USART_INSTANCES_NUMBER                  1
-
-#define DRV_USART_PERIPHERAL_ID_IDX0                USART_ID_1
-#define DRV_USART_OPER_MODE_IDX0                    DRV_USART_OPERATION_MODE_NORMAL
-#define DRV_USART_OPER_MODE_DATA_IDX0               
-#define DRV_USART_INIT_FLAG_WAKE_ON_START_IDX0      false
-#define DRV_USART_INIT_FLAG_AUTO_BAUD_IDX0          false
-#define DRV_USART_INIT_FLAG_STOP_IN_IDLE_IDX0       false
-#define DRV_USART_INIT_FLAGS_IDX0                   0
-#define DRV_USART_BRG_CLOCK_IDX0                    48000000
-#define DRV_USART_BAUD_RATE_IDX0                    9600
-#define DRV_USART_LINE_CNTRL_IDX0                   DRV_USART_LINE_CONTROL_8NONE1
-#define DRV_USART_HANDSHAKE_MODE_IDX0               DRV_USART_HANDSHAKE_NONE
-#define DRV_USART_XMIT_INT_SRC_IDX0                 INT_SOURCE_USART_1_TRANSMIT
-#define DRV_USART_RCV_INT_SRC_IDX0                  INT_SOURCE_USART_1_RECEIVE
-#define DRV_USART_ERR_INT_SRC_IDX0                  INT_SOURCE_USART_1_ERROR
-#define DRV_USART_INT_VECTOR_IDX0                   INT_VECTOR_UART1
-#define DRV_USART_INT_PRIORITY_IDX0                 INT_PRIORITY_LEVEL1
-#define DRV_USART_INT_SUB_PRIORITY_IDX0             INT_SUBPRIORITY_LEVEL0
-
-
-#define DRV_USART_POWER_STATE_IDX0                  SYS_MODULE_POWER_RUN_FULL
-
 
 // *****************************************************************************
 // *****************************************************************************
@@ -159,6 +165,7 @@ extern "C" {
 // *****************************************************************************
 
 /*** Application Instance 0 Configuration ***/
+#define APP_DRV_USART                     0
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
