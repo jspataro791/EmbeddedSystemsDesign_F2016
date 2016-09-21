@@ -79,6 +79,14 @@ void IntHandlerDrvUsartInstance0(void)
  
  
 
+void IntHandlerDrvUsartInstance1(void)
+{
+    DRV_USART_TasksTransmit(sysObj.drvUsart1);
+    DRV_USART_TasksReceive(sysObj.drvUsart1);
+    DRV_USART_TasksError(sysObj.drvUsart1);
+}
+ 
+ 
  
 
  
