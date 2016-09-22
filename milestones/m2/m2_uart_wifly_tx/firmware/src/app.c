@@ -17,9 +17,6 @@ APP_DATA appData;
 
 #define UART_BUF_SIZE  32
 
-// USART stuff
-uint8_t ubuffer[UART_BUF_SIZE];
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Functions
@@ -37,26 +34,14 @@ uint8_t ubuffer[UART_BUF_SIZE];
 
 /* Write string to USART*/
 
-int tx_count = 0; // used to keep track of transmit string position
+char txbuffer[UART_BUF_SIZE];
+DRV_USART_BUFFER_HANDLE tx_buff_handle;
 
-USART_WriteString(const char * str, int numChar, const DRV_HANDLE handle )
+void USART_WriteString(const DRV_HANDLE handle )
 {
-    /* if the USART tx buffer is not full */
-    if(!DRV_USART_TransmitBufferIsFull(handle)) {
-        
-        /* put a byte of the string in the buffer */
-        DRV_USART_WriteByte(handle, str[tx_count]);
-        
-        /* increment the string position */
-        tx_count++;
-                
-        /* if we reached the end of the string, reset*/
-        if(tx_count == numChar) {
-            tx_count = 0;
-        }  
-    }
-              
+    DRV_USART_BufferAddWrite(handle, &tx_buff_handle, txbuffer, UART_BUF_SIZE );
 }
+
 
 // *****************************************************************************
 // *****************************************************************************
@@ -64,18 +49,20 @@ USART_WriteString(const char * str, int numChar, const DRV_HANDLE handle )
 // *****************************************************************************
 // *****************************************************************************
 
+DRV_HANDLE testHandle;
+
 void APP_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
     appData.state = APP_STATE_INIT;
 
     /* Open the USART Driver */
-    appData.appUsartHandle = DRV_USART_Open(sysObj.drvUsart0, DRV_IO_INTENT_WRITE);
+    appData.appUsartHandle = DRV_USART_Open(sysObj.drvUsart0, DRV_IO_INTENT_READWRITE | DRV_IO_INTENT_NONBLOCKING);
     
-    char * testString = "This is a test. ";
+     myRcvQueue = xQueueCreate((unsigned int)QLENGTH, sizeof(unsigned int));
     
-    strcat(ubuffer, testString);
-            
+     strcpy(txbuffer, "This is a test...\n\r");
+     
 }
 
 
@@ -95,22 +82,27 @@ void APP_Tasks ( void )
         case APP_STATE_INIT:
         {
             bool appInitialized = true;
-       
-        
-            if (appInitialized)
-            {
             
-                appData.state = APP_STATE_SERVICE_TASKS;
+            if(appInitialized)
+            {
+                appData.state = APP_STATE_TX;
             }
+            
             break;
         }
 
-        case APP_STATE_SERVICE_TASKS:
+                
+        case APP_STATE_TX:
         {
-            USART_WriteString(ubuffer, UART_BUF_SIZE, appData.appUsartHandle);
             
-            break;
+         
+                   USART_WriteString(appData.appUsartHandle);
+
+            
+            
+            
         }
+        
 
         /* TODO: implement your application state machine.*/
         

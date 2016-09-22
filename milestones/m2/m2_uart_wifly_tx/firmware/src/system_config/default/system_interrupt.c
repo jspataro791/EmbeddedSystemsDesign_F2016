@@ -62,6 +62,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include <xc.h>
 #include <sys/attribs.h>
 #include "app.h"
+#include "app1.h"
 #include "system_definitions.h"
 
 // *****************************************************************************

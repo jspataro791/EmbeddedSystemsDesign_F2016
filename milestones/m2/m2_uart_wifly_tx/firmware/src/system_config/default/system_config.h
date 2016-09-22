@@ -105,11 +105,11 @@ extern "C" {
 */
 #define DRV_USART_INTERRUPT_MODE                    true
 
-#define DRV_USART_BYTE_MODEL_SUPPORT                true
+#define DRV_USART_BYTE_MODEL_SUPPORT                false
 
-#define DRV_USART_READ_WRITE_MODEL_SUPPORT          false
+#define DRV_USART_READ_WRITE_MODEL_SUPPORT          true
 
-#define DRV_USART_BUFFER_QUEUE_SUPPORT              false
+#define DRV_USART_BUFFER_QUEUE_SUPPORT              true
 
 #define DRV_USART_CLIENTS_NUMBER                    1
 #define DRV_USART_SUPPORT_TRANSMIT_DMA              false
@@ -134,6 +134,9 @@ extern "C" {
 #define DRV_USART_INT_PRIORITY_IDX0                 INT_PRIORITY_LEVEL1
 #define DRV_USART_INT_SUB_PRIORITY_IDX0             INT_SUBPRIORITY_LEVEL0
 
+#define DRV_USART_XMIT_QUEUE_SIZE_IDX0              10
+#define DRV_USART_RCV_QUEUE_SIZE_IDX0               10
+
 
 #define DRV_USART_POWER_STATE_IDX0                  SYS_MODULE_POWER_RUN_FULL
 
@@ -152,12 +155,16 @@ extern "C" {
 #define DRV_USART_RCV_INT_SRC_IDX1                  INT_SOURCE_USART_2_RECEIVE
 #define DRV_USART_ERR_INT_SRC_IDX1                  INT_SOURCE_USART_2_ERROR
 #define DRV_USART_INT_VECTOR_IDX1                   INT_VECTOR_UART2
-#define DRV_USART_INT_PRIORITY_IDX1                 INT_PRIORITY_LEVEL1
+#define DRV_USART_INT_PRIORITY_IDX1                 INT_PRIORITY_LEVEL2
 #define DRV_USART_INT_SUB_PRIORITY_IDX1             INT_SUBPRIORITY_LEVEL0
+
+#define DRV_USART_XMIT_QUEUE_SIZE_IDX1              10
+#define DRV_USART_RCV_QUEUE_SIZE_IDX1               10
 
 
 #define DRV_USART_POWER_STATE_IDX1                  SYS_MODULE_POWER_RUN_FULL
 
+#define DRV_USART_QUEUE_DEPTH_COMBINED              40
 
 // *****************************************************************************
 // *****************************************************************************
@@ -176,6 +183,8 @@ extern "C" {
 // *****************************************************************************
 
 /*** Application Instance 0 Configuration ***/
+
+/*** Application Instance 1 Configuration ***/
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

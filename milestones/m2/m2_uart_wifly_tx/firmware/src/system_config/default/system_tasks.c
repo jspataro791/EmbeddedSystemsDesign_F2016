@@ -55,6 +55,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "system_config.h"
 #include "system_definitions.h"
 #include "app.h"
+#include "app1.h"
 
 
 // *****************************************************************************
@@ -67,6 +68,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
  
 static void _SYS_Tasks ( void );
 static void _APP_Tasks(void);
+static void _APP1_Tasks(void);
 
 
 // *****************************************************************************
@@ -93,6 +95,11 @@ void SYS_Tasks ( void )
     /* Create OS Thread for APP Tasks. */
     xTaskCreate((TaskFunction_t) _APP_Tasks,
                 "APP Tasks",
+                1024, NULL, 1, NULL);
+
+    /* Create OS Thread for APP1 Tasks. */
+    xTaskCreate((TaskFunction_t) _APP1_Tasks,
+                "APP1 Tasks",
                 1024, NULL, 1, NULL);
 
     /**************
@@ -139,6 +146,24 @@ static void _APP_Tasks(void)
     while(1)
     {
         APP_Tasks();
+    }
+}
+
+
+/*******************************************************************************
+  Function:
+    void _APP1_Tasks ( void )
+
+  Summary:
+    Maintains state machine of APP1.
+*/
+
+static void _APP1_Tasks(void)
+{
+    while(1)
+    {
+        APP1_Tasks();
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
 

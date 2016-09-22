@@ -114,6 +114,8 @@ const DRV_USART_INIT drvUsart0InitData =
     .interruptTransmit = DRV_USART_XMIT_INT_SRC_IDX0,
     .interruptReceive = DRV_USART_RCV_INT_SRC_IDX0,
     .interruptError = DRV_USART_ERR_INT_SRC_IDX0,
+    .queueSizeTransmit = DRV_USART_XMIT_QUEUE_SIZE_IDX0,
+    .queueSizeReceive = DRV_USART_RCV_QUEUE_SIZE_IDX0,
     .dmaChannelTransmit = DMA_CHANNEL_NONE,
     .dmaInterruptTransmit = DRV_USART_XMIT_INT_SRC_IDX0,    
     .dmaChannelReceive = DMA_CHANNEL_NONE,
@@ -133,6 +135,8 @@ const DRV_USART_INIT drvUsart1InitData =
     .interruptTransmit = DRV_USART_XMIT_INT_SRC_IDX1,
     .interruptReceive = DRV_USART_RCV_INT_SRC_IDX1,
     .interruptError = DRV_USART_ERR_INT_SRC_IDX1,
+    .queueSizeTransmit = DRV_USART_XMIT_QUEUE_SIZE_IDX1,
+    .queueSizeReceive = DRV_USART_RCV_QUEUE_SIZE_IDX1,
     .dmaChannelTransmit = DMA_CHANNEL_NONE,
     .dmaInterruptTransmit = DRV_USART_XMIT_INT_SRC_IDX1,
     .dmaChannelReceive = DMA_CHANNEL_NONE,
@@ -210,7 +214,7 @@ void SYS_Initialize ( void* data )
     sysObj.drvUsart1 = DRV_USART_Initialize(DRV_USART_INDEX_1, (SYS_MODULE_INIT *)&drvUsart1InitData);
     SYS_INT_VectorPrioritySet(INT_VECTOR_UART1, INT_PRIORITY_LEVEL1);
     SYS_INT_VectorSubprioritySet(INT_VECTOR_UART1, INT_SUBPRIORITY_LEVEL0);
-    SYS_INT_VectorPrioritySet(INT_VECTOR_UART2, INT_PRIORITY_LEVEL1);
+    SYS_INT_VectorPrioritySet(INT_VECTOR_UART2, INT_PRIORITY_LEVEL2);
     SYS_INT_VectorSubprioritySet(INT_VECTOR_UART2, INT_SUBPRIORITY_LEVEL0);
 
     /* Initialize System Services */
@@ -223,6 +227,7 @@ void SYS_Initialize ( void* data )
 
     /* Initialize the Application */
     APP_Initialize();
+    APP1_Initialize();
 }
 
 

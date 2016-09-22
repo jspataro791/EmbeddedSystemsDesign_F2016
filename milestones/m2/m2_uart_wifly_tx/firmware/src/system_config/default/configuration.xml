@@ -30,16 +30,16 @@
         <Path>Header Files/FreeRTOS/portable/MPLAB/PIC32MX</Path>
       </File>
       <File>
-        <Name>drv_usart_byte_model.c</Name>
-        <Path>Source Files/framework/driver/usart/src/dynamic</Path>
-      </File>
-      <File>
         <Name>croutine.c</Name>
         <Path>Source Files/FreeRTOS</Path>
       </File>
       <File>
         <Name>port_asm.S</Name>
         <Path>Source Files/FreeRTOS/portable/MPLAB/PIC32MX</Path>
+      </File>
+      <File>
+        <Name>drv_usart_buffer_queue.c</Name>
+        <Path>Source Files/framework/driver/usart/src/dynamic</Path>
       </File>
       <File>
         <Name>list.h</Name>
@@ -144,6 +144,10 @@
       <File>
         <Name>projdefs.h</Name>
         <Path>Header Files/FreeRTOS</Path>
+      </File>
+      <File>
+        <Name>drv_usart_read_write.c</Name>
+        <Path>Source Files/framework/driver/usart/src/dynamic</Path>
       </File>
       <File>
         <Name>portable.h</Name>
@@ -251,7 +255,7 @@
       <Template>
         <Name>system_init.c</Name>
         <Path>Source Files/app/system_config/default</Path>
-        <Checksum>EB58382E0707FFB68FCD5E590AA99B6D</Checksum>
+        <Checksum>110C94B3DCD099E4AC18BC815A4E288C</Checksum>
       </Template>
       <Template>
         <Name>main.c</Name>
@@ -263,9 +267,13 @@
         <Checksum>12ABD3B8984693E74326CA77853775A8</Checksum>
       </Template>
       <Template>
+        <Name>app1.c</Name>
+        <Path>Source Files/app</Path>
+      </Template>
+      <Template>
         <Name>system_definitions.h</Name>
         <Path>Header Files/app/system_config/default</Path>
-        <Checksum>2443454BDBFFF803A9F2A79088FA5223</Checksum>
+        <Checksum>5C710A0B21B50F31E0AD23955358672F</Checksum>
       </Template>
       <Template>
         <Name>system_exceptions.c</Name>
@@ -277,6 +285,10 @@
         <Path>Source Files/app</Path>
       </Template>
       <Template>
+        <Name>app1.h</Name>
+        <Path>Header Files/app</Path>
+      </Template>
+      <Template>
         <Name>FreeRTOSConfig.h</Name>
         <Path>Header Files/app/system_config/default</Path>
         <Checksum>1C958E986B01DDEA40F72AF4B3B94361</Checksum>
@@ -284,12 +296,12 @@
       <Template>
         <Name>system_tasks.c</Name>
         <Path>Source Files/app/system_config/default</Path>
-        <Checksum>15D8F14DCE2A31DD1F0C89A5772F0585</Checksum>
+        <Checksum>C30E61089672AE9B8B6D04EF44611FA4</Checksum>
       </Template>
       <Template>
         <Name>system_config.h</Name>
         <Path>Header Files/app/system_config/default</Path>
-        <Checksum>A1A07841010FA2A61EB5165D9D418FBA</Checksum>
+        <Checksum>DABAEBD6E12ABCFA602C937097940AA2</Checksum>
       </Template>
       <Template>
         <Name>app.h</Name>
@@ -303,7 +315,7 @@
       <Template>
         <Name>system_interrupt.c</Name>
         <Path>Source Files/app/system_config/default</Path>
-        <Checksum>9B132C86A652CE39E1C993E5D02C6164</Checksum>
+        <Checksum>B9D90C40A5251393590B607658F844F7</Checksum>
       </Template>
       <Template>
         <Name>rtos_hooks.c</Name>
