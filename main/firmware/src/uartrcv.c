@@ -3,7 +3,7 @@
  *  it does not do anything otherwise, currently */
 
 #include "uartrcv.h"
-#define UART0_RCV_QUEUE_SIZE 10
+#define UART0_RCV_QUEUE_SIZE 100
 
 /* define UART0 rcv message queue */
 QueueHandle_t uart0RcvQueue;

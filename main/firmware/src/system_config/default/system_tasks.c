@@ -102,12 +102,12 @@ void SYS_Tasks ( void )
     /* Create OS Thread for UARTTRANS Tasks. */
     xTaskCreate((TaskFunction_t) _UARTTRANS_Tasks,
                 "APP Tasks",
-                1024, NULL, 3, NULL);
+                1024, NULL, 1, NULL);
 
     /* Create OS Thread for UARTLOOPBACK Tasks. */
     xTaskCreate((TaskFunction_t) _UARTLOOPBACK_Tasks,
                 "UARTLOOPBACK Tasks",
-                1024, NULL, 2, NULL);
+                1024, NULL, 1, NULL);
 
     /**************
      * Start RTOS * 

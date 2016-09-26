@@ -2,7 +2,7 @@
 
 #include "uartloopback.h"
 #define UART0_LOOPBACK_ENABLE pdTRUE
-#define UART0_LOOPBACK_TASK_DELAY_MS 10
+#define UART0_LOOPBACK_TASK_DELAY_MS 1
 
 /* get external message queues */
 extern QueueHandle_t uart0TransQueue;
