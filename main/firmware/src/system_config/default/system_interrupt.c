@@ -24,42 +24,44 @@ char uart0ByteRcvBuffer; // buffer to place received bytes in
 int SendChkISR; // used to debug whether message was sent to queue correctly
 
 /* USART driver interrupt handler */
-void IntHandlerDrvUsartInstance0(void)
+void
+IntHandlerDrvUsartInstance0 (void)
 {
-    BaseType_t xHigherPriorityTaskWoken;
-           
-    /*check if there is data in the USART0 receive buffer*/
-    if( PLIB_USART_ReceiverDataIsAvailable(USART_ID_1) ) {
-    
-        /* get a byte from the queue */
-        uart0ByteRcvBuffer = PLIB_USART_ReceiverByteReceive(USART_ID_1);
-    
-        /* put the byte in the receive queue */
-        SendChkISR = xQueueSendToBackFromISR( uart0RcvQueue, &uart0ByteRcvBuffer, &xHigherPriorityTaskWoken ); 
- 
+  BaseType_t xHigherPriorityTaskWoken;
+
+  /*check if there is data in the USART0 receive buffer*/
+  if (PLIB_USART_ReceiverDataIsAvailable (USART_ID_1))
+    {
+
+      /* get a byte from the queue */
+      uart0ByteRcvBuffer = PLIB_USART_ReceiverByteReceive (USART_ID_1);
+
+      /* put the byte in the receive queue */
+      SendChkISR = xQueueSendToBackFromISR (uart0RcvQueue, &uart0ByteRcvBuffer, &xHigherPriorityTaskWoken);
+
     }
-    
-    /* these clear flags and stuff, idk */
-    DRV_USART_TasksTransmit(sysObj.drvUsart0);
-    DRV_USART_TasksReceive(sysObj.drvUsart0);
-    DRV_USART_TasksError(sysObj.drvUsart0);
-        
+
+  /* these clear flags and stuff, idk */
+  DRV_USART_TasksTransmit (sysObj.drvUsart0);
+  DRV_USART_TasksReceive (sysObj.drvUsart0);
+  DRV_USART_TasksError (sysObj.drvUsart0);
+
 }
- 
- 
- 
 
- 
 
- 
 
- 
 
- 
 
- 
-  
+
+
+
+
+
+
+
+
+
 /*******************************************************************************
  End of File
-*/
+ */
 

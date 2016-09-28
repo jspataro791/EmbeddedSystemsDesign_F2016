@@ -12,30 +12,28 @@ QueueHandle_t uart0TransQueue;
 char uart0ByteTransBuffer;
 
 /* init */
-void UARTTRANS_Initialize ( void )
-{
+void UARTTRANS_Initialize( void ) {
     /*init uart0 transmit message queue*/
-    uart0TransQueue = xQueueCreate( UART0_TRANS_QUEUE_SIZE, sizeof(char) );
+    uart0TransQueue = xQueueCreate( UART0_TRANS_QUEUE_SIZE, sizeof (char ) );
 }
 
 /* main task */
-void UARTTRANS_Tasks ( void )
-{
+void UARTTRANS_Tasks( void ) {
     /* block until data received on transmit queue */
-    int QRcvChk = xQueueReceive(uart0TransQueue, &uart0ByteTransBuffer, portMAX_DELAY);
-    
+    int QRcvChk = xQueueReceive( uart0TransQueue, &uart0ByteTransBuffer, portMAX_DELAY );
+
     /* if queue rcv was successful */
-    if(QRcvChk == pdTRUE) {
-        
+    if ( QRcvChk == pdTRUE ) {
+
         /* send the byte out on the uart */
-        DRV_USART_WriteByte(sysObj.drvUsart0, uart0ByteTransBuffer);
+        DRV_USART_WriteByte( sysObj.drvUsart0, uart0ByteTransBuffer );
     }
-    
+
     /* delay this task */
-    vTaskDelay(UART0_TRANS_TASK_DELAY_MS);
+    vTaskDelay( UART0_TRANS_TASK_DELAY_MS );
 }
 
- 
+
 
 /*******************************************************************************
  End of File

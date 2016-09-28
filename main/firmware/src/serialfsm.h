@@ -22,14 +22,13 @@
 #define SERIAL_END_BYTE 255
 #define SERIAL_DATA_BYTES_PER_MESSAGE 3
 
-#define SERIAL_DEBUG 1
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
     typedef enum {
-        WAITING_START, WAITING_DATA, WAITING_END, 
+        WAITING_START, WAITING_DATA, WAITING_END,
     } state_type;
 
     typedef struct {
@@ -38,14 +37,14 @@ extern "C" {
         unsigned char dataBytesReceived;
 
         unsigned char temporaryBytes[SERIAL_DATA_BYTES_PER_MESSAGE];
-            
+
 
     } SERIAL_DATA;
 
     SERIAL_DATA serialData;
-        
+
     void runSerialFrame(unsigned char c);
-    
+
 
 
 

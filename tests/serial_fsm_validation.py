@@ -31,7 +31,6 @@ ser.close()
 ser.open()
 ser.flush()
 
-
 # Clearscreen
 def clearScreen():
 	os.system('cls' if os.name == 'nt' else 'clear')
@@ -50,6 +49,7 @@ def serialCheck(msg, data, serial):
 	else:
 		print("--> INVALID")
 
+
 # SENDS
 clearScreen()
 print("[SERIAL COMM FSM CHECKER, TIMEOUT = %f SEC]" % READLINE_TIMEOUT)
@@ -61,7 +61,9 @@ serialCheck("Double Stop", DATA_DOUBLE_STOP, ser)
 serialCheck("No Stop", DATA_NO_STOP, ser)
 serialCheck("No Start", DATA_NO_START, ser)
 
-print("\n")
+print("\n[FINISHED]\n")
+
+
 
 
 

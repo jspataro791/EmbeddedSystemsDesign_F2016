@@ -1907,7 +1907,7 @@ END GROUP
  .debug_abbrev  0x00002f03       0x28 /home/john/microchip/xc32/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib/libpic32.a(default-on-bootstrap.o)
  .debug_abbrev  0x00002f2b       0x28 /home/john/microchip/xc32/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib/libpic32.a(defaultinterrupt.o)
 
-.debug_line     0x00000000     0x6733
+.debug_line     0x00000000     0x6731
  *(.debug_line)
  .debug_line    0x00000000      0x47f build/default/production/_ext/327000265/drv_usart_mapping.o
  .debug_line    0x0000047f      0x8d7 build/default/production/_ext/327000265/drv_usart_static.o
@@ -1937,12 +1937,12 @@ END GROUP
  .debug_line    0x000056e6      0x7cc build/default/production/_ext/793396116/tasks.o
  .debug_line    0x00005eb2       0x1d build/default/production/_ext/793396116/timers.o
  .debug_line    0x00005ecf      0x31e build/default/production/_ext/793396116/event_groups.o
- .debug_line    0x000061ed       0xd6 build/default/production/_ext/1360937237/serialfsm.o
- .debug_line    0x000062c3      0x1ef build/default/production/_ext/1360937237/serialresponds.o
- .debug_line    0x000064b2       0xa9 /home/john/microchip/xc32/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib/libpic32.a(default-bootstrap-exception-handler.o)
- .debug_line    0x0000655b       0x96 /home/john/microchip/xc32/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib/libpic32.a(default-on-reset.o)
- .debug_line    0x000065f1       0x9a /home/john/microchip/xc32/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib/libpic32.a(default-on-bootstrap.o)
- .debug_line    0x0000668b       0xa8 /home/john/microchip/xc32/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib/libpic32.a(defaultinterrupt.o)
+ .debug_line    0x000061ed       0xd4 build/default/production/_ext/1360937237/serialfsm.o
+ .debug_line    0x000062c1      0x1ef build/default/production/_ext/1360937237/serialresponds.o
+ .debug_line    0x000064b0       0xa9 /home/john/microchip/xc32/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib/libpic32.a(default-bootstrap-exception-handler.o)
+ .debug_line    0x00006559       0x96 /home/john/microchip/xc32/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib/libpic32.a(default-on-reset.o)
+ .debug_line    0x000065ef       0x9a /home/john/microchip/xc32/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib/libpic32.a(default-on-bootstrap.o)
+ .debug_line    0x00006689       0xa8 /home/john/microchip/xc32/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib/libpic32.a(defaultinterrupt.o)
 
 .debug_frame    0x00000000     0x14fc
  *(.debug_frame)

@@ -67,16 +67,14 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
-int main ( void )
-{
+int main( void ) {
     /* Initialize all MPLAB Harmony modules, including application(s). */
-    SYS_Initialize ( NULL );
+    SYS_Initialize( NULL );
 
 
-    while ( true )
-    {
+    while ( true ) {
         /* Maintain state machines of all polled MPLAB Harmony modules. */
-        SYS_Tasks ( );
+        SYS_Tasks( );
 
     }
 
@@ -88,5 +86,5 @@ int main ( void )
 
 /*******************************************************************************
  End of File
-*/
+ */
 
