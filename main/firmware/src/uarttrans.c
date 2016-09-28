@@ -3,7 +3,7 @@
     and sends it if available */
 
 #include "uarttrans.h"
-#define UART0_TRANS_QUEUE_SIZE 10
+#define UART0_TRANS_QUEUE_SIZE 50
 #define UART0_TRANS_TASK_DELAY_MS 1
 
 /* uart 0 transmit queue definition */

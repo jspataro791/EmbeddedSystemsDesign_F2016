@@ -1,7 +1,7 @@
 /* If enabled, this task loops back all serial data in UART0 */
 
 #include "uartloopback.h"
-#define UART0_LOOPBACK_ENABLE pdTRUE
+#define UART0_LOOPBACK_ENABLE pdFALSE
 #define UART0_LOOPBACK_TASK_DELAY_MS 1
 
 /* get external message queues */

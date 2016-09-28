@@ -95,9 +95,9 @@ void SYS_Tasks ( void )
 //                1024, NULL, 1, NULL);
 
     /* Create OS Thread for UARTRCV Tasks. */
-//    xTaskCreate((TaskFunction_t) _UARTRCV_Tasks,
-//                "APP Tasks",
-//                1024, NULL, 1, NULL);
+    xTaskCreate((TaskFunction_t) _UARTRCV_Tasks,
+                "APP Tasks",
+                1024, NULL, 1, NULL);
     
     /* Create OS Thread for UARTTRANS Tasks. */
     xTaskCreate((TaskFunction_t) _UARTTRANS_Tasks,
