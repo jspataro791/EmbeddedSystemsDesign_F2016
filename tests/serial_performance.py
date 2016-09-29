@@ -99,7 +99,7 @@ ser.flush()
 while(1):
 	clearScreen()
 	
-	print("[TXRATE = %f, TIMEOUT = %f SEC]\n[DATA = %s, MSGBYTES = %i, ACK = '%s']\n[%s]\n--------------------------------------------"
+	print("[TXRATE = %f SEC, TIMEOUT = %f SEC]\n[DATA = %s, MSGBYTES = %i, ACK = '%s']\n[%s]\n--------------------------------------------"
 																 % (OUTPUT_SLEEP_TIME,TIMEOUT_THRESHOLD, dataType
 																				,MSG_NUM_BYTES, UC_ACK,repr(dataOut)))
 	sys.stdout.write("SEC: %i, QUICK ACK: %i, NO ACK: %i" % (
