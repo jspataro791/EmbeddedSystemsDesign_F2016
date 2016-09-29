@@ -231,4 +231,5 @@ build/default/production/_ext/1688732426/system_interrupt.o:  \
  ../../../../../../../microchip/harmony/v1_08_01/framework/peripheral/ports/processor/../templates/ports_ChangeNoticeEdgeStatus_Unsupported.h  \
  ../src/uarttrans.h  \
 ../src/uartloopback.h  \
+../src/debug.h  \
  ../src/system_config/default/system_definitions.h 

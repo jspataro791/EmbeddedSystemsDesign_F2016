@@ -232,4 +232,5 @@ build/default/production/_ext/1688732426/system_exceptions.o:  \
  ../src/uartrcv.h  \
 ../src/system_config/default/system_definitions.h  \
  ../src/uarttrans.h  \
-../src/uartloopback.h 
+../src/uartloopback.h  \
+../src/debug.h 

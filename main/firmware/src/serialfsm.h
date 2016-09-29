@@ -20,7 +20,7 @@
 
 #define SERIAL_START_BYTE 254
 #define SERIAL_END_BYTE 255
-#define SERIAL_DATA_BYTES_PER_MESSAGE 3
+#define SERIAL_DATA_BYTES_PER_MESSAGE 8
 
 
 #ifdef __cplusplus

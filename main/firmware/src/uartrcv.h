@@ -43,8 +43,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _APP_H
-#define _APP_H
+#ifndef UARTRCV_H
+#define UARTRCV_H
 
 // *****************************************************************************
 // *****************************************************************************

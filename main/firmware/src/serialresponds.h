@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #define SERIAL_RESP_NACK "NN"
-#define SERIAL_RESP_ACK "YY"
+#define SERIAL_RESP_ACK "ACK"
 
     /* sound out response on UART0 */
     void serial0Respond(char * resp);

@@ -3,6 +3,8 @@ import time
 import sys
 import os
 
+args = sys.argv[1]
+
 # DATA CONST
 DATA_GOOD 		= "\xFE\x01\x02\x03\xFF"
 DATA_OVERFLOW 		= "\xFE\x01\x02\x03\x04\xFF"
@@ -11,6 +13,7 @@ DATA_DOUBLE_START	= "\xFE\xFE\x01\x02\x03\xFF"
 DATA_DOUBLE_STOP	= "\xFE\x01\x02\x03\xFF\xFF"
 DATA_NO_STOP		= "\xFE\x01\x02\x03"
 DATA_NO_START		= "\x01\x02\x03\xFF"
+DATA_WEIRD_START    = "\xFE\x01\xFE\x02\x03\xFF"
 
 
 # OTHER CONST
@@ -19,7 +22,7 @@ UC_ACK 		 	= "YY"
 
 # Setup Serial 
 ser = serial.Serial(
-	port = '/dev/ttyUSB0',
+	port = args,
 	baudrate = 9600,
 	parity = serial.PARITY_NONE,
 	stopbits = serial.STOPBITS_ONE,
@@ -40,15 +43,14 @@ def serialCheck(msg, data, serial):
 	print("\nCHECKING: %s" % msg)
 
 	serial.write(data)
-
 	response = serial.readline()
-
 	print("'%s'" % response),
+
 	if response[0:2] == UC_ACK:
 		print("--> ACK")
+
 	else:
 		print("--> INVALID")
-
 
 # SENDS
 clearScreen()
@@ -60,6 +62,7 @@ serialCheck("Double Start", DATA_DOUBLE_START, ser)
 serialCheck("Double Stop", DATA_DOUBLE_STOP, ser)
 serialCheck("No Stop", DATA_NO_STOP, ser)
 serialCheck("No Start", DATA_NO_START, ser)
+serialCheck("Weird Start Issue", DATA_WEIRD_START, ser)
 
 print("\n[FINISHED]\n")
 

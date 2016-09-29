@@ -231,4 +231,5 @@ build/default/production/_ext/1360937237/uartloopback.o:  \
  ../../../../../../../microchip/harmony/v1_08_01/framework/peripheral/ports/processor/../templates/ports_ChangeNoticeEdgeStatus_Unsupported.h  \
  ../src/uartrcv.h  \
 ../src/uarttrans.h  \
-../src/uartloopback.h 
+../src/uartloopback.h  \
+../src/debug.h 

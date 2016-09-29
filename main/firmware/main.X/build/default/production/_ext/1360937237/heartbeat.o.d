@@ -1,6 +1,7 @@
-build/default/production/_ext/639803181/sys_clk_static.o:  \
- ../src/system_config/default/framework/system/clk/src/sys_clk_static.c  \
- ../src/system_config/default/system_config.h  \
+build/default/production/_ext/1360937237/heartbeat.o:  \
+../src/heartbeat.c  \
+ ../src/heartbeat.h  \
+../src/system_config/default/system_config.h  \
  ../src/system_config/default/system_definitions.h  \
  ../../../../../../../microchip/harmony/v1_08_01/framework/system/common/sys_common.h  \
  ../../../../../../../microchip/harmony/v1_08_01/framework/system/common/sys_module.h  \
@@ -231,4 +232,5 @@ build/default/production/_ext/639803181/sys_clk_static.o:  \
  ../src/uartrcv.h  \
 ../src/uarttrans.h  \
 ../src/uartloopback.h  \
-../src/debug.h 
+../src/debug.h  \
+ ../src/serialfsm.h 

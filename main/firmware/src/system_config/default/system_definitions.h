@@ -66,6 +66,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "uartrcv.h"
 #include "uarttrans.h"
 #include "uartloopback.h"
+#include "debug.h"
 
 
 // DOM-IGNORE-BEGIN

@@ -232,4 +232,5 @@ build/default/production/_ext/1360937237/uartrcv.o:  \
  ../src/uartrcv.h  \
 ../src/uarttrans.h  \
 ../src/uartloopback.h  \
+../src/debug.h  \
  ../src/serialfsm.h 

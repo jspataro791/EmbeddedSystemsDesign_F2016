@@ -224,9 +224,13 @@
     </Files>
     <Templates>
       <Template>
+        <Name>uartrcv.h</Name>
+        <Path>Header Files/app</Path>
+      </Template>
+      <Template>
         <Name>drv_usart_static.c</Name>
         <Path>Source Files/app/system_config/default/framework/driver/usart/src</Path>
-        <Checksum>08A884B776372378455174F2909E54E3</Checksum>
+        <Checksum>C42E1A25897F2E0195C686DC790D2EFB</Checksum>
       </Template>
       <Template>
         <Name>sys_ports_static.c</Name>
@@ -237,6 +241,7 @@
         <Name>system_init.c</Name>
         <Path>Source Files/app/system_config/default</Path>
         <Checksum>0CED01CFB619894FFDB7886E8C2C6EFB</Checksum>
+        <ProjectFileChecksum>DFD4FFE6B29D2C8549DE37307DF9EEF0</ProjectFileChecksum>
       </Template>
       <Template>
         <Name>main.c</Name>
@@ -246,6 +251,10 @@
         <Name>system_interrupt_a.S</Name>
         <Path>Source Files/app/system_config/default</Path>
         <Checksum>5C0D911C19B5E425D7F0FB89E579F457</Checksum>
+      </Template>
+      <Template>
+        <Name>uarttrans.h</Name>
+        <Path>Header Files/app</Path>
       </Template>
       <Template>
         <Name>uartloopback.h</Name>
@@ -262,24 +271,12 @@
         <Checksum>C111969CA43D6CEA1E9E33A6164E7AE0</Checksum>
       </Template>
       <Template>
-        <Name>uartTrans.h</Name>
-        <Path>Header Files/app</Path>
-      </Template>
-      <Template>
-        <Name>uartRcv.h</Name>
-        <Path>Header Files/app</Path>
-      </Template>
-      <Template>
         <Name>drv_usart_mapping.c</Name>
         <Path>Source Files/app/system_config/default/framework/driver/usart/src</Path>
         <Checksum>115DDE4372E58D4116BC77DC36FD97DC</Checksum>
       </Template>
       <Template>
         <Name>uartloopback.c</Name>
-        <Path>Source Files/app</Path>
-      </Template>
-      <Template>
-        <Name>uartRcv.c</Name>
         <Path>Source Files/app</Path>
       </Template>
       <Template>
@@ -291,16 +288,13 @@
         <Name>FreeRTOSConfig.h</Name>
         <Path>Header Files/app/system_config/default</Path>
         <Checksum>1C958E986B01DDEA40F72AF4B3B94361</Checksum>
+        <ProjectFileChecksum>E376B96C10D5D0CB06674A7BF2532322</ProjectFileChecksum>
       </Template>
       <Template>
         <Name>system_tasks.c</Name>
         <Path>Source Files/app/system_config/default</Path>
         <Checksum>F99BF51EF8F6D5E68EE836445A6D2111</Checksum>
         <ProjectFileChecksum>D185A319F4B853A63400B4FE59A37A8D</ProjectFileChecksum>
-      </Template>
-      <Template>
-        <Name>uartTrans.c</Name>
-        <Path>Source Files/app</Path>
       </Template>
       <Template>
         <Name>drv_usart_static_byte_model.c</Name>
@@ -311,6 +305,10 @@
         <Name>system_config.h</Name>
         <Path>Header Files/app/system_config/default</Path>
         <Checksum>9294864936AA4A41A73303F38EB29D82</Checksum>
+      </Template>
+      <Template>
+        <Name>uartrcv.c</Name>
+        <Path>Source Files/app</Path>
       </Template>
       <Template>
         <Name>sys_clk_static.h</Name>
@@ -332,6 +330,10 @@
         <Name>sys_clk_static.c</Name>
         <Path>Source Files/app/system_config/default/framework/system/clk/src</Path>
         <Checksum>E8C935BED4628875A8C3428DDD07355C</Checksum>
+      </Template>
+      <Template>
+        <Name>uarttrans.c</Name>
+        <Path>Source Files/app</Path>
       </Template>
       <Template>
         <Name>drv_usart_static_local.h</Name>

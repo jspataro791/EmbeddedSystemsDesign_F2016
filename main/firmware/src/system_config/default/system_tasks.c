@@ -1,50 +1,3 @@
-/*******************************************************************************
- System Tasks File
-
-  File Name:
-    system_tasks.c
-
-  Summary:
-    This file contains source code necessary to maintain system's polled state
-    machines.
-
-  Description:
-    This file contains source code necessary to maintain system's polled state
-    machines.  It implements the "SYS_Tasks" function that calls the individual
-    "Tasks" functions for all the MPLAB Harmony modules in the system.
-
-  Remarks:
-    This file requires access to the systemObjects global data structure that
-    contains the object handles to all MPLAB Harmony module objects executing
-    polled in the system.  These handles are passed into the individual module
-    "Tasks" functions to identify the instance of the module to maintain.
- *******************************************************************************/
-
-// DOM-IGNORE-BEGIN
-/*******************************************************************************
-Copyright (c) 2013-2015 released Microchip Technology Inc.  All rights reserved.
-
-Microchip licenses to you the right to use, modify, copy and distribute
-Software only when embedded on a Microchip microcontroller or digital signal
-controller that is integrated into your product or third party product
-(pursuant to the sublicense terms in the accompanying license agreement).
-
-You should refer to the license agreement accompanying this Software for
-additional information regarding your rights and obligations.
-
-SOFTWARE AND DOCUMENTATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
-EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF
-MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
-IN NO EVENT SHALL MICROCHIP OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER
-CONTRACT, NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION, BREACH OF WARRANTY, OR
-OTHER LEGAL EQUITABLE THEORY ANY DIRECT OR INDIRECT DAMAGES OR EXPENSES
-INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
-CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
-SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
-(INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
- *******************************************************************************/
-// DOM-IGNORE-END
-
 
 // *****************************************************************************
 // *****************************************************************************
@@ -57,6 +10,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "uartrcv.h"
 #include "uarttrans.h"
 #include "uartloopback.h"
+#include "heartbeat.h"
 
 
 // *****************************************************************************
@@ -71,6 +25,7 @@ static void _SYS_Tasks ( void );
 static void _UARTRCV_Tasks(void);
 static void _UARTTRANS_Tasks(void);
 static void _UARTLOOPBACK_Tasks(void);
+static void _DEBUG_GENERATOR_Tasks(void);
 
 
 // *****************************************************************************
@@ -93,20 +48,27 @@ void SYS_Tasks ( void )
 //    xTaskCreate((TaskFunction_t) _SYS_Tasks,
 //                "Sys Tasks",
 //                1024, NULL, 1, NULL);
+    
+    sendGPIOStatus(STAT_SYS_TASK_CREATE);
 
     /* Create OS Thread for UARTRCV Tasks. */
     xTaskCreate((TaskFunction_t) _UARTRCV_Tasks,
-                "APP Tasks",
+                "UARTRCV Tasks",
                 1024, NULL, 1, NULL);
     
     /* Create OS Thread for UARTTRANS Tasks. */
     xTaskCreate((TaskFunction_t) _UARTTRANS_Tasks,
-                "APP Tasks",
+                "UARTTRANS Tasks",
                 1024, NULL, 1, NULL);
 
     /* Create OS Thread for UARTLOOPBACK Tasks. */
-    xTaskCreate((TaskFunction_t) _UARTLOOPBACK_Tasks,
+    /*xTaskCreate((TaskFunction_t) _UARTLOOPBACK_Tasks,
                 "UARTLOOPBACK Tasks",
+                1024, NULL, 1, NULL);*/
+    
+    /* Create OS Thread for DEBUG_GENERATOR Tasks. */
+    xTaskCreate((TaskFunction_t) _DEBUG_GENERATOR_Tasks,
+                "DEBUG GENERATOR Tasks",
                 1024, NULL, 1, NULL);
 
     /**************
@@ -186,6 +148,22 @@ static void _UARTLOOPBACK_Tasks(void)
     while(1)
     {
         UARTLOOPBACK_Tasks();
+    }
+}
+
+/*******************************************************************************
+  Function:
+    void _DEBUG_GENERATOR_Tasks ( void )
+
+  Summary:
+    Maintains state machine of UARTLOOPBACK.
+*/
+
+static void _DEBUG_GENERATOR_Tasks(void)
+{
+    while(1)
+    {
+        HEARTBEAT_Tasks();
     }
 }
 

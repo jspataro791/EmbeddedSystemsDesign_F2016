@@ -11,11 +11,13 @@ extern QueueHandle_t uart0RcvQueue;
 char loopbackByteBuffer;
 
 void UARTLOOPBACK_Initialize(void) {
-
-
+    
+    sendGPIOStatus(STAT_TASK_LOOPBACK_INIT);
 }
 
 void UARTLOOPBACK_Tasks(void) {
+    
+    sendGPIOStatus(STAT_TASK_LOOPBACK);
     
     if (UART0_LOOPBACK_ENABLE) {
         

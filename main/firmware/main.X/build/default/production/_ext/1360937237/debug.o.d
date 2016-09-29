@@ -1,10 +1,11 @@
-build/default/production/_ext/639803181/sys_clk_static.o:  \
- ../src/system_config/default/framework/system/clk/src/sys_clk_static.c  \
- ../src/system_config/default/system_config.h  \
- ../src/system_config/default/system_definitions.h  \
+build/default/production/_ext/1360937237/debug.o:  \
+../src/debug.c  \
+ ../src/debug.h  \
+../src/system_config/default/system_definitions.h  \
  ../../../../../../../microchip/harmony/v1_08_01/framework/system/common/sys_common.h  \
  ../../../../../../../microchip/harmony/v1_08_01/framework/system/common/sys_module.h  \
  ../../../../../../../microchip/harmony/v1_08_01/framework/system/clk/sys_clk.h  \
+ ../src/system_config/default/system_config.h  \
  ../../../../../../../microchip/harmony/v1_08_01/framework/peripheral/osc/plib_osc.h  \
  ../../../../../../../microchip/harmony/v1_08_01/framework/peripheral/osc/processor/osc_processor.h  \
  ../../../../../../../microchip/harmony/v1_08_01/framework/peripheral/osc/processor/osc_p32xxxx.h  \
