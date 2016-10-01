@@ -8,17 +8,21 @@
 extern QueueHandle_t uart0TransQueue;
 extern QueueHandle_t uart0RcvQueue;
 
+/* char buffer to write for loopback */
 char loopbackByteBuffer;
 
 void UARTLOOPBACK_Initialize(void) {
     
+    /* set GPIO status to this init */
     sendGPIOStatus(STAT_TASK_LOOPBACK_INIT);
 }
 
 void UARTLOOPBACK_Tasks(void) {
     
+    /* set GPIO status to this task */
     sendGPIOStatus(STAT_TASK_LOOPBACK);
     
+    /* if LOOPBACK is enabled */
     if (UART0_LOOPBACK_ENABLE) {
         
         /* wait for something to enter the UART0 rcv message queue */

@@ -9,16 +9,19 @@
 /* uart 0 transmit queue definition */
 QueueHandle_t uart0TransQueue;
 
+/* buffer for transmit queue to write to */
 char uart0ByteTransBuffer;
 
 /* init */
 void UARTTRANS_Initialize( void ) {
     
+    /* set GPIO status to this init */
     sendGPIOStatus(STAT_TASK_TX_INIT);
     
     /*init uart0 transmit message queue*/
     uart0TransQueue = xQueueCreate( UART0_TRANS_QUEUE_SIZE, sizeof (char ) );
     
+    /* halt if msg queue cannot be created, fatal */
     if(uart0TransQueue == 0) {
         sendGPIOError(ERR_BAD_MQ_CREATE);
     }
@@ -27,6 +30,7 @@ void UARTTRANS_Initialize( void ) {
 /* main task */
 void UARTTRANS_Tasks( void ) {
     
+    /* set GPIO status to this task */
     sendGPIOStatus(STAT_TASK_TX);
     
     /* block until data received on transmit queue */

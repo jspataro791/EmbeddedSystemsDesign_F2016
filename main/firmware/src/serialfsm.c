@@ -7,6 +7,7 @@ void
 runSerialFrame(unsigned char c) {
     switch (serialData.state) {
 
+        /* STATE: Waiting for start byte*/
         case WAITING_START:
 
             if (c == SERIAL_START_BYTE) {
@@ -27,6 +28,8 @@ runSerialFrame(unsigned char c) {
             break;
 
         case WAITING_DATA:
+            
+            /* STATE: Waiting for data byte */
             if (c == SERIAL_START_BYTE) {
 
                 serialData.state = WAITING_DATA;
@@ -53,6 +56,8 @@ runSerialFrame(unsigned char c) {
             break;
 
         case WAITING_END:
+            
+            /* STATE: Wiaiting for end byte */
             if (c == SERIAL_START_BYTE) {
 
                 serialData.state = WAITING_START;

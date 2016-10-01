@@ -33,6 +33,7 @@ IntHandlerDrvUsartInstance0 (void)
   if (PLIB_USART_ReceiverDataIsAvailable (USART_ID_1))
     {
 
+      /* set GPIO status to this interrupt */
       sendGPIOStatus(STAT_INT_RX_UART0);
       
       /* get a byte from the queue */

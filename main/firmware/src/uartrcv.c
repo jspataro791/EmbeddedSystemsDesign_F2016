@@ -22,10 +22,12 @@ void UARTRCV_Initialize( void ) {
     /* initialized UART0 rcv message queue */
     uart0RcvQueue = xQueueCreate( UART0_RCV_QUEUE_SIZE, sizeof (char ) );
     
+    /* halt if can't create msg queue, fatal */
     if(uart0RcvQueue == 0) {
         sendGPIOError(ERR_BAD_MQ_CREATE);
     }
     
+    /* set serial finite state machine to wait for start byte */
     serialData.state = WAITING_START;
 
 }
@@ -33,6 +35,7 @@ void UARTRCV_Initialize( void ) {
 /* main task */
 void UARTRCV_Tasks( void ) {
     
+    /* set GPIO status to this task */
     sendGPIOStatus(STAT_TASK_RX);
     
     
@@ -43,7 +46,7 @@ void UARTRCV_Tasks( void ) {
     /* if we have a good message queue receive */
     if ( QRcvChk == pdTRUE ) {
 
-        /**/
+        /* check byte by byte in serial fsm for complete frame */
         runSerialFrame( rcvTaskByteBuffer );
 
     }
