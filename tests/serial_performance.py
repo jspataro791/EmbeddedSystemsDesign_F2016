@@ -97,48 +97,59 @@ dbgfirst = 1
 ser.flush()
 
 while(1):
+	""" clear the screen """
 	clearScreen()
 	
+	""" PRINT STATISTICS """
 	print("[TXRATE = %f SEC, TIMEOUT = %f SEC]\n[DATA = %s, MSGBYTES = %i, ACK = '%s']\n[%s]\n--------------------------------------------"
 																 % (OUTPUT_SLEEP_TIME,TIMEOUT_THRESHOLD, dataType
-																				,MSG_NUM_BYTES, UC_ACK,repr(dataOut)))
+																	,MSG_NUM_BYTES, UC_ACK,repr(dataOut)))
 	sys.stdout.write("SEC: %i, QUICK ACK: %i, NO ACK: %i" % (
 				time.time() - timeStart,goodCount,badCount)) 
 	sys.stdout.write("\nAVG ACKTIME: %i MS, ACK RATIO: %i%%\n" % (average, 
 			(float(badCount)/float(goodCount))*100 if goodCount != 0 else 0))
 	sys.stdout.write("DBG RCVD: %i, DBG LOST: %i, DBG RATIO: %i%%\n--------------------------------------------\n" 
 												% (dbgrcvd, dbglost, 
-								(float(dbglost)/float(dbgrcvd))*100 if dbgrcvd != 0 else 0))
-
+												(float(dbglost)/float(dbgrcvd))*100 if dbgrcvd != 0 else 0))
+	
+	""" print the debug response messages """
 	for i in range(len(dbgmsgs)):
 		#print(' ' * 50 + "\r"),
 		print(dbgmsgs[i])
 	
 	sys.stdout.flush() 
 
+	""" wait between sending messages """
 	time.sleep(OUTPUT_SLEEP_TIME)
 	
+	""" set up time stat """
 	#sys.stdout.write("\r")
-	writeTime = time.time() * 1000	
+	writeTime = time.time() * 1000
+
+	""" write out data to serial """
 	ser.write(dataOut)
 	ser.flush()
 
 	timeCount = 0
 	
+	""" Wait for response loop """
 	while(1): 
-		
+		""" get bytes from serial """
 		response = ser.read(MSG_NUM_BYTES)
-		#ser.flushInput()
 		
 		try:
+			""" if we get a debug message..."""
 			if response[0:1].find("\xFE") != -1:
 
+				""" this refreshes the debug message queue so we don't overflow the screen """
 				if len(dbgmsgs) > DBG_MSG_REFRESH:
 					dbgmsgs = []
 
+				""" this places the debug message on the debug message queue """
 				dbgmsgs.append(	"RCV: %s ---> %c%i\r" % 
 							(repr(response), str(response[1]), ord(response[MSG_NUM_BYTES - 2]) ))
 
+				""" calculate the number of missed messages, accounting for rollover """
 				if dbgfirst == 0:
 
 					if ord(response[MSG_NUM_BYTES - 2]) > dbglast:
@@ -154,6 +165,7 @@ while(1):
 				else:
 					dbglost = 0
 	
+				""" sets the last debug message (used for finding missing ones) """
 				dbglast = ord(response[MSG_NUM_BYTES - 2])
 
 				dbgrcvd += 1
@@ -163,6 +175,7 @@ while(1):
 			dbglost += 1
 			pass
 
+		""" if we read an acknowledge from serial """
 		if response[0:3] == UC_ACK:
 			goodCount += 1
 			readTime = time.time() * 1000
@@ -170,6 +183,10 @@ while(1):
 			average = sum(ackTimes)/len(ackTimes)
 		
 			break
+		
+
+		""" otherwise we got nothing of value and we need to increment
+			the time it took for acknowledge if it took too long """
 		else:
 		
 			timeCount += READLINE_TIMEOUT
