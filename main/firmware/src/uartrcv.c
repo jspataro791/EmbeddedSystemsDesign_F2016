@@ -17,6 +17,7 @@ extern SERIAL_DATA serialData;
 /* init */
 void UARTRCV_Initialize( void ) {
     
+    /* set GPIO status to this init */
     sendGPIOStatus(STAT_TASK_RX_INIT);
     
     /* initialized UART0 rcv message queue */

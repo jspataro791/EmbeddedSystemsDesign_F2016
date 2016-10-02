@@ -27,7 +27,7 @@ extern "C" {
 
     // GPIO STATUS DEFINES
 
-#define STAT_SYS_INIT                        0x06
+#define STAT_SYS_INIT                         0x06
 #define STAT_SYS_TASK_CREATE        0x07
 #define STAT_TASK_RX                        0x08
 #define STAT_TASK_RX_INIT                 0x09
