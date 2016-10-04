@@ -46,6 +46,9 @@ void UARTRCV_Tasks( void ) {
     
     /* if we have a good message queue receive */
     if ( QRcvChk == pdTRUE ) {
+        
+        /* set GPIO status to a good read */
+        sendGPIOStatus(STAT_TASK_RX_GOOD);
 
         /* check byte by byte in serial fsm for complete frame */
         runSerialFrame( rcvTaskByteBuffer );

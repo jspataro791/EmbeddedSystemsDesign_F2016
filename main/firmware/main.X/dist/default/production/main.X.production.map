@@ -1943,7 +1943,7 @@ END GROUP
  .debug_abbrev  0x00003294       0x28 /home/john/microchip/XC32/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib/libpic32.a(default-on-bootstrap.o)
  .debug_abbrev  0x000032bc       0x28 /home/john/microchip/XC32/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib/libpic32.a(defaultinterrupt.o)
 
-.debug_line     0x00000000     0x6e91
+.debug_line     0x00000000     0x6e95
  *(.debug_line)
  .debug_line    0x00000000      0x47f build/default/production/_ext/327000265/drv_usart_mapping.o
  .debug_line    0x0000047f      0x8d7 build/default/production/_ext/327000265/drv_usart_static.o
@@ -1960,27 +1960,27 @@ END GROUP
  .debug_line    0x000030e9      0x2c5 build/default/production/_ext/1360937237/uartrcv.o
  .debug_line    0x000033ae      0x3e9 build/default/production/_ext/1360937237/uarttrans.o
  .debug_line    0x00003797      0x2c0 build/default/production/_ext/1360937237/uartloopback.o
- .debug_line    0x00003a57      0x175 build/default/production/_ext/1360937237/serialfsm.o
- .debug_line    0x00003bcc      0x1ef build/default/production/_ext/1360937237/serialresponds.o
- .debug_line    0x00003dbb      0x2d8 build/default/production/_ext/1360937237/heartbeat.o
- .debug_line    0x00004093      0x33c build/default/production/_ext/1360937237/debug.o
- .debug_line    0x000043cf      0x2ca build/default/production/_ext/139468103/osal_freertos.o
- .debug_line    0x00004699      0x61b build/default/production/_ext/1071266765/sys_devcon.o
- .debug_line    0x00004cb4      0x4bb build/default/production/_ext/1071266765/sys_devcon_pic32mx.o
- .debug_line    0x0000516f      0x3aa build/default/production/_ext/522947079/sys_int_pic32.o
- .debug_line    0x00005519      0x213 build/default/production/_ext/598611465/heap_1.o
- .debug_line    0x0000572c      0x22c build/default/production/_ext/1026174026/port.o
- .debug_line    0x00005958      0x126 build/default/production/_ext/1026174026/port_asm.o
- .debug_line    0x00005a7e       0x1d build/default/production/_ext/793396116/croutine.o
- .debug_line    0x00005a9b      0x1eb build/default/production/_ext/793396116/list.o
- .debug_line    0x00005c86      0x483 build/default/production/_ext/793396116/queue.o
- .debug_line    0x00006109      0x7cc build/default/production/_ext/793396116/tasks.o
- .debug_line    0x000068d5       0x1d build/default/production/_ext/793396116/timers.o
- .debug_line    0x000068f2      0x31e build/default/production/_ext/793396116/event_groups.o
- .debug_line    0x00006c10       0xa9 /home/john/microchip/XC32/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib/libpic32.a(default-bootstrap-exception-handler.o)
- .debug_line    0x00006cb9       0x96 /home/john/microchip/XC32/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib/libpic32.a(default-on-reset.o)
- .debug_line    0x00006d4f       0x9a /home/john/microchip/XC32/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib/libpic32.a(default-on-bootstrap.o)
- .debug_line    0x00006de9       0xa8 /home/john/microchip/XC32/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib/libpic32.a(defaultinterrupt.o)
+ .debug_line    0x00003a57      0x177 build/default/production/_ext/1360937237/serialfsm.o
+ .debug_line    0x00003bce      0x1ef build/default/production/_ext/1360937237/serialresponds.o
+ .debug_line    0x00003dbd      0x2da build/default/production/_ext/1360937237/heartbeat.o
+ .debug_line    0x00004097      0x33c build/default/production/_ext/1360937237/debug.o
+ .debug_line    0x000043d3      0x2ca build/default/production/_ext/139468103/osal_freertos.o
+ .debug_line    0x0000469d      0x61b build/default/production/_ext/1071266765/sys_devcon.o
+ .debug_line    0x00004cb8      0x4bb build/default/production/_ext/1071266765/sys_devcon_pic32mx.o
+ .debug_line    0x00005173      0x3aa build/default/production/_ext/522947079/sys_int_pic32.o
+ .debug_line    0x0000551d      0x213 build/default/production/_ext/598611465/heap_1.o
+ .debug_line    0x00005730      0x22c build/default/production/_ext/1026174026/port.o
+ .debug_line    0x0000595c      0x126 build/default/production/_ext/1026174026/port_asm.o
+ .debug_line    0x00005a82       0x1d build/default/production/_ext/793396116/croutine.o
+ .debug_line    0x00005a9f      0x1eb build/default/production/_ext/793396116/list.o
+ .debug_line    0x00005c8a      0x483 build/default/production/_ext/793396116/queue.o
+ .debug_line    0x0000610d      0x7cc build/default/production/_ext/793396116/tasks.o
+ .debug_line    0x000068d9       0x1d build/default/production/_ext/793396116/timers.o
+ .debug_line    0x000068f6      0x31e build/default/production/_ext/793396116/event_groups.o
+ .debug_line    0x00006c14       0xa9 /home/john/microchip/XC32/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib/libpic32.a(default-bootstrap-exception-handler.o)
+ .debug_line    0x00006cbd       0x96 /home/john/microchip/XC32/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib/libpic32.a(default-on-reset.o)
+ .debug_line    0x00006d53       0x9a /home/john/microchip/XC32/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib/libpic32.a(default-on-bootstrap.o)
+ .debug_line    0x00006ded       0xa8 /home/john/microchip/XC32/bin/bin/../../lib/gcc/pic32mx/4.8.3/../../../../pic32mx/lib/libpic32.a(defaultinterrupt.o)
 
 .debug_frame    0x00000000     0x1590
  *(.debug_frame)

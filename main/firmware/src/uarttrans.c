@@ -38,6 +38,9 @@ void UARTTRANS_Tasks( void ) {
 
     /* if queue rcv was successful */
     if ( QRcvChk == pdTRUE ) {
+        
+        /* set GPIO status to transmit buffer rcv good */
+        sendGPIOStatus(STAT_TASK_TX_GOOD);
 
         /* send the byte out on the uart */
         DRV_USART_WriteByte( sysObj.drvUsart0, uart0ByteTransBuffer );
