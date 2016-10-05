@@ -1,0 +1,19 @@
+# Disable pullups on master device!!!
+# Apply 5V to device (3.3V may be possible)
+
+# Slave ID = 0x3E
+
+# Reset routine
+W 7D 12	# Reset register
+W 7D 34	# Must write 0x12 then 0x34
+
+# Test comms
+R 13	# Read test, returns 0xFF (or 0xFF00 if you read 2 bytes)
+
+# Setup inputs, power, and buffers
+W 0F FF	# Set Direction of bank A to be input
+W 0E FC	# Set direction of bank B to enable. IR power and buffer enables for sensors
+W 10 00	# Turn on IR power and buffers
+
+# Read data
+R 11	# Read the sensor array, 
