@@ -183,12 +183,8 @@ while(1):
 			average = sum(ackTimes)/len(ackTimes)
 		
 			break
-		
 
-		""" otherwise we got nothing of value and we need to increment
-			the time it took for acknowledge if it took too long """
 		else:
-		
 			timeCount += READLINE_TIMEOUT
 		
 			if timeCount > TIMEOUT_THRESHOLD:
