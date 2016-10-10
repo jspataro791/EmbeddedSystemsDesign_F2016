@@ -22,19 +22,26 @@ MSG_NUM_BYTES = 10
 def clearScreen():
 	os.system('cls' if os.name == 'nt' else 'clear')
 
+
 # Setup Serial 
-ser = serial.Serial(
-	port = args[1],
-	baudrate = 115200,
-	parity = serial.PARITY_NONE,
-	stopbits = serial.STOPBITS_ONE,
-	bytesize = serial.EIGHTBITS,
-	timeout = READLINE_TIMEOUT
-)
 
-ser.close()
+try:
+	ser = serial.Serial(
+		port = args[1],
+		baudrate = 115200,
+		parity = serial.PARITY_NONE,
+		stopbits = serial.STOPBITS_ONE,
+		bytesize = serial.EIGHTBITS,
+		timeout = READLINE_TIMEOUT
+	)
 
-ser.open()
+	ser.close()
+
+	ser.open()
+
+except serial.SerialException as e:
+	print(e.strerror)
+	exit(0)
 
 # Data frames
 validData				= "\xFE\x00\x01\x02\x03\x04\x05\x06\x07\xFF"
