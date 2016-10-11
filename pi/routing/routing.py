@@ -1,32 +1,83 @@
+#############################################################
+#								::ROUTING SOFTWARE::
+#
+#	Desc: 
+#	Author:
+# 	Date:
+#
+#############################################################
 
-# ROUTING
-# Description goes here you lazy ass
 
+####################
+#		  IMPORTS		 #
+####################
 
-# Import
 import socket
+import time
 from threading import Thread
 from Queue import Queue as queue
+from Queue import Empty
 
 
-# Custom Lib Import
+####################
+#		 LIB IMPORTS		 #
+####################
 
 
-# Constants
-UDP_IP                 = 'localhost'
-RVR1_PORT          = 2000
-RVR2_PORT          = 3000
-STATS_PORT         = 4000
-AI_PORT               = 5000
-GUI_PORT            = 6000
-PIXYIO_PORT        = 7000
+####################
+#		  CONSTANTS		 #
+####################
+
+UDP_IP                 	= "127.0.0.1"
+PACMAN_PORT          = 2000
+GHOST_PORT            = 3000
+STATS_PORT              = 4000
+AI_PORT                     = 5000
+GUI_PORT           	 = 6000
+PIXYIO_PORT      	 = 7000
 
 
-# Thread I/O Classes
+####################
+#		  FUNCTIONS		 #
+####################
+
+def openUDPPort(IP, PORT, IO_INTENT):
+
+	retry = 1
+
+	while(1):
+		try:
+			sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+			sock.setblocking(1)
+
+			if IO_INTENT is "READ":
+				sock.bind((IP, PORT))
+
+			elif IO_INTENT is "WRITE":
+				sock.connect((IP, PORT))
+				
+			else:
+				raise IOError("Invalid IO intent for %s:%i" % (IP,PORT))
+			
+			
+			print("Opened: " + repr(IP) + ":" + repr(PORT))
+			
+			return sock
+		except IOError as e:
+			if retry is 5:
+				print(e)
+				exit(0)
+			else:
+				retry += 1
+
+
+####################
+#	    THREAD CLASSES		 #
+####################
 
 class ioReadSocketWorker(Thread):
 	def __init__(self, socket, ioQueue, threadID):
-		super(Thread, self).__init__()
+		Thread.__init__(self)
 		self._socket = socket
 		self._threadID = threadID
 		self._ioQueue = ioQueue
@@ -36,74 +87,98 @@ class ioReadSocketWorker(Thread):
 	def run(self):
 		data, addr = self._socket.recvfrom(1024)
 		if self._ioQueue.full() is not True:
-    			self._ioQueue.put(data, blocking=True, timeout=2)
+    			self._ioQueue.put(data, block=True, timeout=2)
 
 	def getThreadID(self):
 		return self._threadID
 
 
 class ioWriteSocketWorker(Thread):
-	def __init__(self, socket, ioQueue, threadID):
-		super(Thread, self).__init__()
+	def __init__(self, socket, ioQueue, threadID, address):
+		Thread.__init__(self)
 		self._socket = socket
 		self._threadID = threadID
 		self._ioQueue = ioQueue
+		self._address = address
 		
 		print("INFO: Starting socket write thread %s" % self._threadID)
 
 	def run(self):
-
 		data = self._ioQueue.get(block=True)
-
-		print(data)
-		
-		self._socket.sendall(data)
+		self._socket.sendto(data, self._address)
  
 	def getThreadID(self):
 		return self._threadID
 
 
-# I/O Object
+####################
+#	    	  OBJECTS		 	 #
+####################
 
-class ioObject:
-	def __init__(self, IP, PORT, IO_INTENT):
+class DuplexIOObject:
+	def __init__(self, IP, READPORT=0, WRITEPORT=0):
 		self._IP = IP
-		self._PORT = PORT
-		self._ID = "%s:%s" % (repr(IP), repr(PORT))
-		
-		self._mQ = queue()
+		self._READPORT = READPORT
+		self._WRITEPORT = WRITEPORT
 
-		try:
-			self._sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-			self._sock.setblocking(0)
-			self._sock.bind((self._IP, self._PORT))
-		except IOError as e:
-			print(e)
-			exit
-		
-		if IO_INTENT is "IO_READ":
-			self._ioThread = ioReadSocketWorker(self._sock, self._mQ, self._ID)
-		elif IO_INTENT is "IO_WRITE":
-			self._ioThread = ioWriteSocketWorker(self._sock, self._mQ, self._ID)
-		else:
-			raise IOError("ioObject has no I/O intent")
-	
-		self._ioThread.run()
+		self._RXQ = queue()
+		self._TXQ = queue()
 
-	def __del__(self):
-		self._ioThread.join()
-		
+		if self._READPORT is not 0:
+			self._readSock = openUDPPort(self._IP, self._READPORT, "READ")
+			self._rxWorkerThread = ioReadSocketWorker(self._readSock, self._RXQ, 
+															repr(self._READPORT))
+			self._rxWorkerThread.setDaemon(True)
+			self._rxWorkerThread.start()
+
+		if self._WRITEPORT is not 0:
+			self._writeSock = openUDPPort(self._IP, self._WRITEPORT, "WRITE")
+			address = (self._IP, self._WRITEPORT)
+			self._txWorkerThread = ioWriteSocketWorker(self._writeSock, self._TXQ, 
+														str(self._WRITEPORT), address)
+			self._txWorkerThread.setDaemon(True)
+			self._txWorkerThread.start()
+
 	def write(self, data):
-		self._mQ.put(data, block=False)
+		self._TXQ.put(data, block=False)
 
 	def read(self):
-		return self._mQ.get(block=False)
+		try:
+			data  = self._RXQ.get(block=False)
+		except Empty:
+			pass
+		else:
+			return data
 		
-# ------------------------------ MAIN --------------------------------- #
+
+#######################################
+#	    	  			        MAIN		 		           #
+#######################################
 
 if __name__ == "__main__":
-	RVR1_WRITE = ioObject(UDP_IP, RVR1_PORT, "IO_WRITE")
-	print("Test")
-	RVR1_WRITE.write("Hello!")
+
+	# Create IO objects
+	PACMAN 	= DuplexIOObject(UDP_IP, PACMAN_PORT, PACMAN_PORT + 1)
+	GHOST	= DuplexIOObject(UDP_IP, GHOST_PORT, GHOST_PORT + 1)
+	GUI 		= DuplexIOObject(UDP_IP, GUI_PORT, GUI_PORT + 1)
+	AI 		= DuplexIOObject(UDP_IP, AI_PORT, AI_PORT + 1)
+
+	LOOPBACK = DuplexIOObject(UDP_IP, PACMAN_PORT + 1, PACMAN_PORT)
+	
+	LOOPBACK.write("Test #1")
+
+	time.sleep(1)
+	
+	print(PACMAN.read())
+	
+	PACMAN.write("Test #2")
+
+	time.sleep(1)
+
+	print(LOOPBACK.read())
+			
+		
+	
+
 	
 	
