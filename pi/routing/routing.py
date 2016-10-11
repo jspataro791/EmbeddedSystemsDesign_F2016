@@ -9,15 +9,16 @@
 
 
 ####################
-#		  IMPORTS		 #
+#		  IMPORTS		 	 #
 ####################
 
 import socket
 import time
+import os
 from threading import Thread
 from Queue import Queue as queue
 from Queue import Empty
-
+from Queue import Full
 
 ####################
 #		 LIB IMPORTS		 #
@@ -52,14 +53,11 @@ def openUDPPort(IP, PORT, IO_INTENT):
 
 			if IO_INTENT is "READ":
 				sock.bind((IP, PORT))
-
 			elif IO_INTENT is "WRITE":
 				sock.connect((IP, PORT))
-				
 			else:
 				raise IOError("Invalid IO intent for %s:%i" % (IP,PORT))
-			
-			
+		
 			print("Opened: " + repr(IP) + ":" + repr(PORT))
 			
 			return sock
@@ -70,6 +68,8 @@ def openUDPPort(IP, PORT, IO_INTENT):
 			else:
 				retry += 1
 
+def clearScreen():
+	os.system('cls' if os.name == 'nt' else 'clear')
 
 ####################
 #	    THREAD CLASSES		 #
@@ -82,7 +82,7 @@ class ioReadSocketWorker(Thread):
 		self._threadID = threadID
 		self._ioQueue = ioQueue
 
-		print("INFO: Starting socket read thread %s" % self._threadID)
+		print("Starting socket read thread %s" % self._threadID)
 
 	def run(self):
 		data, addr = self._socket.recvfrom(1024)
@@ -101,7 +101,7 @@ class ioWriteSocketWorker(Thread):
 		self._ioQueue = ioQueue
 		self._address = address
 		
-		print("INFO: Starting socket write thread %s" % self._threadID)
+		print("Starting socket write thread %s" % self._threadID)
 
 	def run(self):
 		data = self._ioQueue.get(block=True)
@@ -110,6 +110,22 @@ class ioWriteSocketWorker(Thread):
 	def getThreadID(self):
 		return self._threadID
 
+class routerWorker(Thread):
+	def __init__(self, ioObject, handler, threadID):
+		Thread.__init__(self)
+		self._ioObject = ioObject
+		self._handler = handler
+		self._threadID = threadID
+
+		print("Launched router worker thread %s" % self._threadID)
+
+	def run(self):
+		data = self._ioObject.read()
+		self._handler(data, self._ioObject)
+		self.join()
+		
+	def getThreadID(self):
+		return self._threadID
 
 ####################
 #	    	  OBJECTS		 	 #
@@ -140,11 +156,14 @@ class DuplexIOObject:
 			self._txWorkerThread.start()
 
 	def write(self, data):
-		self._TXQ.put(data, block=False)
+		try:
+			self._TXQ.put(data, block=True)
+		except Full:
+			pass
 
 	def read(self):
 		try:
-			data  = self._RXQ.get(block=False)
+			data  = self._RXQ.get(block=True)
 		except Empty:
 			pass
 		else:
@@ -157,26 +176,18 @@ class DuplexIOObject:
 
 if __name__ == "__main__":
 
+	# Welcome message
+	clearScreen()
+	print("[ ROUTING START ]\n")
+
 	# Create IO objects
 	PACMAN 	= DuplexIOObject(UDP_IP, PACMAN_PORT, PACMAN_PORT + 1)
 	GHOST	= DuplexIOObject(UDP_IP, GHOST_PORT, GHOST_PORT + 1)
 	GUI 		= DuplexIOObject(UDP_IP, GUI_PORT, GUI_PORT + 1)
 	AI 		= DuplexIOObject(UDP_IP, AI_PORT, AI_PORT + 1)
 
-	LOOPBACK = DuplexIOObject(UDP_IP, PACMAN_PORT + 1, PACMAN_PORT)
+	# Launch Routing Threads
 	
-	LOOPBACK.write("Test #1")
-
-	time.sleep(1)
-	
-	print(PACMAN.read())
-	
-	PACMAN.write("Test #2")
-
-	time.sleep(1)
-
-	print(LOOPBACK.read())
-			
 		
 	
 
