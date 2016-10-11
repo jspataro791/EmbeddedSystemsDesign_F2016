@@ -48,6 +48,8 @@ IntHandlerDrvUsartInstance0 (void)
   DRV_USART_TasksTransmit (sysObj.drvUsart0);
   DRV_USART_TasksReceive (sysObj.drvUsart0);
   DRV_USART_TasksError (sysObj.drvUsart0);
+  
+  portEND_SWITCHING_ISR(xHigherPriorityTaskWoken)
 
 }
 

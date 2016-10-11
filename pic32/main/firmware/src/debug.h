@@ -37,11 +37,12 @@ extern "C" {
 #define STAT_TASK_TX_INIT                  0x0D
 #define STAT_TASK_HEARTBEAT           0x0E
 #define STAT_TASK_HEARTBEAT_INIT    0x0F
-#define STAT_TASK_LOOPBACK             0x10
-#define STAT_TASK_LOOPBACK_INIT     0x11
-#define STAT_SERIAL_ACK                     0x12
-#define STAT_SERIAL_NACK                   0x13
-#define STAT_INT_RX_UART0                  0x14
+#define STAT_TASK_HEARTBEAT_SEND 0x10
+#define STAT_TASK_LOOPBACK             0x11
+#define STAT_TASK_LOOPBACK_INIT     0x12
+#define STAT_SERIAL_ACK                     0x13
+#define STAT_SERIAL_NACK                   0x14
+#define STAT_INT_RX_UART0                  0x15
 
 
     // initialize GPIO error port

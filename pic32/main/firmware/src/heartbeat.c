@@ -20,6 +20,8 @@ void HEARTBEAT_Initialize( void ) {
     /* Set GPIO status to this init task */
     sendGPIOStatus(STAT_TASK_HEARTBEAT_INIT);
     
+    /* Set up the timer */
+    
     /* set msg count to zero */
     heartbeat_msgcount = 0;
     
@@ -52,6 +54,7 @@ void HEARTBEAT_Tasks( void ) {
     int i = 0;
     for(i; i < sizeof(heartbeat_msgbuff); i++)
     {
+        sendGPIOStatus(STAT_TASK_HEARTBEAT_SEND);
         xQueueSend(uart0TransQueue, &heartbeat_msgbuff[i], 0);
     }
        
