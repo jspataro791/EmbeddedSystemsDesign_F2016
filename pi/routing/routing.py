@@ -37,7 +37,9 @@ GUI_PORT           	 = 6000
 PIXYIO_PORT      	 = 7000
 
 RVR_ACK                 = "ACK"
-RVR_ACK_TIMEOUT  = 0.30
+RVR_ACK_TIMEOUT  = 300
+
+RVR_FRUIT 		= "FRUIT!"
 
 
 
@@ -116,7 +118,7 @@ class RVRIOObject:
                 
         def read(self):
                 try:
-                        data = self._rxQ.get(block=False)
+                        data = self._rxQ.get(block=True)
                 except Empty:
                         pass
                 else:
@@ -174,7 +176,7 @@ class RVRIOObject:
 		
 class ioObject:
 	def __init__(self, IP, PORT, ID):
-		self._sendAddress = (IP, PORT)
+		self._sendAddress = (IP, PORT+1)
 		
 		dbgPrint("INIT", "ioObject ID: " + ID)
 		
@@ -205,7 +207,7 @@ class ioObject:
         	
         	while True:
         		txData = self._txQ.get(block=True)
-        		self._txSock.sendto(self._sendAddress)
+        		self._txSock.sendto(txData, self._sendAddress)
         
         def ioReadWorker(self):
         
@@ -248,6 +250,37 @@ if __name__ == "__main__":
         AI = ioObject(UDP_IP, AI_PORT, "AI")
         STATS = ioObject(UDP_IP, STATS_PORT, "STATS")
 	
-	#
+	# Define handler threads
+	
+	def PACMANHandlerWorker():
+	
+		dbgPrint("THREAD START", "PACMANHandlerWorker()")
+	
+		while True:
+			rxData = PACMAN.read()
+			
+			dbgPrint("IO", "PACMANHandlerWorker() read %s" % rxData)
+		
+			if rxData == RVR_FRUIT:
+			
+				dbgPrint("IO", "PACMANHandlerWorker() got a fruit!")
+				
+				GUI.write("FRUIT")
+				AI.write("FRUIT")
+				STATS.write("FRUIT")
 	
 	
+	# Start handle threads
+	
+	PACMANHandlerThread = threading.Thread(target=PACMANHandlerWorker)
+	PACMANHandlerThread.setDaemon(True)
+	PACMANHandlerThread.start()
+	
+	
+	# LOOP
+	while True:
+		cmd = raw_input()
+		if cmd == "quit":
+			exit(0)
+		elif cmd == "clear":
+			clearScreen()
