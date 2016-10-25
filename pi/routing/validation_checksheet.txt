@@ -1,0 +1,68 @@
+[ VALIDATION CHECKSHEET FOR ROUTING SOFTWARE ]
+
+[ ] 1) Open UDP Socket Subroutine Test
+        * Can open socket in READ and WRITE mode
+
+[ ] 2) Rover Data Frame Generator Subroutine Test
+        * Test two different speed settings
+        * Test LEFT and RIGHT bytes
+        * Subroutine should reproduce correct hexadecimal 
+          values to send to rovers over WiFly
+            
+--------## I/O TESTS ##----------
+          
+[ ] 3) GUI I/O Test
+        * emulate GUI sending LEFT and RIGHT messages to PACMAN rover
+        * output should be sent to PACMAN rover, check that output
+          data frame is correct
+        * STATS should receive the current direction
+        * router _should not_ have to wait for ACK if successful
+        
+[ ] 4) AI I/O Test
+        * emulate AI engine sending LEFT and RIGHT messages to GHOST rovers
+        * output should be sent to GHOST rover, check that output
+          data frame is correct
+        * STATS should receive the current direction
+        * router _should not_ have to wait for ACK if successful
+        
+[ ] 5) PACMAN I/O Test (FRUIT)
+        * emulate PACMAN sending a FRUIT message
+        * FRUIT message should reach the AI engine, GUI, and STATS processes
+        
+[ ] 6) PACMAN I/O Test (DEBUG)
+        * emulate PACMAN sending a DEBUG message
+        * DEBUG message should be detected, data stripped, sent to STATS process
+        
+[ ] 7) GHOST I/O Test (DEBUG)
+        * emulate GHOST sending a DEBUG message
+        * DEBUG message should be detected, data stripped, sent to STATS process
+
+
+
+                                         +-------------------------+
+                        (LEFT, RIGHT)    |                         |  (L,R)
++------------------+------------------>  |                         | <----------+----------------------+
+| GRAPHICAL USER   |                     |                         |            |       AI ENGINE      |
+|    INTERFACE     |                     |         ROUTING         |            |                      |
++------------------+ <----------------+  |         SOFTWARE        | +--------> +----------------------+
+                          (FRUIT!)       |                         |   (FRUIT!)
+                                         |                         |
+                                         |                         |
+                                         |                         |
+                                         +--+-+-----+-----+-+------+
+                                            ^ |     |     | ^
+                        (DEBUG, FRUIT!)     | |     |     | |   (DEBUG)
++------------------+------------------------+ |     |     | +-------------+---------------------+
+|                  |                          |     |     |               |                     |
+|   PACMAN ROVER   |                          |     |     |               |     GHOST ROVER     |
+|                  |     (LEFT, RIGHT, SPD)   |     |     |               |                     |
++------------------+ <------------------------+     |     +-------------> +---------------------+
+                                                    |     (LEFT, RIGHT, SPD)
+                                                    |
+                                                    | (PAC & GHOST DEBUG,
+                                                    |   FRUIT, LEFT/RIGHT INFO)
+                                           +--------v-----------+
+                                           |                    |
+                                           |       STATS        |
+                                           |                    |
+                                           +--------------------+

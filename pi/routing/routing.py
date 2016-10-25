@@ -20,14 +20,19 @@ import socket
 import time
 import os
 import threading
+import ConfigParser
 from Queue import Queue as queue
 from Queue import Empty
 from Queue import Full
 
 
+
+
 ####################
 #    CONSTANTS     #
 ####################
+
+CONFIG_FILE_PATH                = "ports.conf"
 
 UDP_IP                          = "127.0.0.1"
 PACMAN_PORT                     = 2000
@@ -53,10 +58,12 @@ AI_LEFT                         = "LEFT"
 AI_RIGHT                        = "RIGHT"
 
 
+
 ####################
 #     MUTEXES      #
 ####################
 globalThreadingLock = threading.Lock()
+
 
 
 ####################
@@ -90,7 +97,7 @@ def openUDPSocket(IP, PORT, IO_INTENT):
                         else:
                                 raise IOError("Invalid IO intent for %s:%i" % (IP,PORT))
                 
-                        dbgPrint("SOCK", "Opened socket %s:%i" % (IP, PORT))
+                        dbgPrint("SOCK", "Opened socket %s:%i in mode %s" % (IP, PORT, IO_INTENT))
                         
                         return sock
                 except IOError as e:
@@ -116,6 +123,8 @@ def fillRVRDatagram(speed, direction):
         numBytesOfData = chr(len(dataTotal))
         
         return RVR_START_BYTE + numBytesOfData + dataTotal + RVR_STOP_BYTE
+
+
 
 
 ####################
@@ -175,7 +184,7 @@ class RVRIOObject:
                                                 break
 
                                         except Empty:
-                                                dbgPrint("WARN", "ioWriteWorker() in RVRIOObject ID: %s waited for ACK longer than %i seconds!"
+                                                dbgPrint("WARN", "ioWriteWorker() in RVRIOObject ID: %s waited for ACK longer than %2f seconds!"
                                                                                                         % (self._rvrID, RVR_ACK_TIMEOUT))
                                                 self._dpSock.sendto(txData, self._sendAddress)      
                                    
@@ -243,7 +252,7 @@ class ioObject:
                         txData = self._txQ.get(block=True)
                         self._dpSock.sendto(txData, self._sendAddress)
 
-                        dbgPrint("IO", "ioWriteWorker() in ioObject ID: %s sent %s" % (self._rvrID, txData))
+                        dbgPrint("IO", "ioWriteWorker() in ioObject ID: %s sent %s" % (self._ID, txData))
         
         def ioReadWorker(self):
         
@@ -268,6 +277,8 @@ class ioObject:
                 ioWriteThread.start()
                 ioReadThread.start()
                 
+
+                
                 
 #######################################
 #                MAIN                 #
@@ -278,7 +289,19 @@ if __name__ == "__main__":
         # Welcome message
         clearScreen()
         print("[ ROUTING START ]\n")
-
+        
+        # Do config parsing
+        
+        cparse = ConfigParser.ConfigParser()
+        cparse.read(CONFIG_FILE_PATH)
+        
+        UDP_IP = cparse.get('IOPORTS', 'UDP_IP')
+        PACMAN_PORT = cparse.getint('IOPORTS', 'PACMAN_PORT')
+        GHOST_PORT = cparse.getint('IOPORTS', 'GHOST_PORT')
+        AI_PORT = cparse.getint('IOPORTS', 'AI_PORT')
+        GUI_PORT = cparse.getint('IOPORTS', 'GUI_PORT')
+        STATS_PORT = cparse.getint('IOPORTS', 'STATS_PORT')
+        PIXYIO_PORT = cparse.getint('IOPORTS', 'PIXYIO_PORT')
 
         # Create IO objects
         PACMAN = RVRIOObject(UDP_IP, PACMAN_PORT, "PACMAN")
@@ -307,6 +330,14 @@ if __name__ == "__main__":
                                 AI.write("FRUIT")
                                 STATS.write("FRUIT")
                                 
+                        if rxData.find('D') == 2:
+								
+								dbgPrint("IO", "PACMANHandlerWorker() got debug message #%i" 
+														% ord(rxData[3]))
+								
+								STATS.write("&P:" + rxData[2:rxData.find(RVR_STOP_BYTE)])
+								                              
+                        
 
                 # GHOST HANDLER WORKER        
         def GHOSTHandlerWorker():
@@ -318,6 +349,13 @@ if __name__ == "__main__":
                         rxData = GHOST.read()
                         
                         dbgPrint("IO", "GHOSTHandlerWorker() read %s" % rxData)
+                        
+                        if rxData.find('D') == 2:
+								
+								dbgPrint("IO", "GHOSTHandlerWorker() got debug message #%i" 
+														% ord(rxData[3]))
+								
+								STATS.write("&G:" + rxData[2:rxData.find(RVR_STOP_BYTE)])
 
 
                 # GUI HANDLER WORKER
@@ -333,9 +371,11 @@ if __name__ == "__main__":
                 
                         if rxData == GUI_LEFT:
                                 pacData = fillRVRDatagram(PACMAN_RVR_CUR_SPEED, "LEFT")
+                                STATS.write("&P:LEFT")
                                 PACMAN.write(pacData)
                         elif rxData == GUI_RIGHT:
                                 pacData = fillRVRDatagram(PACMAN_RVR_CUR_SPEED, "RIGHT")
+                                STATS.write("&P:RIGHT")
                                 PACMAN.write(pacData)
                         else:
                                 pass
@@ -353,9 +393,11 @@ if __name__ == "__main__":
 
                         if rxData == AI_LEFT:
                                 ghostData = fillRVRDatagram(GHOST_RVR_CUR_SPEED, "LEFT")
+                                STATS.write("&G:LEFT")
                                 GHOST.write(ghostData)
                         elif rxData == AI_RIGHT:
                                 ghostData = fillRVRDatagram(GHOST_RVR_CUR_SPEED, "RIGHT")
+                                STATS.write("&G:RIGHT")
                                 GHOST.write(ghostData)
                         else:
                                 pass
@@ -393,7 +435,7 @@ if __name__ == "__main__":
                 elif cmd == "clear":
                         clearScreen()
                         
-## END MAIN ##
+
                         
 #############################################################
 #                    END FILE                               #
