@@ -1,0 +1,54 @@
+Milestone #3:
+Test case: I will show that the line-following array (LFA) can detect
+the presence or absence of a black line.
+Correct answer: The bits should be set for the sensors that are over
+the line, and only those sensors.
+Verification: Visual confirmation of which sensors are occluded versus
+what information is being returned from the sensor.
+What is being tested: The code that I've written to interface with the LFA.
+
+Test case: I will show that my AI algorithm can find the shortest
+distance between two nodes using A* (A-star) search.
+Correct answer: For each map, starting node, and end node, there will
+be a shortest path.
+Verification: I'll test this with multiple maps and goals to ensure it
+handles edge cases correctly. For more complicated maps, I could use
+an open source implementation to verify that the path found is the
+correct path.
+What is being tested: This would test my implementation of the A*
+(A-star) search algorithm, which is the cornerstone of our "Ghost"
+rover's behavior.
+
+Milestone #4:
+Test case: I will show that the LFA can remember the previous
+positions and orientations of the line, so it can backtrack if it
+drives off the line.
+Correct answer: The LFA should detect when it has left the line, and
+will give the appropriate motor commands to adjust itself back onto
+the line.
+Verification: I can test this directly by occluding certain parts of
+the sensor and verifying that the motor signals it produces are
+correct. After integration, I could verify this by simply placing the
+rover on a line but not perfectly aligned with it, and see if it
+corrects itself to follow it.
+What is being tested: This test verifies that the LFA's "memory" is
+correct and that it knows how to adjust itself in various situations
+where it might "wander" off the line due to the imprecision of the
+starting position or faulty turns.
+
+Test case: I will show that my AI algorithm can find the optimal path
+between nodes in our unique node format, and can translate this to
+relative directions (straight, left, or right.)
+Correct answer: Given a map, a starting position and orientation, and
+a goal, it should give the right list of turning instructions to reach
+the goal along the shortest path. There are certain maps that would be
+impossible to solve using this approach, which I'll demonstrate as
+well.
+Verification: It will be trivial to demonstrate that the list produced
+is the optimal path for most of these maps, but I can provide more
+rigorous verification by giving the cost of the solution, and then
+using an exhaustive search to find the costs of all possible
+solutions.
+What is being tested: That my A* search algorithm correctly applies to
+our unique situation, namely, an agent that cannot turn around, but
+can only go straight, left, or right at most.
