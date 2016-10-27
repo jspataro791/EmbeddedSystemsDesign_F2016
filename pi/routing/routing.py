@@ -27,7 +27,6 @@ from Queue import Full
 
 
 
-
 ####################
 #    CONSTANTS     #
 ####################
@@ -371,7 +370,7 @@ if __name__ == "__main__":
                 
                         if rxData == GUI_LEFT:
                                 pacData = fillRVRDatagram(PACMAN_RVR_CUR_SPEED, "LEFT")
-                                STATS.write("&P:LEFT")
+                                STATS.write("&P:@LEFT")
                                 PACMAN.write(pacData)
                         elif rxData == GUI_RIGHT:
                                 pacData = fillRVRDatagram(PACMAN_RVR_CUR_SPEED, "RIGHT")
