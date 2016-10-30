@@ -22,9 +22,9 @@ import socket
 import ConfigParser
 
 cparse = ConfigParser.ConfigParser()
-cparse.read("statsports.conf")
+cparse.read("../common/conf/ports.conf")
 
-logfile = open("statslog.log","w")
+logfile = open("../log/stats.log","w")
 
 startTime = time.time()
 
@@ -34,7 +34,7 @@ printList = []
 #    CONSTANTS     #
 ####################
 
-UDP_IP = cparse.get("STATSPORTS","UDP_IP")
+UDP_IP = cparse.get("IOPORTS","UDP_IP")
 ROUTER_INPUT_PORT = cparse.getint("STATSPORTS","ROUTING_INPUT_PORT")
 AI_INPUT_PORT = cparse.getint("STATSPORTS", "AI_INPUT_PORT")
 PIXYCAM_IO_INPUT_PORT = cparse.getint("STATSPORTS", "PIXYCAM_IO_INPUT_PORT")
