@@ -20,11 +20,12 @@ import socket
 import time
 import os
 import threading
+import datetime
+from datetime import datetime as dt
 import ConfigParser
 from Queue import Queue as queue
 from Queue import Empty
 from Queue import Full
-
 
 
 ####################
@@ -32,6 +33,7 @@ from Queue import Full
 ####################
 
 CONFIG_FILE_PATH                = "../common/conf/ports.conf"
+LOG_FILE_PATH                   = "../common/log/routing.log"
 
 UDP_IP                          = "127.0.0.1"
 PACMAN_PORT                     = 2000
@@ -64,6 +66,11 @@ AI_RIGHT                        = "RIGHT"
 globalThreadingLock = threading.Lock()
 
 
+####################
+#     FILE I/O     #
+####################
+logfile = open(LOG_FILE_PATH, "w")
+
 
 ####################
 #    FUNCTIONS     #
@@ -75,8 +82,14 @@ def clearScreen():
         
 def dbgPrint(dtype, msg):
         if GLOBAL_DEBUG is True:
+                
+                curTime = dt.now().strftime('%H:%M:%S.%f')
+                
                 globalThreadingLock.acquire()
-                print("- " + dtype + ": " + msg)
+                print(curTime + " - " + dtype + ": " + msg)
+                global logfile
+                logfile.write( curTime + ", " + 
+                                dtype + ": " + msg + "\n")
                 globalThreadingLock.release()
                 
                 
@@ -301,7 +314,7 @@ if __name__ == "__main__":
         GUI_PORT = cparse.getint('IOPORTS', 'GUI_PORT')
         STATS_PORT = cparse.getint('IOPORTS', 'STATS_PORT')
         PIXYIO_PORT = cparse.getint('IOPORTS', 'PIXYIO_PORT')
-
+        
         # Create IO objects
         PACMAN = RVRIOObject(UDP_IP, PACMAN_PORT, "PACMAN")
         GHOST = RVRIOObject(UDP_IP, GHOST_PORT, "GHOST")
@@ -331,10 +344,10 @@ if __name__ == "__main__":
                                 
                         if rxData.find('D') == 2:
 								
-								dbgPrint("IO", "PACMANHandlerWorker() got debug message #%i" 
-														% ord(rxData[3]))
-								
-								STATS.write("&P:" + rxData[2:rxData.find(RVR_STOP_BYTE)])
+                                dbgPrint("IO", "PACMANHandlerWorker() got debug message #%i" 
+                                                                                % ord(rxData[3]))
+                                
+                                STATS.write("&P:" + rxData[2:rxData.find(RVR_STOP_BYTE)])
 								                              
                         
 
@@ -351,10 +364,10 @@ if __name__ == "__main__":
                         
                         if rxData.find('D') == 2:
 								
-								dbgPrint("IO", "GHOSTHandlerWorker() got debug message #%i" 
-														% ord(rxData[3]))
-								
-								STATS.write("&G:" + rxData[2:rxData.find(RVR_STOP_BYTE)])
+                                dbgPrint("IO", "GHOSTHandlerWorker() got debug message #%i" 
+                                                                                % ord(rxData[3]))
+                                
+                                STATS.write("&G:" + rxData[2:rxData.find(RVR_STOP_BYTE)])
 
 
                 # GUI HANDLER WORKER
@@ -370,7 +383,7 @@ if __name__ == "__main__":
                 
                         if rxData == GUI_LEFT:
                                 pacData = fillRVRDatagram(PACMAN_RVR_CUR_SPEED, "LEFT")
-                                STATS.write("&P:@LEFT")
+                                STATS.write("&P:LEFT")
                                 PACMAN.write(pacData)
                         elif rxData == GUI_RIGHT:
                                 pacData = fillRVRDatagram(PACMAN_RVR_CUR_SPEED, "RIGHT")
@@ -430,6 +443,7 @@ if __name__ == "__main__":
         while True:
                 cmd = raw_input()
                 if cmd == "quit" or cmd == "exit":
+                        logfile.close()
                         exit(0)
                 elif cmd == "clear":
                         clearScreen()

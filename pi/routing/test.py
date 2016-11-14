@@ -13,7 +13,7 @@ import routing
 #       GLOBS      #
 #################### 
 
-CONFIG_FILE_PATH 				= "ports.conf"
+CONFIG_FILE_PATH 		= "../common/conf/ports.conf"
 UDP_IP                          = "127.0.0.1"
 PACMAN_PORT                     = 2000
 GHOST_PORT                      = 3000

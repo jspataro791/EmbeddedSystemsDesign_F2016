@@ -20,11 +20,13 @@ import os
 import time
 import socket
 import ConfigParser
+import datetime
+from datetime import datetime as dt
 
 cparse = ConfigParser.ConfigParser()
 cparse.read("../common/conf/ports.conf")
 
-logfile = open("../log/stats.log","w")
+logfile = open("../common/log/stats.log","w")
 
 startTime = time.time()
 
@@ -54,15 +56,17 @@ def clearScreen():
         os.system('cls' if os.name == 'nt' else 'clear')
 
 def debugDataPrinter(dbgData):
+        
+        curTime = dt.now().strftime('%H:%M:%S.%f')
+        
         if len(printList) > 8:
                 printList = []
-        print(dbgData)
+        print(curTime + ", " + dbgData)
         global printList
-        printList.append(dbgData)              
+        printList.append(curTime + ", " + dbgData)              
         global logfile
         global startTime
-        curTime = format(time.time() - startTime, ".2f")
-        logfile.write(str(curTime) + ", " + dbgData + "\n")
+        logfile.write(curTime + ", " + dbgData + "\n")
 
 def openUDPSocket(IP, PORT, IO_INTENT):
 

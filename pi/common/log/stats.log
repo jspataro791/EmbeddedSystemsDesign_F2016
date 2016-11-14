@@ -1,0 +1,15 @@
+11:13:34, SOCK: Opened socket 127.0.0.1:4001 in mode READ
+11:13:34, SOCK: Opened socket 127.0.0.1:7200 in mode READ
+11:13:34, SOCK: Opened socket 127.0.0.1:7300 in mode READ
+11:13:36, PACMAN: Found a fruit!
+11:13:37, PACMAN: Instructed to turn LEFT
+11:13:37, PACMAN: Instructed to turn RIGHT
+11:13:38, GHOST: Instructed to turn LEFT
+11:13:39, GHOST: Instructed to turn RIGHT
+11:13:39, PACMAN: FirstDebugMessage
+11:13:40, PACMAN: SkippedFourMessages
+11:13:41, GHOST: FirstDebugMessage
+11:13:41, GHOST: SkippedFourMessages
+11:13:42, GUI: Hi, it's me, AI!
+11:13:42, PIXY_IO: Hi, it's me, PixyIO!
+11:13:43, EXITING
