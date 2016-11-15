@@ -12,11 +12,11 @@ args = sys.argv
 # Consts
 TIMEOUT_THRESHOLD = 0.3
 READLINE_TIMEOUT = 0.01
-OUTPUT_SLEEP_TIME = 0.2
+OUTPUT_SLEEP_TIME = 0.1
 UC_ACK = "ACK"
 DBG_MSG_REFRESH = 10
 DBG_MSG_NUM_ROLLOVER = 127
-MSG_NUM_BYTES = 10
+MSG_NUM_BYTES = 4
 
 # Clearscreen
 def clearScreen():
@@ -44,13 +44,13 @@ except serial.SerialException as e:
 	exit(0)
 
 # Data frames
-validData				= "\xFE\x00\x01\x02\x03\x04\x05\x06\x07\xFF"
+validData				= "\xFE\x00\x01\x02\x03\xFF"
 invalidDataOverflow 	= "\xFE\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x10\x11\x12\xFF"
-invalidDataUnderflow	= "\xFE\x00\x01\x02\x03\x04\x05\x06\xFF"
-invalidDataDoubleStart	= "\xFE\xFE\x00\x01\x02\x03\x04\x05\x06\x07\xFF"
-invalidDataDoubleStop	= "\xFE\x00\x01\x02\x03\x04\x05\x06\x07\xFF\xFF"
-invalidDataNoStart		= "\x00\x01\x02\x03\x04\x05\x06\x07\xFF"
-invalidDataNoStop		= "\xFE\x00\x01\x02\x03\x04\x05\x06\x07"
+invalidDataUnderflow	= "\xFE\x00\x01\x02xFF"
+invalidDataDoubleStart	= "\xFE\xFE\x00\x01\x02\x03\xFF"
+invalidDataDoubleStop	= "\xFE\x00\x01\x02\x03\xFF\xFF"
+invalidDataNoStart		= "\x00\x01\x02\x03\xFF"
+invalidDataNoStop		= "\xFE\x00\x01\x02\x03"
 
 
 
