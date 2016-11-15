@@ -3,9 +3,7 @@
 #ifndef SERIALFSM_H    /* Guard against multiple inclusion */
 #define SERIALFSM_H
 
-#define SERIAL_START_BYTE 254
-#define SERIAL_END_BYTE 255
-#define SERIAL_DATA_BYTES_PER_MESSAGE 4
+#include "system_definitions.h"
 
 
 #ifdef __cplusplus

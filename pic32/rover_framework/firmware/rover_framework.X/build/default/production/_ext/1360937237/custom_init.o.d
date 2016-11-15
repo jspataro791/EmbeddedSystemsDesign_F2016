@@ -10,8 +10,9 @@ build/default/production/_ext/1360937237/custom_init.o:  \
  ../../../../third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX/portmacro.h  \
  ../../../../third_party/rtos/FreeRTOS/Source/include/mpu_wrappers.h  \
  ../../../../third_party/rtos/FreeRTOS/Source/include/queue.h  \
- ../src/debug.h  \
-../src/system_config/default/system_definitions.h  \
+ ../../../../third_party/rtos/FreeRTOS/Source/include/semphr.h  \
+ ../../../../third_party/rtos/FreeRTOS/Source/include/queue.h  \
+ ../src/system_config/default/system_definitions.h  \
  ../../../../framework/system/common/sys_common.h  \
  ../../../../framework/system/common/sys_module.h  \
  ../../../../framework/system/clk/sys_clk.h  \
@@ -197,8 +198,6 @@ build/default/production/_ext/1360937237/custom_init.o:  \
  ../../../../framework/osal/osal.h  \
  ../../../../framework/osal/osal_definitions.h  \
  ../../../../framework/osal/src/osal_freertos.h  \
- ../../../../third_party/rtos/FreeRTOS/Source/include/semphr.h  \
- ../../../../third_party/rtos/FreeRTOS/Source/include/queue.h  \
  ../../../../third_party/rtos/FreeRTOS/Source/include/task.h  \
  ../../../../third_party/rtos/FreeRTOS/Source/include/list.h  \
  ../../../../framework/system/debug/sys_debug.h  \
@@ -231,6 +230,8 @@ build/default/production/_ext/1360937237/custom_init.o:  \
  ../../../../framework/peripheral/ports/processor/../templates/ports_ChannelChangeNoticeMethod_Unsupported.h  \
  ../../../../framework/peripheral/ports/processor/../templates/ports_ChangeNoticeEdgeControl_Unsupported.h  \
  ../../../../framework/peripheral/ports/processor/../templates/ports_ChangeNoticeEdgeStatus_Unsupported.h  \
- ../src/tsk_wifly_rx.h  \
+ ../src/rvr_config.h  \
+../src/tsk_wifly_rx.h  \
 ../src/tsk_wifly_tx.h  \
-../src/tsk_lfa_rx.h 
+ ../src/tsk_lfa_rx.h  \
+../src/debug.h 

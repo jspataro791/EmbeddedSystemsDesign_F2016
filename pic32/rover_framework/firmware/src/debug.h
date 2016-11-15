@@ -8,42 +8,6 @@
 extern "C" {
 #endif
 
-    // LED DEBUG PORT AND PIN
-#define DBG_LED_PORT PORT_CHANNEL_A
-#define DBG_LED_PIN PORTS_BIT_POS_3
-
-    // GPIO PORT AND PIN
-#define ERR_GPIO_PORT PORT_CHANNEL_E
-
-
-    // GPIO ERROR DEFINES
-#define ERR_GOOD                0xFF
-#define ERR_GENERIC_BAD         0x00
-#define ERR_BAD_MQ_RECV         0x01
-#define ERR_BAD_MQ_SEND         0x02
-#define ERR_BAD_MQ_CREATE       0x03
-#define ERR_BAD_TIMER_INIT      0x04
-#define ERR_BAD_TASK_STATE      0x05
-
-    // GPIO STATUS DEFINES
-
-#define STAT_SYS_INIT               0x06
-#define STAT_SYS_TASK_CREATE        0x07
-
-#define STAT_WIFLY_RX_INIT          0x08
-#define STAT_WIFLY_RX_TASK_ENTER    0x09
-#define STAT_WIFLY_RX_GOOD          0x0A
-    
-#define STAT_SERIAL_ACK             0x0B
-#define STAT_SERIAL_NACK            0x0C
-    
-#define STAT_WIFLY_TX_INIT          0x0D
-#define STAT_WIFLY_TX_TASK_ENTER    0x0E
-#define STAT_WIFLY_TX_GOOD          0x0F
-    
-#define STAT_RVRSTATUS_INIT         0x10
-#define STAT_RVRSTATUS_TASK_ENTER   0x11
-
 
     // initialize GPIO error port
     void initGPIODebug();

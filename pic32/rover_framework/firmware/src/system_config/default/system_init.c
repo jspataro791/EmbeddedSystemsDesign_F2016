@@ -51,6 +51,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "custom_init.h"
 #include "tsk_rvrstatus.h"
 #include "debug.h"
+#include "tsk_debug.h"
 
 
 // ****************************************************************************
@@ -185,6 +186,7 @@ void SYS_Initialize ( void* data )
     /* Custom inits */
     initPublicQueues();
     initRvrStatus();
+    initMutexes();
 
     /* Initialize System Services */
 
@@ -199,6 +201,7 @@ void SYS_Initialize ( void* data )
     WIFLY_TX_Initialize();
     LFA_RX_Initialize();
     RVRStatus_Initialize();
+    DEBUG_Initialize();
     
     /* post init GPIO status */
     sendGPIOStatus(STAT_SYS_INIT);

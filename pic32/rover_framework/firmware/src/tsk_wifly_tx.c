@@ -27,6 +27,9 @@ void WIFLY_TX_Tasks ( void )
         /* set GPIO status to transmit buffer rcv good */
         sendGPIOStatus(STAT_WIFLY_TX_GOOD);
 
+        /* take the mutex*/
+        xSemaphoreTake(uartTxMutexHandle, portMAX_DELAY);
+        
         /* send each byte out on the uart */
         int i = 0;
         while(wiflyTransBuffer[i] != '\0')
@@ -36,8 +39,11 @@ void WIFLY_TX_Tasks ( void )
         }
         
         /* send out packet termination character */
-        uint8_t pTerm = 0x7C;
+        uint8_t pTerm = RVRMsgEndByte;
         DRV_USART_WriteByte( sysObj.drvUsart0, pTerm );
+        
+        /* return the mutex */
+        xSemaphoreGive(uartTxMutexHandle);
     }
 }
 

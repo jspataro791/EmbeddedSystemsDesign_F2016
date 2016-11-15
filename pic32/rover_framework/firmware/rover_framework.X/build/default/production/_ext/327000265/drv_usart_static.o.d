@@ -228,7 +228,8 @@ build/default/production/_ext/327000265/drv_usart_static.o:  \
  ../../../../framework/peripheral/ports/processor/../templates/ports_ChannelChangeNoticeMethod_Unsupported.h  \
  ../../../../framework/peripheral/ports/processor/../templates/ports_ChangeNoticeEdgeControl_Unsupported.h  \
  ../../../../framework/peripheral/ports/processor/../templates/ports_ChangeNoticeEdgeStatus_Unsupported.h  \
- ../src/tsk_wifly_rx.h  \
+ ../src/rvr_config.h  \
+../src/tsk_wifly_rx.h  \
 ../src/public_vars.h  \
-../src/tsk_wifly_tx.h  \
- ../src/tsk_lfa_rx.h 
+ ../src/tsk_wifly_tx.h  \
+../src/tsk_lfa_rx.h 

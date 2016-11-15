@@ -1,0 +1,49 @@
+#include "tsk_debug.h"
+#include "debug.h"
+#include "public_vars.h"
+
+/* this task basically reports info about the rover every second or so */
+
+char debugTransBuffer[MAX_QUEUE_ITEM_SIZE];
+
+void DEBUG_Initialize()
+{
+    /* send task initialize debug status */
+    sendGPIOStatus(STAT_DEBUG_INIT);
+}
+
+void DEBUG_Tasks()
+{
+    /* send task enter debug status */
+    sendGPIOStatus(STAT_DEBUG_TASK_ENTER);
+    
+    /* block until data received on transmit queue */
+    int QRcvChk = xQueueReceive( debug_queue, &debugTransBuffer, portMAX_DELAY );
+
+    /* if queue rcv was successful */
+    if ( QRcvChk == pdTRUE ) {
+
+        
+        /* take the semaphore */
+        xSemaphoreTake(uartTxMutexHandle, portMAX_DELAY);
+        
+        /* send each byte out on the uart */
+        int i = 0;
+        while(debugTransBuffer[i] != '\0')
+        {
+           DRV_USART_WriteByte( sysObj.drvUsart0, debugTransBuffer[i] );
+           i++;
+        }
+        
+        /* send out packet termination character */
+        uint8_t pTerm = RVRMsgEndByte;
+        DRV_USART_WriteByte( sysObj.drvUsart0, pTerm );
+        
+        /* return the semaphore*/
+        xSemaphoreGive(uartTxMutexHandle);
+                
+    } 
+    
+    // wait a second
+    vTaskDelay(1000);
+}

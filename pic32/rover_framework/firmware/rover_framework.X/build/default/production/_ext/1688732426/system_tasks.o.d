@@ -229,10 +229,11 @@ build/default/production/_ext/1688732426/system_tasks.o:  \
  ../../../../framework/peripheral/ports/processor/../templates/ports_ChannelChangeNoticeMethod_Unsupported.h  \
  ../../../../framework/peripheral/ports/processor/../templates/ports_ChangeNoticeEdgeControl_Unsupported.h  \
  ../../../../framework/peripheral/ports/processor/../templates/ports_ChangeNoticeEdgeStatus_Unsupported.h  \
- ../src/tsk_wifly_rx.h  \
-../src/system_config/default/system_definitions.h  \
- ../src/public_vars.h  \
-../src/tsk_wifly_tx.h  \
+ ../src/rvr_config.h  \
+../src/tsk_wifly_rx.h  \
+ ../src/system_config/default/system_definitions.h  \
+../src/public_vars.h  \
+ ../src/tsk_wifly_tx.h  \
 ../src/tsk_lfa_rx.h  \
- ../src/tsk_rvrstatus.h  \
-../src/debug.h 
+../src/tsk_rvrstatus.h  \
+ ../src/debug.h 

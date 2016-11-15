@@ -58,8 +58,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "system/int/sys_int.h"
 #include "driver/usart/drv_usart_static.h"
 #include "system/ports/sys_ports.h"
-
-
+#include "rvr_config.h"
 
 #include "FreeRTOS.h"
 #include "task.h"

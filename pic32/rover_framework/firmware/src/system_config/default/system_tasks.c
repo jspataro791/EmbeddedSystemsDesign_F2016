@@ -73,7 +73,7 @@ static void _WIFLY_RX_Tasks(void);
 static void _WIFLY_TX_Tasks(void);
 static void _LFA_RX_Tasks(void);
 static void _RVRSTATUS_Tasks(void);
-
+static void _DEBUG_Tasks(void);
 
 // *****************************************************************************
 // *****************************************************************************
@@ -91,29 +91,34 @@ static void _RVRSTATUS_Tasks(void);
 
 void SYS_Tasks ( void )
 {
-    /* Create OS Thread for Sys Tasks. */
-    xTaskCreate((TaskFunction_t) _SYS_Tasks,
-                "Sys Tasks",
-                1024, NULL, 1, NULL);
+//    /* Create OS Thread for Sys Tasks. */
+//    xTaskCreate((TaskFunction_t) _SYS_Tasks,
+//                "Sys Tasks",
+//                1024, NULL, 1, NULL);
 
     /* Create OS Thread for WIFLY_RX Tasks. */
     xTaskCreate((TaskFunction_t) _WIFLY_RX_Tasks,
                 "WIFLY_RX Tasks",
-                1024, NULL, 1, NULL);
+                1024, NULL, 3, NULL);
 
     /* Create OS Thread for WIFLY_TX Tasks. */
     xTaskCreate((TaskFunction_t) _WIFLY_TX_Tasks,
                 "WIFLY_TX Tasks",
-                1024, NULL, 1, NULL);
+                1024, NULL, 2, NULL);
 
     /* Create OS Thread for LFA_RX Tasks. */
     xTaskCreate((TaskFunction_t) _LFA_RX_Tasks,
                 "LFA_RX Tasks",
-                1024, NULL, 1, NULL);
+                1024, NULL, 4, NULL);
     
     /* Create OS Thread for RVRSTATUS Tasks. */
     xTaskCreate((TaskFunction_t) _RVRSTATUS_Tasks,
                 "RVRSTATUS Tasks",
+                1024, NULL, 1, NULL);
+    
+    /* Create OS Thread for DEBUG Tasks. */
+    xTaskCreate((TaskFunction_t) _DEBUG_Tasks,
+                "DEBUG Tasks",
                 1024, NULL, 1, NULL);
     
     
@@ -215,6 +220,23 @@ static void _RVRSTATUS_Tasks(void)
         RVRStatus_Tasks();
     }
 }
+
+/*******************************************************************************
+  Function:
+    void _DEBUG_Tasks ( void )
+
+  Summary:
+    Maintains state machine of DEBUG_Tasks.
+*/
+
+static void _DEBUG_Tasks(void)
+{
+    while(1)
+    {
+        DEBUG_Tasks();
+    }
+}
+
 
 
 /*******************************************************************************
