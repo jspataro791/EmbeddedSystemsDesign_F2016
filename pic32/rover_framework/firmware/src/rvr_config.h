@@ -9,15 +9,15 @@
 #define	RVR_CONFIG_H
 
 /* rover configuration stuff */
-#define RVRTypePacman 0
-#define RVRTypeGhost 1
+#define RVR_TYPE 0 // 0 for pacman, 1 for ghost
 
+/* rover direction defs */
 #define RVR_STRAIGHT 0
 #define RVR_LEFT     1
 #define RVR_RIGHT    2
 
 /* serial comm stuff */
-#define RVRMsgEndByte 0x7C
+#define RVR_MSG_END_BYTE 0x7C
 #define SERIAL_START_BYTE 254
 #define SERIAL_END_BYTE 255
 #define SERIAL_DATA_BYTES_PER_MESSAGE 4

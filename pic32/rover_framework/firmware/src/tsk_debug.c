@@ -25,7 +25,7 @@ void DEBUG_Tasks()
 
         
         /* take the semaphore */
-        xSemaphoreTake(uartTxMutexHandle, portMAX_DELAY);
+        xSemaphoreTake(UART_TX_Mutex, portMAX_DELAY);
         
         /* send each byte out on the uart */
         int i = 0;
@@ -36,11 +36,11 @@ void DEBUG_Tasks()
         }
         
         /* send out packet termination character */
-        uint8_t pTerm = RVRMsgEndByte;
+        uint8_t pTerm = RVR_MSG_END_BYTE;
         DRV_USART_WriteByte( sysObj.drvUsart0, pTerm );
         
         /* return the semaphore*/
-        xSemaphoreGive(uartTxMutexHandle);
+        xSemaphoreGive(UART_TX_Mutex);
                 
     } 
     

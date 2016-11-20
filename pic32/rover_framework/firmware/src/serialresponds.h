@@ -9,8 +9,6 @@
 extern "C" {
 #endif
 
-
-
     /* sound out response on UART0 */
     void serial0Respond(char * resp);
 

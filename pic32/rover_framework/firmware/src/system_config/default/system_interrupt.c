@@ -113,28 +113,28 @@ void IntHandlerDrvUsartInstance0(void)
 void IntHandlerDrvUsartInstance1(void)
 {
     
-    BaseType_t xHigherPriorityTaskWoken;
-
-    /*check if there is data in the USART0 receive buffer*/
-    if (PLIB_USART_ReceiverDataIsAvailable (USART_ID_2))
-    {
-
-      /* set GPIO status to this interrupt */
-      //sendGPIOStatus(STAT_INT_RX_UART0);
-      
-      /* get a byte from the queue */
-      uart1ByteRcvBuffer = PLIB_USART_ReceiverByteReceive (USART_ID_2);
-
-      /* put the byte in the receive queue */
-      qSendCheckISR1 = xQueueSendToBackFromISR (lfa_rx_queue, &uart1ByteRcvBuffer, &xHigherPriorityTaskWoken);
-
-    }
+//    BaseType_t xHigherPriorityTaskWoken;
+//
+//    /*check if there is data in the USART0 receive buffer*/
+//    if (PLIB_USART_ReceiverDataIsAvailable (USART_ID_2))
+//    {
+//
+//      /* set GPIO status to this interrupt */
+//      //sendGPIOStatus(STAT_INT_RX_UART0);
+//      
+//      /* get a byte from the queue */
+//      uart1ByteRcvBuffer = PLIB_USART_ReceiverByteReceive (USART_ID_2);
+//
+//      /* put the byte in the receive queue */
+//      qSendCheckISR1 = xQueueSendToBackFromISR (lfa_rx_queue, &uart1ByteRcvBuffer, &xHigherPriorityTaskWoken);
+//
+//    }
     
     DRV_USART_TasksTransmit(sysObj.drvUsart1);
     DRV_USART_TasksReceive(sysObj.drvUsart1);
     DRV_USART_TasksError(sysObj.drvUsart1);
     
-    portEND_SWITCHING_ISR(xHigherPriorityTaskWoken)
+    //portEND_SWITCHING_ISR(xHigherPriorityTaskWoken)
     
 }
  

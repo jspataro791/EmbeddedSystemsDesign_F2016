@@ -28,7 +28,7 @@ void WIFLY_TX_Tasks ( void )
         sendGPIOStatus(STAT_WIFLY_TX_GOOD);
 
         /* take the mutex*/
-        xSemaphoreTake(uartTxMutexHandle, portMAX_DELAY);
+        xSemaphoreTake(UART_TX_Mutex, portMAX_DELAY);
         
         /* send each byte out on the uart */
         int i = 0;
@@ -39,11 +39,11 @@ void WIFLY_TX_Tasks ( void )
         }
         
         /* send out packet termination character */
-        uint8_t pTerm = RVRMsgEndByte;
+        uint8_t pTerm = RVR_MSG_END_BYTE;
         DRV_USART_WriteByte( sysObj.drvUsart0, pTerm );
         
         /* return the mutex */
-        xSemaphoreGive(uartTxMutexHandle);
+        xSemaphoreGive(UART_TX_Mutex);
     }
 }
 

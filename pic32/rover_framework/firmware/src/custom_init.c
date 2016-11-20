@@ -27,9 +27,9 @@ void initRvrStatus()
 
 void initMutexes()
 {
-    uartTxMutexHandle = xSemaphoreCreateMutex();
+    UART_TX_Mutex = xSemaphoreCreateMutex();
     
-    if(uartTxMutexHandle == NULL)
+    if(UART_TX_Mutex == NULL)
     {
         /* do some critical error here */
     }

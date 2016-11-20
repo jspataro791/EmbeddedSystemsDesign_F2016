@@ -229,7 +229,8 @@ build/default/production/_ext/327000265/drv_usart_mapping.o:  \
  ../../../../framework/peripheral/ports/processor/../templates/ports_ChangeNoticeEdgeControl_Unsupported.h  \
  ../../../../framework/peripheral/ports/processor/../templates/ports_ChangeNoticeEdgeStatus_Unsupported.h  \
  ../src/rvr_config.h  \
+../src/peripheral/i2c.h  \
 ../src/tsk_wifly_rx.h  \
-../src/public_vars.h  \
- ../src/tsk_wifly_tx.h  \
+ ../src/public_vars.h  \
+../src/tsk_wifly_tx.h  \
 ../src/tsk_lfa_rx.h 
