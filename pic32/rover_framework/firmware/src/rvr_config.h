@@ -32,22 +32,23 @@
 
 //* DEBUG STUFF *//
 
-    // LED DEBUG PORT AND PIN
-#define DBG_LED_PORT PORT_CHANNEL_A
-#define DBG_LED_PIN PORTS_BIT_POS_3
 
     // GPIO PORT AND PIN
 #define ERR_GPIO_PORT PORT_CHANNEL_E
 
+#define LFA_GPIO_PORT PORT_CHANNEL_C
+#define LFA_GPIO_PIN_0  PORTS_BIT_POS_2
+#define LFA_GPIO_PIN_1  PORTS_BIT_POS_3
 
     // GPIO ERROR DEFINES
-#define ERR_GOOD                0xFF
-#define ERR_GENERIC_BAD         0x00
+#define ERR_GOOD                0xFE
+#define ERR_GENERIC_BAD         0xFF
 #define ERR_BAD_MQ_RECV         0x01
 #define ERR_BAD_MQ_SEND         0x02
 #define ERR_BAD_MQ_CREATE       0x03
 #define ERR_BAD_TIMER_INIT      0x04
 #define ERR_BAD_TASK_STATE      0x05
+#define ERR_I2C_BUS_COLLISION   0xF0
 
     // GPIO STATUS DEFINES
 
@@ -70,6 +71,9 @@
 
 #define STAT_DEBUG_INIT             0x12
 #define STAT_DEBUG_TASK_ENTER       0x13
+
+#define STAT_LFA_RX_INIT            0x14
+#define STAT_LFA_TASK_ENTER         0x15
 
 
 #endif	/* RVR_CONFIG_H */

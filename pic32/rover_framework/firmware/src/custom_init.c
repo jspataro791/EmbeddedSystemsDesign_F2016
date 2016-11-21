@@ -23,6 +23,9 @@ void initRvrStatus()
 {
     RVR_CurDirection = RVR_STRAIGHT; // straight
     RVR_CurSpeed = 16; // max speed
+    
+    sendDirStatus((uint8_t)RVR_CurDirection);
+    sendSpdStatus((uint8_t)RVR_CurSpeed);
 }
 
 void initMutexes()

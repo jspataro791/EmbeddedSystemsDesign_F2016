@@ -39,5 +39,9 @@ void WIFLY_RX_Tasks ( void )
         runSerialFrame( wiflyRcvByteBuffer );
 
     }
+    else
+    {
+        sendGPIOError(ERR_BAD_MQ_RECV);
+    }
 
 }

@@ -97,6 +97,11 @@ void IntHandlerDrvUsartInstance0(void)
 
       /* put the byte in the receive queue */
       qSendCheckISR0 = xQueueSendToBackFromISR (wifly_rx_queue, &uart0ByteRcvBuffer, &xHigherPriorityTaskWoken);
+      
+      if(qSendCheckISR0 != pdTRUE)
+      {
+        sendGPIOError(ERR_BAD_MQ_SEND);
+      }
 
     }
     

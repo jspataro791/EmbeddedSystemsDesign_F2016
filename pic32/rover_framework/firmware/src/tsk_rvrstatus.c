@@ -42,5 +42,12 @@ void RVRStatus_Tasks()
         
         RVR_CurSpeed = rvrStatusBuffer[index + 1];
         
+        sendDirStatus((uint8_t)RVR_CurDirection);
+        sendSpdStatus((uint8_t)RVR_CurSpeed);
+        
+    }
+    else
+    {
+        sendGPIOError(ERR_BAD_MQ_RECV);
     }
 }

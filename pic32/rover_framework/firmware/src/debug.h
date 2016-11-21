@@ -11,6 +11,8 @@ extern "C" {
 
     // initialize GPIO error port
     void initGPIODebug();
+    
+    uint8_t getDebugSetting();
 
     // send error to GPIO
     void sendGPIOError(uint8_t errCode);
@@ -18,8 +20,14 @@ extern "C" {
     // send status to GPIO
     void sendGPIOStatus(uint8_t stat);
 
-    // toggle LED
-
+    // lfa status
+    void sendLFAStatus(uint8_t lfastat);
+    
+    // direction status
+    void sendDirStatus(uint8_t dir);
+    
+    // speed status
+    void sendSpdStatus(uint8_t spd);
 #ifdef __cplusplus
 }
 #endif

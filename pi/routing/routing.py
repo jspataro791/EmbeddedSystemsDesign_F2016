@@ -48,6 +48,7 @@ RVR_STOP_BYTE                   = "\xFF"
 RVR_ACK                         = "ACK"
 RVR_ACK_TIMEOUT                 = 5
 RVR_FRUIT                       = "FRUIT!"
+RVR_FRAME_CTRL_CHAR             = "|"
 
 GHOST_RVR_CUR_SPEED             = 5
 PACMAN_RVR_CUR_SPEED            = 16
@@ -330,7 +331,7 @@ if __name__ == "__main__":
                 dbgPrint("THREAD START", "PACMANHandlerWorker()")
         
                 while True:
-                        rxData = PACMAN.read()
+                        rxData = PACMAN.read().remove(RVR_FRAME_CTRL_CHAR)
                         
                         dbgPrint("IO", "PACMANHandlerWorker() read %s" % rxData)
                 

@@ -45,6 +45,10 @@ void WIFLY_TX_Tasks ( void )
         /* return the mutex */
         xSemaphoreGive(UART_TX_Mutex);
     }
+    else
+    {
+        sendGPIOError(ERR_BAD_MQ_RECV);
+    }
 }
 
  

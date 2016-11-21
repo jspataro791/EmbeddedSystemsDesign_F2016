@@ -234,4 +234,5 @@ build/default/production/_ext/1360937237/tsk_lfa_rx.o:  \
 ../src/tsk_wifly_rx.h  \
  ../src/public_vars.h  \
 ../src/tsk_wifly_tx.h  \
-../src/tsk_lfa_rx.h 
+../src/tsk_lfa_rx.h  \
+ ../src/debug.h 

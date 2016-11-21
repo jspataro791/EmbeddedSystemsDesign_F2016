@@ -42,7 +42,11 @@ void DEBUG_Tasks()
         /* return the semaphore*/
         xSemaphoreGive(UART_TX_Mutex);
                 
-    } 
+    }
+    else
+    {
+        sendGPIOError(ERR_BAD_MQ_RECV);
+    }
     
     // wait a second
     vTaskDelay(1000);
