@@ -1,6 +1,6 @@
 #!/usr/bin/python2.7
 
-import serial
+import socket
 import os
 import sys
 import time
@@ -8,47 +8,44 @@ import random
 
 args = sys.argv
 
-# Setup Serial 
-
-try:
-	ser = serial.Serial(
-		port = args[1],
-		baudrate = 115200,
-		parity = serial.PARITY_NONE,
-		stopbits = serial.STOPBITS_ONE,
-		bytesize = serial.EIGHTBITS,
-	)
-
-	ser.close()
-
-	ser.open()
-
-except serial.SerialException as e:
-	print(e.strerror)
-	exit(0)
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect(("10.0.0.191", 2000))
         
 START = "\xFE"
 STOP = "\xFF"
         
+SPD = "S"
+DIR = "D"
+DBG = "I"        
+
 spd = 0
 direc = 0
 while(1):
+	
+	spd += 1
+	if spd > 16:
+		spd = 0
+	direc += 1
+	if direc > 2:
+	   direc = 0
               
-      print("Spd: %i, Dir: %i" % (spd,direc))
+	print("Spd: %i, Dir: %i" % (spd,direc))
+	
+	send = START + SPD + chr(spd) + DIR + chr(direc) + DBG + "\x01" + STOP
+	
+	s.send(send)
+	
+	ack = s.recv(65536).split("|")
+	print(ack)
+	
+	raw_input()
+	
+	
+	#time.sleep(2)
+	
+# 	if ack == "ACK":
+# 	        time.sleep(1)
+# 	        
+# 	        continue
 
-      send = START + "S" + chr(spd) + "D" + chr(direc) + STOP
-      
-      ser.write(send)
-      ser.flush()
-      
-      ack = ser.read(4).replace("|","")
-      
-      if ack == "ACK":
-              time.sleep(1)
-              spd += 1
-              if spd > 16:
-                      spd = 0
-              direc += 1
-              if direc > 2:
-                      direc = 0
-              continue
+	  		 

@@ -237,4 +237,5 @@ build/default/production/_ext/1688732426/system_tasks.o:  \
  ../src/tsk_wifly_tx.h  \
 ../src/tsk_lfa_rx.h  \
 ../src/tsk_rvrstatus.h  \
- ../src/debug.h 
+ ../src/debug.h  \
+../src/tsk_motorctrl.h 

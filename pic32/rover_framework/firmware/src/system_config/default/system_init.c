@@ -52,6 +52,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "tsk_rvrstatus.h"
 #include "debug.h"
 #include "tsk_debug.h"
+#include "tsk_motorctrl.h"
 
 
 // ****************************************************************************
@@ -202,6 +203,7 @@ void SYS_Initialize ( void* data )
     LFA_RX_Initialize();
     RVRStatus_Initialize();
     DEBUG_Initialize();
+    MOTOR_CTRL_Initialize();
     
     /* post init GPIO status */
     sendGPIOStatus(STAT_SYS_INIT);

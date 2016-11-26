@@ -14,23 +14,23 @@
 # You can invoke make with the values of the macros:
 # $ makeMP_CC="/opt/microchip/mplabc30/v3.30c/bin/pic30-gcc" ...  
 #
-PATH_TO_IDE_BIN=/home/john/microchip/mplabx/mplab_ide/platform/../mplab_ide/modules/../../bin/
+PATH_TO_IDE_BIN=/home/john/microchip/MPLAB-X/mplab_ide/platform/../mplab_ide/modules/../../bin/
 # Adding MPLAB X bin directory to path.
-PATH:=/home/john/microchip/mplabx/mplab_ide/platform/../mplab_ide/modules/../../bin/:$(PATH)
+PATH:=/home/john/microchip/MPLAB-X/mplab_ide/platform/../mplab_ide/modules/../../bin/:$(PATH)
 # Path to java used to run MPLAB X when this makefile was created
-MP_JAVA_PATH="/home/john/microchip/mplabx/sys/java/jre1.8.0_91/bin/"
+MP_JAVA_PATH="/home/john/microchip/MPLAB-X/sys/java/jre1.8.0_91/bin/"
 OS_CURRENT="$(shell uname -s)"
-MP_CC="/home/john/microchip/xc32/v1.42/bin/xc32-gcc"
-MP_CPPC="/home/john/microchip/xc32/v1.42/bin/xc32-g++"
+MP_CC="/home/john/microchip/XC32/bin/xc32-gcc"
+MP_CPPC="/home/john/microchip/XC32/bin/xc32-g++"
 # MP_BC is not defined
-MP_AS="/home/john/microchip/xc32/v1.42/bin/xc32-as"
-MP_LD="/home/john/microchip/xc32/v1.42/bin/xc32-ld"
-MP_AR="/home/john/microchip/xc32/v1.42/bin/xc32-ar"
-DEP_GEN=${MP_JAVA_PATH}java -jar "/home/john/microchip/mplabx/mplab_ide/platform/../mplab_ide/modules/../../bin/extractobjectdependencies.jar"
-MP_CC_DIR="/home/john/microchip/xc32/v1.42/bin"
-MP_CPPC_DIR="/home/john/microchip/xc32/v1.42/bin"
+MP_AS="/home/john/microchip/XC32/bin/xc32-as"
+MP_LD="/home/john/microchip/XC32/bin/xc32-ld"
+MP_AR="/home/john/microchip/XC32/bin/xc32-ar"
+DEP_GEN=${MP_JAVA_PATH}java -jar "/home/john/microchip/MPLAB-X/mplab_ide/platform/../mplab_ide/modules/../../bin/extractobjectdependencies.jar"
+MP_CC_DIR="/home/john/microchip/XC32/bin"
+MP_CPPC_DIR="/home/john/microchip/XC32/bin"
 # MP_BC_DIR is not defined
-MP_AS_DIR="/home/john/microchip/xc32/v1.42/bin"
-MP_LD_DIR="/home/john/microchip/xc32/v1.42/bin"
-MP_AR_DIR="/home/john/microchip/xc32/v1.42/bin"
+MP_AS_DIR="/home/john/microchip/XC32/bin"
+MP_LD_DIR="/home/john/microchip/XC32/bin"
+MP_AR_DIR="/home/john/microchip/XC32/bin"
 # MP_BC_DIR is not defined

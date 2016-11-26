@@ -59,6 +59,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "tsk_lfa_rx.h"
 #include "tsk_rvrstatus.h"
 #include "debug.h"
+#include "tsk_motorctrl.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -74,6 +75,7 @@ static void _WIFLY_TX_Tasks(void);
 static void _LFA_RX_Tasks(void);
 static void _RVRSTATUS_Tasks(void);
 static void _DEBUG_Tasks(void);
+static void _MOTOR_CTRL_Tasks(void);
 
 // *****************************************************************************
 // *****************************************************************************
@@ -121,6 +123,10 @@ void SYS_Tasks ( void )
                 "DEBUG Tasks",
                 1024, NULL, 1, NULL);
     
+     /* Create OS Thread for MOTOR CONTROL Tasks. */
+    xTaskCreate((TaskFunction_t) _MOTOR_CTRL_Tasks,
+                "MOTOR CTRL Tasks",
+                1024, NULL, 3, NULL);
     
     /* post GPIO status */
     sendGPIOStatus(STAT_SYS_TASK_CREATE);
@@ -237,7 +243,21 @@ static void _DEBUG_Tasks(void)
     }
 }
 
+/*******************************************************************************
+  Function:
+    void _MOTOR_CTRL_Tasks ( void )
 
+  Summary:
+    Maintains state machine of MOTOR_CTRL task.
+*/
+
+static void _MOTOR_CTRL_Tasks(void)
+{
+    while(1)
+    {
+        MOTOR_CTRL_Tasks();
+    }
+}
 
 /*******************************************************************************
  End of File
