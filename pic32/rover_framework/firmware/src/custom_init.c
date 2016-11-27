@@ -36,6 +36,6 @@ void initMutexes()
     
     if(UART_TX_Mutex == NULL)
     {
-        /* do some critical error here */
+        sendGPIOError(ERR_BAD_MUTEX_CREATE);
     }
 }

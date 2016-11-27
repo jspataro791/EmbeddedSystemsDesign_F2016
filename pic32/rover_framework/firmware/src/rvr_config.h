@@ -6,7 +6,7 @@
  */
 
 #ifndef RVR_CONFIG_H
-#define	RVR_CONFIG_H
+#define RVR_CONFIG_H
 
 /* rover configuration stuff */
 #define RVR_TYPE 0 // 0 for pacman, 1 for ghost
@@ -18,9 +18,9 @@
 
 /* serial comm stuff */
 #define RVR_MSG_END_BYTE 0x7C
-#define SERIAL_START_BYTE 254
-#define SERIAL_END_BYTE 255
-#define SERIAL_DATA_BYTES_PER_MESSAGE 4
+#define SERIAL_START_BYTE 0xFE
+#define SERIAL_END_BYTE 0xFF
+#define SERIAL_DATA_BYTES_PER_MESSAGE 6
 #define SERIAL_RESP_NACK "NN"
 #define SERIAL_RESP_ACK "ACK"
 
@@ -28,8 +28,14 @@
 #define MAX_QUEUE_ITEM_SIZE  32
 #define MAX_QUEUE_LENGTH  64
 
-//* DEBUG STUFF *//
 
+//* MOTOR CONTROL *//
+
+//* see: motor control task
+
+
+
+//* DEBUG STUFF *//
 
     // GPIO PORT AND PIN
 /* err = chipkit pins 30 through 37 */
@@ -48,6 +54,7 @@
 #define ERR_BAD_TIMER_INIT      0x04
 #define ERR_BAD_TASK_STATE      0x05
 #define ERR_I2C_BUS_COLLISION   0xF0
+#define ERR_BAD_MUTEX_CREATE 0xF1
 
     // GPIO STATUS DEFINES
 
