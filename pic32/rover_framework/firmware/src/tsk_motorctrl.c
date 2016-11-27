@@ -1,71 +1,113 @@
 #include "tsk_motorctrl.h"
 #include "system_definitions.h"
 #include "rvr_config.h"
+#include "public_vars.h"
 
-void initMotorPins()
+void InitMotorPins()
 {
-    /* enable = output */
-    PLIB_PORTS_DirectionOutputSet(PORTS_ID_0, MOTOR_ENABLE_PORT, MOTOR_ENABLE_PIN);
+     /* set chipkit pin 3 (RD0) to output */
+    TRISDbits.TRISD0 = 0;
     
-    /* directions = output*/
-    PLIB_PORTS_DirectionOutputSet(PORTS_ID_0, MOTOR1_DIR_PORT, MOTOR1_DIR_PIN);
-    PLIB_PORTS_DirectionOutputSet(PORTS_ID_0, MOTOR2_DIR_PORT, MOTOR2_DIR_PIN);
+    /* set chipkit pin 4 (RC14) to output */
+    TRISCbits.TRISC14 = 0;
+    
+    /* set chipkit pin 78 (RG1) to output */
+    TRISGbits.TRISG1 = 0;
 }
 
 void StopMotors()
 {
     /* enable = disabled*/
-    PLIB_PORTS_Clear(PORTS_ID_0, MOTOR_ENABLE_PORT, MOTOR_ENABLE_PIN);
-    
+    PORTDbits.RD0 = 0;
  }
 
 void ForwardMotors()
 {
-    /* enable = enabled*/
-    PLIB_PORTS_Write(PORTS_ID_0, MOTOR_ENABLE_PORT, MOTOR_ENABLE_PIN);
+    /* enable = disabled*/
+    PORTDbits.RD0 = 1;
     
-    /* directions = forward*/
-    PLIB_PORTS_Clear(PORTS_ID_0, MOTOR1_DIR_PORT, MOTOR1_DIR_PIN);
-    PLIB_PORTS_Clear(PORTS_ID_0, MOTOR2_DIR_PORT, MOTOR2_DIR_PIN);
+    /* motor1 = forward */
+    PORTCbits.RC14 = 0;
+    /* motor2 = forward */
+    PORTGbits.RG1 = 0;
 }
 
 void ReverseMotors()
 {
-    /* enable = enabled*/
-    PLIB_PORTS_Write(PORTS_ID_0, MOTOR_ENABLE_PORT, MOTOR_ENABLE_PIN);
+    /* enable = disabled*/
+    PORTDbits.RD0 = 1;
     
-    /* directions = forward*/
-    PLIB_PORTS_Write(PORTS_ID_0, MOTOR1_DIR_PORT, MOTOR1_DIR_PIN);
-    PLIB_PORTS_Write(PORTS_ID_0, MOTOR2_DIR_PORT, MOTOR2_DIR_PIN);
+    /* motor1 = reversed */
+    PORTCbits.RC14 = 1;
+    /* motor2 = reversed */
+    PORTGbits.RG1 = 1;
 }
 
 void LeftMotors()
 {
-    /* enable = enabled*/
-    PLIB_PORTS_Write(PORTS_ID_0, MOTOR_ENABLE_PORT, MOTOR_ENABLE_PIN);
+    /* enable = disabled*/
+    PORTDbits.RD0 = 1;
     
-    /* directions = left*/
-    PLIB_PORTS_Clear(PORTS_ID_0, MOTOR1_DIR_PORT, MOTOR1_DIR_PIN);
-    PLIB_PORTS_Write(PORTS_ID_0, MOTOR2_DIR_PORT, MOTOR2_DIR_PIN);
+    /* motor1 = forward */
+    PORTCbits.RC14 = 0;
+    /* motor2 = reversed */
+    PORTGbits.RG1 = 1;
 }
 
 void RightMotors()
 {
-    /* enable = enabled*/
-    PLIB_PORTS_Write(PORTS_ID_0, MOTOR_ENABLE_PORT, MOTOR_ENABLE_PIN);
+    /* enable = disabled*/
+    PORTDbits.RD0 = 1;
     
-    /* directions = left*/
-    PLIB_PORTS_Write(PORTS_ID_0, MOTOR1_DIR_PORT, MOTOR1_DIR_PIN);
-    PLIB_PORTS_Clear(PORTS_ID_0, MOTOR2_DIR_PORT, MOTOR2_DIR_PIN);
+    /* motor1 = reversed */
+    PORTCbits.RC14 = 1;
+    /* motor2 = forward */
+    PORTGbits.RG1 = 0;
 }
 
 void MOTOR_CTRL_Initialize()
 {
-        initMotorPins();
+    
+    /* send task enter debug status */
+    sendGPIOStatus(STAT_MTR_CTRL_INIT);
+        
+    /* init and stop motors*/
+        InitMotorPins();
         StopMotors();
 }
 
+char mtrCtrlBuffer;
+
 void MOTOR_CTRL_Tasks()
 {
-    vTaskDelay(10000);
+     /* send task enter debug status */
+    sendGPIOStatus(STAT_MTR_CTRL_TASK_ENTER);
+    
+    /* block until data received on transmit queue */
+    int QRcvChk = xQueueReceive( motor_ctrl_queue, &mtrCtrlBuffer, portMAX_DELAY );
+
+    /* if queue rcv was successful */
+    if ( QRcvChk == pdTRUE ) {
+        
+        if (mtrCtrlBuffer == 'L')
+        {
+            LeftMotors();
+        }
+        else if(mtrCtrlBuffer == 'R')
+        {
+            RightMotors();
+        }
+        else if(mtrCtrlBuffer == 'S')
+        {
+            ForwardMotors();
+        }
+        else if (mtrCtrlBuffer == 'B')
+        {
+            ReverseMotors();
+        }   
+    }
+    else
+    {
+        sendGPIOError(ERR_BAD_MQ_RECV);
+    }
 }

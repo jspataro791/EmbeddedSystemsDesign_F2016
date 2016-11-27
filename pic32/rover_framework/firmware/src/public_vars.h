@@ -16,6 +16,7 @@ QueueHandle_t wifly_tx_queue; // transmit queue (string)
 QueueHandle_t lfa_rx_queue; // receive queue (byte by byte from lfa)
 QueueHandle_t valid_data_queue; // verified data from wifly
 QueueHandle_t debug_queue; // strings to be sent back to the server as debug
+QueueHandle_t motor_ctrl_queue; // L,R,S,B (Left, Right, Straight, Back/Reverse)
 
 /* STATUS */
 uint8_t RVR_CurDirection;

@@ -28,23 +28,6 @@
 #define MAX_QUEUE_ITEM_SIZE  32
 #define MAX_QUEUE_LENGTH  64
 
-//* MOTOR CONTROL STUFF *//
-
-/* enable = chipkit pin 46, pic32 RF1*/
-/* route to motor shield pin 3*/
-#define MOTOR_ENABLE_PORT PORT_CHANNEL_F
-#define MOTOR_ENABLE_PIN   PORTS_BIT_POS_1
-
-/* motor1 dir = chipkit pin 47, pic32 RD6*/
-/* route to motor shield pin 4 */
-#define MOTOR1_DIR_PORT PORT_CHANNEL_D
-#define MOTOR1_DIR_PIN PORTS_BIT_POS_6
-
-/* motor2 dir = chipkit pin 48, pic32 RD8*/
-/* route to motor shield pin 34 */
-#define MOTOR2_DIR_PORT PORT_CHANNEL_D
-#define MOTOR2_DIR_PIN PORTS_BIT_POS_8
-
 //* DEBUG STUFF *//
 
 
@@ -90,6 +73,9 @@
 
 #define STAT_LFA_RX_INIT            0x14
 #define STAT_LFA_TASK_ENTER         0x15
+
+#define STAT_MTR_CTRL_INIT  0x16
+#define STAT_MTR_CTRL_TASK_ENTER 0x17
 
 
 #endif	/* RVR_CONFIG_H */

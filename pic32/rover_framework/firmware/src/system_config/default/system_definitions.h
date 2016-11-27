@@ -58,7 +58,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "system/int/sys_int.h"
 #include "driver/usart/drv_usart_static.h"
 #include "system/ports/sys_ports.h"
-#include "peripheral.h"
 #include "rvr_config.h"
 #define _SUPPRESS_PLIB_WARNING
 #define _PLIB_DISABLE_LEGACY
