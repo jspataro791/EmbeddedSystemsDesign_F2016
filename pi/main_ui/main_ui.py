@@ -16,8 +16,10 @@ from pip.utils.outdated import SELFCHECK_DATE_FMT
 
 MAINWIN_DEF_LOC_X = 300
 MAINWIN_DEF_LOC_Y = 300
-MAINWIN_DEF_SIZE_X = 1024
-MAINWIN_DEF_SIZE_Y = 768
+MAINWIN_DEF_SIZE_X = 640
+MAINWIN_DEF_SIZE_Y = 480
+
+BUTTON_HEIGHT = 150
 
 PAC_SER = "/dev/ttyUSB0"
 
@@ -69,7 +71,7 @@ class DebugConsole(qt.QTextBrowser):
         
         self._maxHeight = parent.geometry().height()
         
-        self.setFixedHeight(0.3 * self._maxHeight)
+        self.resize(qt.QSize(0,0.3 * self._maxHeight))
         
     def addMsgEvent(self, msg):
         
@@ -110,19 +112,19 @@ class TabControl(qt.QWidget):
         
         # buttons
         self._straightBtn = qt.QPushButton(qt.QIcon('graphics/straight_arrow.png'), "STRAIGHT", self)
-        self._straightBtn.setFixedHeight(200)
+        self._straightBtn.setFixedHeight(BUTTON_HEIGHT)
         
         self._leftBtn = qt.QPushButton(qt.QIcon('graphics/left_arrow.png'), "LEFT", self)
-        self._leftBtn.setFixedHeight(200)
+        self._leftBtn.setFixedHeight(BUTTON_HEIGHT)
         
         self._rightBtn = qt.QPushButton(qt.QIcon('graphics/right_arrow.png'), "RIGHT", self)
-        self._rightBtn.setFixedHeight(200)
+        self._rightBtn.setFixedHeight(BUTTON_HEIGHT)
         
         self._startBtn = qt.QPushButton(qt.QIcon('graphics/start.png'), "START", self)
-        self._startBtn.setFixedHeight(50)
+        self._startBtn.setFixedHeight(BUTTON_HEIGHT)
         
         self._stopBtn = qt.QPushButton(qt.QIcon('graphics/stop.png'), "STOP", self)
-        self._stopBtn.setFixedHeight(50)
+        self._stopBtn.setFixedHeight(BUTTON_HEIGHT)
         
         # button layout
         self._controlLayout.addWidget(self._leftBtn)
@@ -199,7 +201,7 @@ class TabControl(qt.QWidget):
 class TabDebug(qt.QWidget):
     
     def __init__(self, parent=None):
-        super(TabDebug, self).__init__(parent) 
+        super(self.__class__, self).__init__(parent) 
         
         # layouts
         self._hLayout = qt.QHBoxLayout()
