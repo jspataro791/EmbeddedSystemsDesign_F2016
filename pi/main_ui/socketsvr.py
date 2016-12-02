@@ -15,115 +15,116 @@ TX_DBG_CHAR = "G"
 TX_END_CHAR = "E"
 TX_MSG_LENGTH = "\x07"
 
+class Printer():
+    
+    def __init__(self):
+        
+        self.callback = None
+    
+    def setCallback(self,callback):
+        self.callback = callback    
+    
+    def put(self, msg):
+        
+        if self.callback == None:
+            return
+        else:
+            self.callback(msg)
+        
+PRINT = Printer()
+
 class RoverSocketServer():
     
-    def __init__(self, ip, socket, id, acktimeout=2):
+    def __init__(self, ip, port, id, acktimeout=0.5):
         
         # members
         self._ip = ip
-        self._socket = socket
+        self._port = port
         self._id = id
         self._acktimeout = acktimeout
-        self._txQ = queue()
-        self._rxQ = queue()
-        self._ACKQ = queue()
-        
-
-        
+        self._ackQ = queue()
+                
         # open socket
         self._tcpSock = self._openTCPSocket()
         
-        # run
-        self.run()
-        
+        # state 
+        self._reconnect_tries = 0
+     
+    
         
     def _openTCPSocket(self):
   
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.connect((self._ip, self._socket))
+            s.connect((self._ip, self._port))
+            s.settimeout(0.01)
             
         except IOError as e:
-            print("Could not open TCP socket for %s" % self._id)
+            PRINT.put("Could not open TCP socket for %s" % self._id)
                         
         return s
-    
+ 
+    def reconnect(self):
+        
+        PRINT.put("Reconnecting %s, try #%i" % (self._id, self._reconnect_tries))
+        self._tcpSock.close()
+        self._tcpSock = self._openTCPSocket()
+   
     def write(self, data):
-        self._txQ.put(data, block=True)
-                
-    def read(self):
+        
+        
+        PRINT.put("Sending %s to %s" % (data.encode('hex'), self._id))
+        
         try:
-            data = self._rxQ.get(block=False)
+            self._tcpSock.send(data)
+        except socket.error:
+            pass
+        
+        PRINT.put("Waiting for ACK on %s" % self._id)
+        
+        self.read()
+        
+        try:
+            ack = self._ackQ.get(block=True, timeout=0.5)
         except Empty:
+            
+            PRINT.put("Did not receive ACK on %s" % self._id)
+            
+            if self._reconnect_tries > 2:
+                PRINT.put("Could not reconnect, socket might be dead!")
+                self._reconnect_tries = 0
+                return
+            
+            self._reconnect_tries += 1 
+            self.reconnect()
+            self.write(data)
+        else:       
+            PRINT.put("Received ACK on %s" % self._id)                
+        
+    def read(self):
+        
+        try:
+            rcv = self._tcpSock.recv(65536)
+        except socket.error:
             return None
-        else:
-            return data
-
-    def _ioWriteWorker(self):
-            
-        print("THREAD START", "ioWriteWorker() in RoverSocketServer ID: %s" % self._id)
+        except socket.timeout:
+            return None
         
-        while True:
-                
-            try:
-                txData = self._txQ.get(block=True)
-                self._tcpSock.send(txData)
-
-                print("IO", "ioWriteWorker() in RoverSocketServer ID: %s sent %s" % (self._id, txData.encode('hex')))
-                
-                print("INFO", "ioWriteWorker() in RoverSocketServer ID: %s waiting for ACK..." % self._id)
-
-                while True:
-                        
-                    try:
-                        self._ACKQ.get(block=True, timeout=self._acktimeout)
-
-                        print("INFO", "ioWriteWorker() in RoverSocketServer ID: %s received ACK!" % self._id)
-
-                        break
-
-                    except Empty:
-                        print("WARN", "ioWriteWorker() in RoverSocketServer ID: %s waited for ACK longer than %2f seconds!"
-                                % (self._id, self._acktimeout))
-                        self._tcpSock.send(txData)      
-                       
-            except IOError as e:
-                    pass
-                          
-    def _ioReadWorker(self):
-            
-        print("THREAD START", "ioReadWorker() in RoverSocketServer ID: %s" % self._id)
+        msgs = rcv.split('|')
+        msgs.remove('')
         
-        rxBuf = ""
+        msgToRet = []
         
-        while True:
-                
-            rxData = self._tcpSock.recv(1)
-            
-            if rxData == RX_BREAK_CHAR:
-                if rxBuf == RX_ACK_MSG:
-                    self._ACKQ.put("ACK", block=False)
-                else:
-                    self._txQ.put(rxBuf, block=False)
-                rxBuf = ""    
-                
+        for msg in msgs:
+            if msg == RX_ACK_MSG:
+                self._ackQ.put(msg, block=False)
             else:
-                rxBuf += rxData
-            
-                    
-    def run(self):
-
-        print("INFO", "Starting threads in RoverSocketServer ID: " + self._id)
-
-        ioWriteThread = threading.Thread(target=self._ioWriteWorker)
-        ioReadThread = threading.Thread(target=self._ioReadWorker)
-
-        ioWriteThread.setDaemon(True)
-        ioReadThread.setDaemon(True)
-
-        ioWriteThread.start()
-        ioReadThread.start()
+                msgToRet.append(msg) 
         
+        return msgToRet
+
+                    
+    
 
 class RoverDataObj():
     
@@ -131,37 +132,45 @@ class RoverDataObj():
         
         self._spd = 0
         self._dir = 0
-        self._debug = 1
+        self._debug = 0
         
     def setSpeed(self, spd):
         if spd > 16 or spd < 0:
-            print("Rover speed must be between 0 and 16")
+            PRINT.put("Rover speed must be between 0 and 16")
         else:
             self._spd = spd
     
     def setDir(self, dir):
         if dir == "STRAIGHT":
             self._dir = 0
-        if dir == "LEFT":
+        elif dir == "LEFT":
             self._dir = 1
-        if dir == "RIGHT":
+        elif dir == "RIGHT":
             self._dir = 2
         else:
-            print("Rover direction cannot be %s" % dir)
+            PRINT.put("Rover direction cannot be %s" % dir)
         
     def setDbg(self, dbgStat):
         if dbgStat == True:
             self._debug = 1
-        if dbgStat == False:
+        elif dbgStat == False:
             self._debug = 0
         else:
-            print("Rover debug cannot be %s" % dbgStat)
+            PRINT.put("Rover debug cannot be %s" % dbgStat)
       
         
     def __repr__(self):
         
-        return (TX_START_SEQ +  TX_MSG_LENGTH + TX_SPD_CHAR + chr(self._spd) + TX_DIR_CHAR 
+        global TX_START_SEQ
+        global TX_MSG_LENGTH
+        global TX_SPD_CHAR
+        global TX_DIR_CHAR
+        global TX_DBG_CHAR
+        global TX_END_CHAR
+        global TX_END_SEQ
+        msg = (TX_START_SEQ +  TX_MSG_LENGTH + TX_SPD_CHAR + chr(self._spd) + TX_DIR_CHAR 
                 + chr(self._dir) + TX_DBG_CHAR + chr(self._debug) + TX_END_CHAR + TX_END_SEQ)
+        return msg
         
         
         

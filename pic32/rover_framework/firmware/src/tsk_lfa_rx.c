@@ -196,6 +196,8 @@ void LFA_RX_Initialize(void) {
     LFA_I2C_INIT();
 }
 
+int lfaStatEchoTime = 0;
+
 void LFA_RX_Tasks(void) {
     sendGPIOStatus(STAT_LFA_TASK_ENTER);
 
@@ -212,8 +214,18 @@ void LFA_RX_Tasks(void) {
     }
 
     sendLFAStatus(lfa_rx_i2c_buf);
-
+    
+    if(lfaStatEchoTime > 350) {
+        /* echo back LFA data */
+        char lfaStat[5] = "LFA";
+        lfaStat[3] = (char)lfa_rx_i2c_buf;
+        lfaStat[4] = MSG_END_CHAR;
+        xQueueSend(debug_queue, lfaStat, 0);
+        lfaStatEchoTime = 0;
+    }
+    
     vTaskDelay(50);
+    lfaStatEchoTime += 50;
 
 }
 

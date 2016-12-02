@@ -77,6 +77,7 @@ static void _RVRSTATUS_Tasks(void);
 static void _DEBUG_Tasks(void);
 static void _MOTOR_CTRL_Tasks(void);
 
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: System "Tasks" Routine
@@ -111,7 +112,8 @@ void SYS_Tasks(void) {
     xTaskCreate((TaskFunction_t) _LFA_RX_Tasks,
             "LFA_RX Tasks",
             1024, NULL, 4, NULL);
-
+    
+ 
     /* Create OS Thread for RVRSTATUS Tasks. */
     xTaskCreate((TaskFunction_t) _RVRSTATUS_Tasks,
             "RVRSTATUS Tasks",
@@ -239,6 +241,10 @@ static void _MOTOR_CTRL_Tasks(void) {
         MOTOR_CTRL_Tasks();
     }
 }
+
+
+
+
 
 /*******************************************************************************
  End of File

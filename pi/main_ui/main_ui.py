@@ -71,7 +71,9 @@ class MainWindow(qt.QMainWindow):
        self.setWindowTitle("Embedded Main Window")
        self.setCentralWidget(self._main)
        self.showMaximized()
-
+       
+       self.printer = socketsvr.PRINT
+       self.printer.setCallback(self._debugConsole.addMsgEvent)
         
         
 class DebugConsole(qt.QTextBrowser):
@@ -136,6 +138,8 @@ class TabControl(qt.QWidget):
         self._stopBtn = qt.QPushButton(qt.QIcon('graphics/stop.png'), "STOP", self)
         self._stopBtn.setFixedHeight(BUTTON_HEIGHT)
         
+        self._reconnectBtn = qt.QPushButton(qt.QIcon('graphics/reconnect.png'), "RECONNECT", self)
+        
         # button layout
         self._controlLayout.addWidget(self._leftBtn)
         self._controlLayout.addWidget(self._straightBtn)
@@ -144,14 +148,16 @@ class TabControl(qt.QWidget):
         self._startLayout.addStretch(1)
         self._startLayout.addWidget(self._startBtn)
         self._startLayout.addWidget(self._stopBtn)
+        self._startLayout.addWidget(self._reconnectBtn)
         self._startLayout.addStretch(1)
         
         # button callbacks
-        self._straightBtn.clicked.connect(self.sendStraightSignal)
-        self._leftBtn.clicked.connect(self.sendLeftSignal)
-        self._rightBtn.clicked.connect(self.sendRightSignal)
-        self._startBtn.clicked.connect(self.start)
-        self._stopBtn.clicked.connect(self.stop)
+        self._straightBtn.pressed.connect(self.sendStraightSignal)
+        self._leftBtn.pressed.connect(self.sendLeftSignal)
+        self._rightBtn.pressed.connect(self.sendRightSignal)
+        self._startBtn.pressed.connect(self.start)
+        self._stopBtn.pressed.connect(self.stop)
+        self._reconnectBtn.pressed.connect(self.reconnect)
         
         # started
         self._started = False
@@ -172,6 +178,8 @@ class TabControl(qt.QWidget):
         if self._started and self._dirStat != "RIGHT":
             self.util_setButtonColors("RIGHT")
             self.window()._debugConsole.addMsgEvent("Right")
+            global PAC_DATA_OBJ
+            global PAC_SOCK_SRV
             PAC_DATA_OBJ.setDir("RIGHT")
             PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))
         
@@ -179,6 +187,8 @@ class TabControl(qt.QWidget):
         if self._started and self._dirStat != "STRAIGHT":
             self.util_setButtonColors("STRAIGHT")
             self.window()._debugConsole.addMsgEvent("Straight")
+            global PAC_DATA_OBJ
+            global PAC_SOCK_SRV
             PAC_DATA_OBJ.setDir("STRAIGHT")
             PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))
         
@@ -197,6 +207,11 @@ class TabControl(qt.QWidget):
             PAC_DATA_OBJ.setSpeed(0)
             PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))
             self._started = False
+            
+    def reconnect(self):
+        
+        PAC_SOCK_SRV.reconnect()
+        GST_SOCK_SRV.reconnect()
             
     def util_setButtonColors(self, dir):
         
@@ -230,9 +245,13 @@ class TabDebug(qt.QWidget):
         self._hLayout.addLayout(self._vRightLayout)
         
         # items        
-        self._debugState = qt.QCheckBox("Debugging", self)
-        self._debugState.stateChanged.connect(self.setDebugging)
-        self._vLeftLayout.addWidget(self._debugState)
+        self._pacDebugState = qt.QCheckBox("PACMAN Debugging", self)
+        self._pacDebugState.stateChanged.connect(self.setPacDebugging)
+        self._vLeftLayout.addWidget(self._pacDebugState)
+        
+        self._gstDebugState = qt.QCheckBox("GHOST Debugging", self)
+        self._gstDebugState.stateChanged.connect(self.setGstDebugging)
+        self._vRightLayout.addWidget(self._gstDebugState)
         
             # pacman
         self._pacDbgSpeed = self.DebugItem(title="Pacman Speed")
@@ -248,7 +267,6 @@ class TabDebug(qt.QWidget):
         self._vLeftLayout.addWidget(self._pacDbgMsgCount)
             
             # ghost
-        self._vRightLayout.addSpacing(30)
             
         self._gstDbgSpeed = self.DebugItem(title="Ghost Speed")
         self._vRightLayout.addWidget(self._gstDbgSpeed)
@@ -265,21 +283,35 @@ class TabDebug(qt.QWidget):
         
         # update timers
         UpdTimer = qt.QTimer(self)
-        UpdTimer.setInterval(300)
+        UpdTimer.setInterval(50)
         UpdTimer.setSingleShot(False)
         UpdTimer.timeout.connect(self.updPacData)
         UpdTimer.timeout.connect(self.updGstData)
         UpdTimer.start()
         
+        # debug msg counter
+        self.pacDbgMsgCounter = 0
+        self.gstDbgMsgCounter = 0
+        
         
     def updPacData(self):
         global PAC_SOCK_SRV
         rxData = PAC_SOCK_SRV.read()
-        
+
         if rxData == None:
             return
-        else:
-            pass
+        
+        for data in rxData:
+
+            if data[0:3] == "SPD":
+                self._pacDbgSpeed.write(ord(data[3]))
+            elif data[0:3] == "DIR":
+                self._pacDbgDirection.write(ord(data[3]))
+            elif data[0:3] == "LFA":   
+                self._pacDbgLFAData.write( bin( ord(data[3]) )[2:].zfill(8) )
+            self.pacDbgMsgCounter += 1
+            self._pacDbgMsgCount.write(repr(self.pacDbgMsgCounter))
+        
         
     def updGstData(self):
         global GST_SOCK_SRV
@@ -287,33 +319,53 @@ class TabDebug(qt.QWidget):
         
         if rxData == None:
             return
-        else:
-            pass
-
-
-    def setDebugging(self):
         
-        global GST_DATA_OBJ
+        for data in rxData:
+
+            if data[0:3] == "SPD":
+                self._gstDbgSpeed.write(ord(data[3]))
+            elif data[0:3] == "DIR":
+                self._gstDbgDirection.write(ord(data[3]))
+            elif data[0:3] == "LFA":   
+                self._gstDbgLFAData.write( bin( ord(data[3]) )[2:].zfill(8) )
+            self.gstDbgMsgCounter += 1
+            self._gstDbgMsgCount.write(repr(self.gstDbgMsgCounter))
+
+
+    def setPacDebugging(self):
+        
         global PAC_DATA_OBJ
-        global GST_SOCK_SRV
         global PAC_SOCK_SRV
         
-        chkd = self._debugState.isChecked()
+        chkd = self._pacDebugState.isChecked()
         
         if chkd:
-            self.window()._debugConsole.addMsgEvent("Debugging Enabled")
-            GST_DATA_OBJ.setDbg(True)
+            self.window()._debugConsole.addMsgEvent("PACMAN Debugging Enabled")
             PAC_DATA_OBJ.setDbg(True)
-            GST_SOCK_SRV.write(repr(GST_DATA_OBJ))
             PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))      
             
         else:
-            self.window()._debugConsole.addMsgEvent("Debugging Disabled")
-            GST_DATA_OBJ.setDbg(False)
+            self.window()._debugConsole.addMsgEvent("PACMAN Debugging Disabled")
             PAC_DATA_OBJ.setDbg(False)
-            GST_SOCK_SRV.write(repr(GST_DATA_OBJ))
             PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))   
-       
+    
+    
+    def setGstDebugging(self):
+        
+        global GST_DATA_OBJ
+        global GST_SOCK_SRV
+        
+        chkd = self._gstDebugState.isChecked()
+        
+        if chkd:
+            self.window()._debugConsole.addMsgEvent("GHOST Debugging Enabled")
+            GST_DATA_OBJ.setDbg(True)
+            GST_SOCK_SRV.write(repr(GST_DATA_OBJ))      
+            
+        else:
+            self.window()._debugConsole.addMsgEvent("GHOST Debugging Disabled")
+            GST_DATA_OBJ.setDbg(False)
+            GST_SOCK_SRV.write(repr(GST_DATA_OBJ))     
      
 
     class DebugItem(qt.QGroupBox):
@@ -332,9 +384,9 @@ class TabDebug(qt.QWidget):
             self._layout.addWidget(self._line)
             
         def write(self, msg):
-            
+
             self._line.clear()
-            self._line.append(msg)
+            self._line.setText(repr(msg))
         
         
 class TabNodeView(qt.QWidget):

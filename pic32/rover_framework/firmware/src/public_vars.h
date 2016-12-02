@@ -22,6 +22,7 @@ QueueHandle_t motor_ctrl_queue; // L,R,S,B (Left, Right, Straight, Back/Reverse)
 uint8_t RVR_CurDirection;
 uint8_t RVR_CurSpeed;
 uint8_t RVR_Dbg;
+uint8_t RVR_LFA;
 
 /* UART TX MUTEX */
 SemaphoreHandle_t UART_TX_Mutex; // this mutex makes sure that multiple tasks can't

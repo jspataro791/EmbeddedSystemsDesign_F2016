@@ -19,30 +19,33 @@ void DEBUG_Tasks() {
     int QRcvChk = xQueueReceive(debug_queue, &debugTransBuffer, portMAX_DELAY);
 
     /* if queue rcv was successful */
-    if (QRcvChk == pdTRUE) {
+    if (RVR_Dbg == 1) {
+        if (QRcvChk == pdTRUE) {
 
 
-        /* take the semaphore */
-        xSemaphoreTake(UART_TX_Mutex, portMAX_DELAY);
+            /* take the semaphore */
+            xSemaphoreTake(UART_TX_Mutex, portMAX_DELAY);
 
-        /* send each byte out on the uart */
-        int i = 0;
-        while (debugTransBuffer[i] != '\0') {
-            DRV_USART_WriteByte(sysObj.drvUsart0, debugTransBuffer[i]);
-            i++;
+            /* send each byte out on the uart */
+            int i = 0;
+            while (debugTransBuffer[i] != MSG_END_CHAR) {
+                DRV_USART_WriteByte(sysObj.drvUsart0, debugTransBuffer[i]);
+                i++;
+            }
+
+            /* send out packet termination character */
+            uint8_t pTerm = RVR_MSG_END_BYTE;
+            DRV_USART_WriteByte(sysObj.drvUsart0, pTerm);
+
+            /* return the semaphore*/
+            xSemaphoreGive(UART_TX_Mutex);
+
+        } else {
+            sendGPIOError(ERR_BAD_MQ_RECV);
         }
-
-        /* send out packet termination character */
-        uint8_t pTerm = RVR_MSG_END_BYTE;
-        DRV_USART_WriteByte(sysObj.drvUsart0, pTerm);
-
-        /* return the semaphore*/
-        xSemaphoreGive(UART_TX_Mutex);
-
-    } else {
-        sendGPIOError(ERR_BAD_MQ_RECV);
     }
 
+
     // wait a second
-    vTaskDelay(1000);
+    vTaskDelay(100);
 }

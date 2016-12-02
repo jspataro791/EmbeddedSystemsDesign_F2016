@@ -9,6 +9,7 @@ void RVRStatus_Initialize() {
     sendGPIOStatus(STAT_RVRSTATUS_INIT);
 }
 
+
 void RVRStatus_Tasks() {
     sendGPIOStatus(STAT_RVRSTATUS_TASK_ENTER);
 
@@ -52,6 +53,21 @@ void RVRStatus_Tasks() {
 
         sendDirStatus((uint8_t) RVR_CurDirection);
         sendSpdStatus((uint8_t) RVR_CurSpeed);
+        
+        /* echo back speed */
+        char spdStat[5] = "SPD";
+        spdStat[3] = (char)RVR_CurSpeed;
+        spdStat[4] = MSG_END_CHAR;           
+        xQueueSend(debug_queue, spdStat, 0);
+        
+        /* echo back direction */
+        char dirStat[5] = "DIR";
+        dirStat[3] = (char)RVR_CurDirection;
+        dirStat[4] = MSG_END_CHAR;
+        xQueueSend(debug_queue, dirStat, 0);
+        
+        
+        
     } else {
         sendGPIOError(ERR_BAD_MQ_RECV);
     }
