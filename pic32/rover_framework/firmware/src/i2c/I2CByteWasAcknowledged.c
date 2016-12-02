@@ -24,7 +24,7 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 
 #include <peripheral/i2c.h>
 #include "I2CPrivate.h"
@@ -51,8 +51,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     
   Returns:
     Boolean identifying if the byte was acknowleded or not
-    * TRUE    - If the receiver ACK'd the byte
-    * FALSE   - If the receiver NAK'd the byte
+ * TRUE    - If the receiver ACK'd the byte
+ * FALSE   - If the receiver NAK'd the byte
 
   Example:
     <code>
@@ -67,11 +67,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
   Remarks:
     This routine can be used by both master or slave receivers.
-  *****************************************************************************/
+ *****************************************************************************/
 
-BOOL I2CByteWasAcknowledged ( I2C_MODULE id )
-{
-	I2C_REGISTERS * const i2cRegisters = i2cBase[id];
+BOOL I2CByteWasAcknowledged(I2C_MODULE id) {
+    I2C_REGISTERS * const i2cRegisters = i2cBase[id];
 
-	return(!i2cRegisters->I2CxSTATbits.ACKSTAT);
+    return (!i2cRegisters->I2CxSTATbits.ACKSTAT);
 }

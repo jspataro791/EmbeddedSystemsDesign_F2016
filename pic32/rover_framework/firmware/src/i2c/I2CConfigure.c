@@ -24,11 +24,10 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 
 #include <peripheral/i2c.h>
 #include "I2CPrivate.h"
-
 
 /*******************************************************************************
   Function:
@@ -60,11 +59,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     Refer to the I2C_CONFIGURATION enumerated data type for details on each 
     configuration flag.  Note that the bitmask resulting from the bit-wise OR
     of these values will result in a value that is not defined in the enum.
-  *****************************************************************************/
+ *****************************************************************************/
 
-void I2CConfigure ( I2C_MODULE id, I2C_CONFIGURATION flags )
-{
-	I2C_REGISTERS * const i2cRegisters = i2cBase[id];
+void I2CConfigure(I2C_MODULE id, I2C_CONFIGURATION flags) {
+    I2C_REGISTERS * const i2cRegisters = i2cBase[id];
 
-	i2cRegisters->I2CxCONSET = flags;
+    i2cRegisters->I2CxCONSET = flags;
 }

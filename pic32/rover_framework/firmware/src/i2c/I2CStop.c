@@ -24,7 +24,7 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 
 #include <peripheral/i2c.h>
 #include "I2CPrivate.h"
@@ -56,11 +56,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     </code>
 
   Remarks:
-  *****************************************************************************/
+ *****************************************************************************/
 
-void I2CStop ( I2C_MODULE id )
-{
-	I2C_REGISTERS * const i2cRegisters = i2cBase[id];
+void I2CStop(I2C_MODULE id) {
+    I2C_REGISTERS * const i2cRegisters = i2cBase[id];
 
     // Enable the Stop condition
     i2cRegisters->I2CxCONSET = _I2CCON_PEN_MASK;

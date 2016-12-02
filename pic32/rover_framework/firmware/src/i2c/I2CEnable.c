@@ -24,7 +24,7 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 
 #include <peripheral/i2c.h>
 #include "I2CPrivate.h"
@@ -47,8 +47,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     id      - Identifies the desired I2C module
     
     enable  - Determines if the module is to be enabled or disabled
-              * If TRUE, enables the I2C module
-              * If FALSE, disables the I2C module
+ * If TRUE, enables the I2C module
+ * If FALSE, disables the I2C module
 
   Returns:
     None
@@ -60,11 +60,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
   Remarks:
     None
-  *****************************************************************************/
+ *****************************************************************************/
 
-void I2CEnable( I2C_MODULE id, BOOL enable )
-{
-	I2C_REGISTERS * const i2cRegisters = i2cBase[id];
+void I2CEnable(I2C_MODULE id, BOOL enable) {
+    I2C_REGISTERS * const i2cRegisters = i2cBase[id];
 
-	i2cRegisters->I2CxCONbits.ON = enable;
+    i2cRegisters->I2CxCONbits.ON = enable;
 }

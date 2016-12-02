@@ -5,10 +5,9 @@
 
 char s0RespBuffer[MAX_QUEUE_ITEM_SIZE];
 
-void serial0Respond(char * resp)
-{
+void serial0Respond(char * resp) {
     strcpy(s0RespBuffer, resp);
-    xQueueSend(wifly_tx_queue, s0RespBuffer, 0); 
-        
+    xQueueSend(wifly_tx_queue, s0RespBuffer, 0);
+
 }
 

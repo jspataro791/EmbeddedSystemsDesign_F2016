@@ -19,7 +19,7 @@
     of the routines, eliminating the need for an object ID or object handle.
 
     Static single-open interfaces also eliminate the need for the open handle.
-*******************************************************************************/
+ *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -43,7 +43,7 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 //DOM-IGNORE-END
 
 // *****************************************************************************
@@ -54,13 +54,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "system_config.h"
 #include "system_definitions.h"
 
-
-SYS_MODULE_OBJ DRV_USART_Initialize(const SYS_MODULE_INDEX index,const SYS_MODULE_INIT * const init)
-{
+SYS_MODULE_OBJ DRV_USART_Initialize(const SYS_MODULE_INDEX index, const SYS_MODULE_INIT * const init) {
     SYS_MODULE_OBJ returnValue;
 
-    switch(index)
-    {
+    switch (index) {
         case DRV_USART_INDEX_0:
         {
             returnValue = DRV_USART0_Initialize();
@@ -80,10 +77,8 @@ SYS_MODULE_OBJ DRV_USART_Initialize(const SYS_MODULE_INDEX index,const SYS_MODUL
     return returnValue;
 }
 
-void DRV_USART_Deinitialize( SYS_MODULE_OBJ object)
-{
-    switch(object)
-    {
+void DRV_USART_Deinitialize(SYS_MODULE_OBJ object) {
+    switch (object) {
         case DRV_USART_INDEX_0:
         {
             DRV_USART0_Deinitialize();
@@ -101,12 +96,10 @@ void DRV_USART_Deinitialize( SYS_MODULE_OBJ object)
     }
 }
 
-SYS_STATUS DRV_USART_Status( SYS_MODULE_OBJ object)
-{
+SYS_STATUS DRV_USART_Status(SYS_MODULE_OBJ object) {
     SYS_STATUS returnValue;
 
-    switch(object)
-    {
+    switch (object) {
         case DRV_USART_INDEX_0:
         {
             returnValue = DRV_USART0_Status();
@@ -126,10 +119,8 @@ SYS_STATUS DRV_USART_Status( SYS_MODULE_OBJ object)
     return returnValue;
 }
 
-void DRV_USART_TasksTransmit ( SYS_MODULE_OBJ object )
-{
-    switch(object)
-    {
+void DRV_USART_TasksTransmit(SYS_MODULE_OBJ object) {
+    switch (object) {
         case DRV_USART_INDEX_0:
         {
             DRV_USART0_TasksTransmit();
@@ -147,10 +138,8 @@ void DRV_USART_TasksTransmit ( SYS_MODULE_OBJ object )
     }
 }
 
-void DRV_USART_TasksReceive ( SYS_MODULE_OBJ object )
-{
-    switch(object)
-    {
+void DRV_USART_TasksReceive(SYS_MODULE_OBJ object) {
+    switch (object) {
         case DRV_USART_INDEX_0:
         {
             DRV_USART0_TasksReceive();
@@ -168,10 +157,8 @@ void DRV_USART_TasksReceive ( SYS_MODULE_OBJ object )
     }
 }
 
-void DRV_USART_TasksError ( SYS_MODULE_OBJ object )
-{
-    switch(object)
-    {
+void DRV_USART_TasksError(SYS_MODULE_OBJ object) {
+    switch (object) {
         case DRV_USART_INDEX_0:
         {
             DRV_USART0_TasksError();
@@ -191,20 +178,19 @@ void DRV_USART_TasksError ( SYS_MODULE_OBJ object )
 
 
 //client interface
-DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX index, const DRV_IO_INTENT ioIntent)
-{
+
+DRV_HANDLE DRV_USART_Open(const SYS_MODULE_INDEX index, const DRV_IO_INTENT ioIntent) {
     DRV_HANDLE returnValue;
 
-    switch(index)
-    {
+    switch (index) {
         case DRV_USART_INDEX_0:
         {
-            returnValue = DRV_USART0_Open(index,ioIntent);
+            returnValue = DRV_USART0_Open(index, ioIntent);
             break;
         }
         case DRV_USART_INDEX_1:
         {
-            returnValue = DRV_USART1_Open(index,ioIntent);
+            returnValue = DRV_USART1_Open(index, ioIntent);
             break;
         }
         default:
@@ -216,14 +202,12 @@ DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX index, const DRV_IO_INTENT ioI
     return returnValue;
 }
 
-void DRV_USART_Close( const DRV_HANDLE handle)
-{
+void DRV_USART_Close(const DRV_HANDLE handle) {
     uintptr_t instance;
 
     instance = handle & 0x00FF;
     //As we are handling single client, only multiple instance is taken care.
-    switch(instance)
-    {
+    switch (instance) {
         case DRV_USART_INDEX_0:
         {
             DRV_USART0_Close();
@@ -241,15 +225,13 @@ void DRV_USART_Close( const DRV_HANDLE handle)
     }
 }
 
-DRV_USART_CLIENT_STATUS DRV_USART_ClientStatus ( DRV_HANDLE handle )
-{
+DRV_USART_CLIENT_STATUS DRV_USART_ClientStatus(DRV_HANDLE handle) {
     uintptr_t instance;
     DRV_USART_CLIENT_STATUS returnValue;
 
     instance = handle & 0x00FF;
     //As we are handling single client, only multiple instance is taken care.
-    switch(instance)
-    {
+    switch (instance) {
         case DRV_USART_INDEX_0:
         {
             returnValue = DRV_USART0_ClientStatus();
@@ -269,15 +251,13 @@ DRV_USART_CLIENT_STATUS DRV_USART_ClientStatus ( DRV_HANDLE handle )
     return returnValue;
 }
 
-DRV_USART_TRANSFER_STATUS DRV_USART_TransferStatus( const DRV_HANDLE handle )
-{
+DRV_USART_TRANSFER_STATUS DRV_USART_TransferStatus(const DRV_HANDLE handle) {
     uintptr_t instance;
     DRV_USART_TRANSFER_STATUS returnValue;
 
     instance = handle & 0x00FF;
     //As we are handling single client, only multiple instance is taken care.
-    switch(instance)
-    {
+    switch (instance) {
         case DRV_USART_INDEX_0:
         {
             returnValue = DRV_USART0_TransferStatus();
@@ -290,7 +270,7 @@ DRV_USART_TRANSFER_STATUS DRV_USART_TransferStatus( const DRV_HANDLE handle )
         }
         default:
         {
-            returnValue = (DRV_USART_TRANSFER_STATUS)NULL;
+            returnValue = (DRV_USART_TRANSFER_STATUS) NULL;
             break;
         }
     }
@@ -300,15 +280,14 @@ DRV_USART_TRANSFER_STATUS DRV_USART_TransferStatus( const DRV_HANDLE handle )
 
 
 //Byte Model
-uint8_t DRV_USART_ReadByte( const DRV_HANDLE handle )
-{
+
+uint8_t DRV_USART_ReadByte(const DRV_HANDLE handle) {
     uintptr_t instance;
     uint8_t returnValue;
 
     instance = handle & 0x00FF;
     //As we are handling single client, only multiple instance is taken care.
-    switch(instance)
-    {
+    switch (instance) {
         case DRV_USART_INDEX_0:
         {
             returnValue = DRV_USART0_ReadByte();
@@ -329,14 +308,12 @@ uint8_t DRV_USART_ReadByte( const DRV_HANDLE handle )
     return returnValue;
 }
 
-void DRV_USART_WriteByte( const DRV_HANDLE handle, const uint8_t byte)
-{
+void DRV_USART_WriteByte(const DRV_HANDLE handle, const uint8_t byte) {
     uintptr_t instance;
 
     instance = handle & 0x00FF;
     //As we are handling single client, only multiple instance is taken care.
-    switch(instance)
-    {
+    switch (instance) {
         case DRV_USART_INDEX_0:
         {
             DRV_USART0_WriteByte(byte);
@@ -354,15 +331,13 @@ void DRV_USART_WriteByte( const DRV_HANDLE handle, const uint8_t byte)
     }
 }
 
-unsigned int DRV_USART_ReceiverBufferSizeGet( const DRV_HANDLE handle )
-{
+unsigned int DRV_USART_ReceiverBufferSizeGet(const DRV_HANDLE handle) {
     uintptr_t instance;
     unsigned int returnValue;
 
     instance = handle & 0x00FF;
     //As we are handling single client, only multiple instance is taken care.
-    switch(instance)
-    {
+    switch (instance) {
         case DRV_USART_INDEX_0:
         {
             returnValue = DRV_USART0_ReceiverBufferSizeGet();
@@ -375,22 +350,20 @@ unsigned int DRV_USART_ReceiverBufferSizeGet( const DRV_HANDLE handle )
         }
         default:
         {
-            returnValue = (unsigned int)NULL;
+            returnValue = (unsigned int) NULL;
             break;
         }
     }
     return returnValue;
 }
 
-unsigned int DRV_USART_TransmitBufferSizeGet( const DRV_HANDLE handle )
-{
+unsigned int DRV_USART_TransmitBufferSizeGet(const DRV_HANDLE handle) {
     uintptr_t instance;
     unsigned int returnValue;
 
     instance = handle & 0x00FF;
     //As we are handling single client, only multiple instance is taken care.
-    switch(instance)
-    {
+    switch (instance) {
         case DRV_USART_INDEX_0:
         {
             returnValue = DRV_USART0_TransmitBufferSizeGet();
@@ -403,22 +376,20 @@ unsigned int DRV_USART_TransmitBufferSizeGet( const DRV_HANDLE handle )
         }
         default:
         {
-            returnValue = (unsigned int)NULL;
+            returnValue = (unsigned int) NULL;
             break;
         }
     }
     return returnValue;
 }
 
-bool DRV_USART_ReceiverBufferIsEmpty( const DRV_HANDLE handle )
-{
+bool DRV_USART_ReceiverBufferIsEmpty(const DRV_HANDLE handle) {
     uintptr_t instance;
     bool returnValue;
 
     instance = handle & 0x00FF;
     //As we are handling single client, only multiple instance is taken care.
-    switch(instance)
-    {
+    switch (instance) {
         case DRV_USART_INDEX_0:
         {
             returnValue = DRV_USART0_ReceiverBufferIsEmpty();
@@ -438,15 +409,13 @@ bool DRV_USART_ReceiverBufferIsEmpty( const DRV_HANDLE handle )
     return returnValue;
 }
 
-bool DRV_USART_TransmitBufferIsFull( const DRV_HANDLE handle )
-{
+bool DRV_USART_TransmitBufferIsFull(const DRV_HANDLE handle) {
     uintptr_t instance;
     bool returnValue;
 
     instance = handle & 0x00FF;
     //As we are handling single client, only multiple instance is taken care.
-    switch(instance)
-    {
+    switch (instance) {
         case DRV_USART_INDEX_0:
         {
             returnValue = DRV_USART0_TransmitBufferIsFull();
@@ -466,15 +435,13 @@ bool DRV_USART_TransmitBufferIsFull( const DRV_HANDLE handle )
     return returnValue;
 }
 
-DRV_USART_BAUD_SET_RESULT DRV_USART_BaudSet(const DRV_HANDLE handle, uint32_t baud)
-{
+DRV_USART_BAUD_SET_RESULT DRV_USART_BaudSet(const DRV_HANDLE handle, uint32_t baud) {
     uintptr_t instance;
     DRV_USART_BAUD_SET_RESULT returnValue;
 
     instance = handle & 0x00FF;
     //As we are handling single client, only multiple instance is taken care.
-    switch(instance)
-    {
+    switch (instance) {
         case DRV_USART_INDEX_0:
         {
             returnValue = DRV_USART0_BaudSet(baud);
@@ -494,15 +461,13 @@ DRV_USART_BAUD_SET_RESULT DRV_USART_BaudSet(const DRV_HANDLE handle, uint32_t ba
     return returnValue;
 }
 
-DRV_USART_LINE_CONTROL_SET_RESULT DRV_USART_LineControlSet(const DRV_HANDLE handle,const DRV_USART_LINE_CONTROL lineControl)
-{
+DRV_USART_LINE_CONTROL_SET_RESULT DRV_USART_LineControlSet(const DRV_HANDLE handle, const DRV_USART_LINE_CONTROL lineControl) {
     uintptr_t instance;
     DRV_USART_LINE_CONTROL_SET_RESULT returnValue;
 
     instance = handle & 0x00FF;
     //As we are handling single client, only multiple instance is taken care.
-    switch(instance)
-    {
+    switch (instance) {
         case DRV_USART_INDEX_0:
         {
             returnValue = DRV_USART0_LineControlSet(lineControl);
@@ -525,4 +490,4 @@ DRV_USART_LINE_CONTROL_SET_RESULT DRV_USART_LineControlSet(const DRV_HANDLE hand
 
 /*******************************************************************************
  End of File
-*/
+ */

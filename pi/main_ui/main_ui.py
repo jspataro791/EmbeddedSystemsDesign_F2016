@@ -10,6 +10,7 @@ import sys
 import time
 import datetime
 import threading
+import socketsvr
 from PIL.ImageQt import qt_is_installed
 from pip.utils.outdated import SELFCHECK_DATE_FMT
 
@@ -21,7 +22,17 @@ MAINWIN_DEF_SIZE_Y = 480
 
 BUTTON_HEIGHT = 150
 
-PAC_SER = "/dev/ttyUSB0"
+PAC_DATA_OBJ = socketsvr.RoverDataObj()
+PAC_IP = "10.0.0.191"
+PAC_PORT = 2000
+PAC_SOCK_SRV = socketsvr.RoverSocketServer(PAC_IP, PAC_PORT, "PACMAN")
+
+GST_DATA_OBJ = socketsvr.RoverDataObj()
+GST_IP = "10.0.0.192"
+GST_PORT = 2000
+GST_SOCK_SRV = socketsvr.RoverSocketServer(GST_IP, GST_PORT, "GHOST")
+
+
 
 class MainApplication():
     
@@ -38,7 +49,6 @@ class MainApplication():
     def stop(self):
         
         self._app.quit()
-
 
 
 class MainWindow(qt.QMainWindow):
@@ -153,32 +163,39 @@ class TabControl(qt.QWidget):
         if self._started and self._dirStat != "LEFT":
             self.util_setButtonColors("LEFT")
             self.window()._debugConsole.addMsgEvent("Left")
-            # TODO: add rover send callback
+            global PAC_DATA_OBJ
+            global PAC_SOCK_SRV
+            PAC_DATA_OBJ.setDir("LEFT")
+            PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))
         
     def sendRightSignal(self):
         if self._started and self._dirStat != "RIGHT":
             self.util_setButtonColors("RIGHT")
             self.window()._debugConsole.addMsgEvent("Right")
-            # TODO: add rover send callback
+            PAC_DATA_OBJ.setDir("RIGHT")
+            PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))
         
     def sendStraightSignal(self):
         if self._started and self._dirStat != "STRAIGHT":
             self.util_setButtonColors("STRAIGHT")
             self.window()._debugConsole.addMsgEvent("Straight")
-            # TODO: add rover send callback
+            PAC_DATA_OBJ.setDir("STRAIGHT")
+            PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))
         
     def start(self):
         
         if not self._started:
             self.window()._debugConsole.addMsgEvent("STARTING!")
-            # TODO: add rover send callback
+            PAC_DATA_OBJ.setSpeed(16)
+            PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))
             self._started = True
             
     def stop(self):
         
         if self._started:
             self.window()._debugConsole.addMsgEvent("STOPPING!")
-            # TODO: add rover send callback
+            PAC_DATA_OBJ.setSpeed(0)
+            PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))
             self._started = False
             
     def util_setButtonColors(self, dir):
@@ -208,7 +225,9 @@ class TabDebug(qt.QWidget):
         self.setLayout(self._hLayout)
         
         self._vLeftLayout = qt.QVBoxLayout()
+        self._vRightLayout = qt.QVBoxLayout()
         self._hLayout.addLayout(self._vLeftLayout)
+        self._hLayout.addLayout(self._vRightLayout)
         
         # items        
         self._debugState = qt.QCheckBox("Debugging", self)
@@ -229,31 +248,73 @@ class TabDebug(qt.QWidget):
         self._vLeftLayout.addWidget(self._pacDbgMsgCount)
             
             # ghost
+        self._vRightLayout.addSpacing(30)
             
         self._gstDbgSpeed = self.DebugItem(title="Ghost Speed")
-        self._vLeftLayout.addWidget(self._gstDbgSpeed)
+        self._vRightLayout.addWidget(self._gstDbgSpeed)
         
         self._gstDbgDirection = self.DebugItem(title="Ghost Direction")
-        self._vLeftLayout.addWidget(self._gstDbgDirection)
+        self._vRightLayout.addWidget(self._gstDbgDirection)
         
         self._gstDbgLFAData = self.DebugItem(title="Ghost LFA Data")
-        self._vLeftLayout.addWidget(self._gstDbgLFAData)
+        self._vRightLayout.addWidget(self._gstDbgLFAData)
         
         self._gstDbgMsgCount = self.DebugItem(title="Ghost Dbg Msg Count")
-        self._vLeftLayout.addWidget(self._gstDbgMsgCount)
+        self._vRightLayout.addWidget(self._gstDbgMsgCount)
         
+        
+        # update timers
+        UpdTimer = qt.QTimer(self)
+        UpdTimer.setInterval(300)
+        UpdTimer.setSingleShot(False)
+        UpdTimer.timeout.connect(self.updPacData)
+        UpdTimer.timeout.connect(self.updGstData)
+        UpdTimer.start()
+        
+        
+    def updPacData(self):
+        global PAC_SOCK_SRV
+        rxData = PAC_SOCK_SRV.read()
+        
+        if rxData == None:
+            return
+        else:
+            pass
+        
+    def updGstData(self):
+        global GST_SOCK_SRV
+        rxData = GST_SOCK_SRV.read()
+        
+        if rxData == None:
+            return
+        else:
+            pass
+
 
     def setDebugging(self):
+        
+        global GST_DATA_OBJ
+        global PAC_DATA_OBJ
+        global GST_SOCK_SRV
+        global PAC_SOCK_SRV
         
         chkd = self._debugState.isChecked()
         
         if chkd:
             self.window()._debugConsole.addMsgEvent("Debugging Enabled")
-            # TODO: add rover send callback
+            GST_DATA_OBJ.setDbg(True)
+            PAC_DATA_OBJ.setDbg(True)
+            GST_SOCK_SRV.write(repr(GST_DATA_OBJ))
+            PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))      
+            
         else:
             self.window()._debugConsole.addMsgEvent("Debugging Disabled")
-            # TODO: add rover send callback
-    
+            GST_DATA_OBJ.setDbg(False)
+            PAC_DATA_OBJ.setDbg(False)
+            GST_SOCK_SRV.write(repr(GST_DATA_OBJ))
+            PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))   
+       
+     
 
     class DebugItem(qt.QGroupBox):
         
@@ -280,6 +341,9 @@ class TabNodeView(qt.QWidget):
     
     def __init__(self, parent=None):
         super(self.__class__, self).__init__(parent)
+        
+        
+
         
        
 if __name__ == "__main__":

@@ -24,27 +24,26 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 
 #include <xc.h>
 #include "I2CPrivate.h"
 
-I2C_REGISTERS * const i2cBase[] =
-{
+I2C_REGISTERS * const i2cBase[] ={
 #ifdef _I2C1
-	(I2C_REGISTERS * const)_I2C1_BASE_ADDRESS,
+    (I2C_REGISTERS * const) _I2C1_BASE_ADDRESS,
 #endif
 #ifdef _I2C2
-	(I2C_REGISTERS * const)_I2C2_BASE_ADDRESS,
+    (I2C_REGISTERS * const) _I2C2_BASE_ADDRESS,
 #endif
 #ifdef _I2C3
-	(I2C_REGISTERS * const)_I2C3_BASE_ADDRESS,
+    (I2C_REGISTERS * const) _I2C3_BASE_ADDRESS,
 #endif
 #ifdef _I2C4
-	(I2C_REGISTERS * const)_I2C4_BASE_ADDRESS,
+    (I2C_REGISTERS * const) _I2C4_BASE_ADDRESS,
 #endif
 #ifdef _I2C5
-	(I2C_REGISTERS * const)_I2C5_BASE_ADDRESS,
+    (I2C_REGISTERS * const) _I2C5_BASE_ADDRESS,
 #endif
 };
 

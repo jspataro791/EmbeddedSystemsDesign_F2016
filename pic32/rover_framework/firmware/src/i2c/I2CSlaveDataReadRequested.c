@@ -24,7 +24,7 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 
 #include <peripheral/i2c.h>
 #include "I2CPrivate.h"
@@ -49,8 +49,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
   Returns:
     Boolean identifying if the request was a slave read or write
-    * TRUE    - If an external master is requesting data (slave read/transmit)
-    * FALSE   - If an external is sending data (slave write/receive)
+ * TRUE    - If an external master is requesting data (slave read/transmit)
+ * FALSE   - If an external is sending data (slave write/receive)
     
   Example:
     <code>
@@ -69,11 +69,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
   Remarks:
     This routine should be used by both master and slave receivers.
-  *****************************************************************************/
+ *****************************************************************************/
 
-BOOL I2CSlaveDataReadRequested ( I2C_MODULE id )
-{
-	I2C_REGISTERS * const i2cRegisters = i2cBase[id];
-	
-	return(i2cRegisters->I2CxSTATbits.R_W);
+BOOL I2CSlaveDataReadRequested(I2C_MODULE id) {
+    I2C_REGISTERS * const i2cRegisters = i2cBase[id];
+
+    return (i2cRegisters->I2CxSTATbits.R_W);
 }

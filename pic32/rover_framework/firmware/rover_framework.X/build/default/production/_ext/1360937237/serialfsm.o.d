@@ -235,5 +235,6 @@ build/default/production/_ext/1360937237/serialfsm.o:  \
  ../src/public_vars.h  \
 ../src/tsk_wifly_tx.h  \
 ../src/tsk_lfa_rx.h  \
+ ../../../../third_party/rtos/FreeRTOS/Source/include/list.h  \
  ../src/serialresponds.h  \
 ../src/debug.h 

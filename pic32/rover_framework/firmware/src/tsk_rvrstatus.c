@@ -5,49 +5,54 @@
 
 char rvrStatusBuffer[MAX_QUEUE_ITEM_SIZE];
 
-void RVRStatus_Initialize()
-{
+void RVRStatus_Initialize() {
     sendGPIOStatus(STAT_RVRSTATUS_INIT);
 }
 
-void RVRStatus_Tasks()
-{
+void RVRStatus_Tasks() {
     sendGPIOStatus(STAT_RVRSTATUS_TASK_ENTER);
-    
-    int QRcvChk = xQueueReceive( valid_data_queue, &rvrStatusBuffer, portMAX_DELAY );
-    
-    if(QRcvChk == pdTRUE)
-    {
-        /* get index of D */
+
+    int QRcvChk = xQueueReceive(valid_data_queue, &rvrStatusBuffer, portMAX_DELAY);
+
+    if (QRcvChk == pdTRUE) {
+        /* get the length of the message based on end char*/
+        int i = 0;
+        for (i; i < MAX_QUEUE_ITEM_SIZE; ++i) {
+            if (rvrStatusBuffer[i] == MSG_END_CHAR) {
+                break;
+            }
+        }
+
+        /* get direct */
         int index = 0;
-        for(index; index < strlen(rvrStatusBuffer);index++)
-        {
-            if(rvrStatusBuffer[index] == 'D')
-            {
+        for (index; index < i; index++) {
+            if (rvrStatusBuffer[index] == DIR_CHAR) {
+                RVR_CurDirection = rvrStatusBuffer[index + 1];
                 break;
             }
         }
-        
-        RVR_CurDirection = rvrStatusBuffer[index + 1];
-        
-        /* get index of S */
+
+        /* get speed */
         index = 0;
-        for(index; index < strlen(rvrStatusBuffer);index++)
-        {
-            if(rvrStatusBuffer[index] == 'S')
-            {
+        for (index; index < i; index++) {
+            if (rvrStatusBuffer[index] == SPEED_CHAR) {
+                RVR_CurSpeed = rvrStatusBuffer[index + 1];
                 break;
             }
         }
-        
-        RVR_CurSpeed = rvrStatusBuffer[index + 1];
-        
-        sendDirStatus((uint8_t)RVR_CurDirection);
-        sendSpdStatus((uint8_t)RVR_CurSpeed);
-        
-    }
-    else
-    {
+
+        /* get debug */
+        index = 0;
+        for (index; index < i; index++) {
+            if (rvrStatusBuffer[index] == DEBUG_CHAR) {
+                RVR_Dbg = rvrStatusBuffer[index + 1];
+                break;
+            }
+        }
+
+        sendDirStatus((uint8_t) RVR_CurDirection);
+        sendSpdStatus((uint8_t) RVR_CurSpeed);
+    } else {
         sendGPIOError(ERR_BAD_MQ_RECV);
     }
 }

@@ -24,7 +24,7 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 
 #include <peripheral/i2c.h>
 
@@ -34,7 +34,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // Private mask definition
 #define I2C_ADDRESS_MODE_FLAGS_MASK \
         (I2C_USE_10BIT_ADDRESS|I2C_ENABLE_GENERAL_CALL_ADDRESS|I2C_USE_RESERVED_ADDRESSES)
-
 
 /*******************************************************************************
   Function:
@@ -81,14 +80,13 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     </code>
 
   Remarks:
-  *****************************************************************************/
+ *****************************************************************************/
 
-void I2CSetSlaveAddress ( I2C_MODULE id, UINT16 address, UINT16 mask, I2C_ADDRESS_MODE flags )
-{
-	I2C_REGISTERS * const i2cRegisters = i2cBase[id];
+void I2CSetSlaveAddress(I2C_MODULE id, UINT16 address, UINT16 mask, I2C_ADDRESS_MODE flags) {
+    I2C_REGISTERS * const i2cRegisters = i2cBase[id];
 
-	i2cRegisters->I2CxADD       = address;
-	i2cRegisters->I2CxMSK       = mask;
-    i2cRegisters->I2CxCONSET    = I2C_ADDRESS_MODE_FLAGS_MASK &  flags;
-    i2cRegisters->I2CxCONCLR    = I2C_ADDRESS_MODE_FLAGS_MASK & ~flags;
+    i2cRegisters->I2CxADD = address;
+    i2cRegisters->I2CxMSK = mask;
+    i2cRegisters->I2CxCONSET = I2C_ADDRESS_MODE_FLAGS_MASK & flags;
+    i2cRegisters->I2CxCONCLR = I2C_ADDRESS_MODE_FLAGS_MASK & ~flags;
 }

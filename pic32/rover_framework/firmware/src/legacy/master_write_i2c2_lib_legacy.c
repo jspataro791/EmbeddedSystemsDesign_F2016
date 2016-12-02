@@ -41,34 +41,32 @@
 #ifdef _I2C2
 
 /************************************************************************
-*    Function Name:  MasterWriteI2C2
-*    Description:    This routine is used to write a byte to the I2C bus.
-*                    The input parameter data_out is written to the
-*                    I2CTRN register. If IWCOL bit is set,write collision
-*                    has occured and -1 is returned, else 0 is returned.
-*    Parameters:     unsigned char : data_out
-*    Return Value:   char
-*************************************************************************/
+ *    Function Name:  MasterWriteI2C2
+ *    Description:    This routine is used to write a byte to the I2C bus.
+ *                    The input parameter data_out is written to the
+ *                    I2CTRN register. If IWCOL bit is set,write collision
+ *                    has occured and -1 is returned, else 0 is returned.
+ *    Parameters:     unsigned char : data_out
+ *    Return Value:   char
+ *************************************************************************/
 
-unsigned int MasterWriteI2C2(unsigned char data_out)
-{
+unsigned int MasterWriteI2C2(unsigned char data_out) {
     I2C2TRN = data_out;
-	
-    if(I2C2STATbits.IWCOL)        /* If write collision occurs,return -1 */
-        return -1;
-    else
-	{
-		while( I2C2STATbits.TBF );   // wait until write cycle is complete         
-		IdleI2C2();                 // ensure module is idle
 
-		if ( I2C2STATbits.ACKSTAT ) // test for ACK condition received
-             return ( -2 );
-        else 
-			return ( 0 );               
+    if (I2C2STATbits.IWCOL) /* If write collision occurs,return -1 */
+        return -1;
+    else {
+        while (I2C2STATbits.TBF); // wait until write cycle is complete         
+        IdleI2C2(); // ensure module is idle
+
+        if (I2C2STATbits.ACKSTAT) // test for ACK condition received
+            return ( -2);
+        else
+            return ( 0);
     }
-	
-	
-	
+
+
+
 }
 
 #endif

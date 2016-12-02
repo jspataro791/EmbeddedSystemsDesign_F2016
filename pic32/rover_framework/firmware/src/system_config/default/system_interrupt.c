@@ -81,80 +81,73 @@ char uart1ByteRcvBuffer; // buffer to place received bytes in (uart1)
 int qSendCheckISR0;
 int qSendCheckISR1;
 
-void IntHandlerDrvUsartInstance0(void)
-{
+void IntHandlerDrvUsartInstance0(void) {
     BaseType_t xHigherPriorityTaskWoken;
 
     /*check if there is data in the USART0 receive buffer*/
-    if (PLIB_USART_ReceiverDataIsAvailable (USART_ID_1))
-    {
+    if (PLIB_USART_ReceiverDataIsAvailable(USART_ID_1)) {
 
-      /* set GPIO status to this interrupt */
-      //sendGPIOStatus(STAT_INT_RX_UART0);
-      
-      /* get a byte from the queue */
-      uart0ByteRcvBuffer = PLIB_USART_ReceiverByteReceive (USART_ID_1);
+        /* set GPIO status to this interrupt */
+        //sendGPIOStatus(STAT_INT_RX_UART0);
 
-      /* put the byte in the receive queue */
-      qSendCheckISR0 = xQueueSendToBackFromISR (wifly_rx_queue, &uart0ByteRcvBuffer, &xHigherPriorityTaskWoken);
-      
-      if(qSendCheckISR0 != pdTRUE)
-      {
-        sendGPIOError(ERR_BAD_MQ_SEND);
-      }
+        /* get a byte from the queue */
+        uart0ByteRcvBuffer = PLIB_USART_ReceiverByteReceive(USART_ID_1);
+
+        /* put the byte in the receive queue */
+        qSendCheckISR0 = xQueueSendToBackFromISR(wifly_rx_queue, &uart0ByteRcvBuffer, &xHigherPriorityTaskWoken);
+
+        if (qSendCheckISR0 != pdTRUE) {
+            sendGPIOError(ERR_BAD_MQ_SEND);
+        }
 
     }
-    
+
     DRV_USART_TasksTransmit(sysObj.drvUsart0);
     DRV_USART_TasksReceive(sysObj.drvUsart0);
     DRV_USART_TasksError(sysObj.drvUsart0);
-    
+
     portEND_SWITCHING_ISR(xHigherPriorityTaskWoken)
 }
- 
- 
- 
 
-void IntHandlerDrvUsartInstance1(void)
-{
-    
-//    BaseType_t xHigherPriorityTaskWoken;
-//
-//    /*check if there is data in the USART0 receive buffer*/
-//    if (PLIB_USART_ReceiverDataIsAvailable (USART_ID_2))
-//    {
-//
-//      /* set GPIO status to this interrupt */
-//      //sendGPIOStatus(STAT_INT_RX_UART0);
-//      
-//      /* get a byte from the queue */
-//      uart1ByteRcvBuffer = PLIB_USART_ReceiverByteReceive (USART_ID_2);
-//
-//      /* put the byte in the receive queue */
-//      qSendCheckISR1 = xQueueSendToBackFromISR (lfa_rx_queue, &uart1ByteRcvBuffer, &xHigherPriorityTaskWoken);
-//
-//    }
-    
+void IntHandlerDrvUsartInstance1(void) {
+
+    //    BaseType_t xHigherPriorityTaskWoken;
+    //
+    //    /*check if there is data in the USART0 receive buffer*/
+    //    if (PLIB_USART_ReceiverDataIsAvailable (USART_ID_2))
+    //    {
+    //
+    //      /* set GPIO status to this interrupt */
+    //      //sendGPIOStatus(STAT_INT_RX_UART0);
+    //      
+    //      /* get a byte from the queue */
+    //      uart1ByteRcvBuffer = PLIB_USART_ReceiverByteReceive (USART_ID_2);
+    //
+    //      /* put the byte in the receive queue */
+    //      qSendCheckISR1 = xQueueSendToBackFromISR (lfa_rx_queue, &uart1ByteRcvBuffer, &xHigherPriorityTaskWoken);
+    //
+    //    }
+
     DRV_USART_TasksTransmit(sysObj.drvUsart1);
     DRV_USART_TasksReceive(sysObj.drvUsart1);
     DRV_USART_TasksError(sysObj.drvUsart1);
-    
+
     //portEND_SWITCHING_ISR(xHigherPriorityTaskWoken)
-    
+
 }
- 
- 
- 
 
- 
 
- 
 
- 
 
- 
-  
+
+
+
+
+
+
+
+
 /*******************************************************************************
  End of File
-*/
+ */
 

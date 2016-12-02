@@ -8,7 +8,7 @@
     
   Description:
     This file defines the register structure for the I2C library.
-*******************************************************************************/
+ *******************************************************************************/
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
 FileName:       I2Cprivate.h
@@ -36,7 +36,7 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 //DOM-IGNORE-END
 
 #ifndef _I2C_PRIVATE_H_
@@ -52,73 +52,80 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 typedef union {
-  struct {
-    unsigned SEN:1;
-    unsigned RSEN:1;
-    unsigned PEN:1;
-    unsigned RCEN:1;
-    unsigned ACKEN:1;
-    unsigned ACKDT:1;
-    unsigned STREN:1;
-    unsigned GCEN:1;
-    unsigned SMEN:1;
-    unsigned DISSLW:1;
-    unsigned A10M:1;
-    unsigned STRICT:1;
-    unsigned SCLREL:1;
-    unsigned SIDL:1;
-    unsigned :1;
-    unsigned ON:1;
-  };
-  struct {
-    unsigned :11;
-    unsigned IPMIEN:1;
-    unsigned :1;
-    unsigned I2CSIDL:1;
-    unsigned :1;
-    unsigned I2CEN:1;
-  };
-  struct {
-    unsigned w:32;
-  };
+
+	struct {
+		unsigned SEN : 1;
+		unsigned RSEN : 1;
+		unsigned PEN : 1;
+		unsigned RCEN : 1;
+		unsigned ACKEN : 1;
+		unsigned ACKDT : 1;
+		unsigned STREN : 1;
+		unsigned GCEN : 1;
+		unsigned SMEN : 1;
+		unsigned DISSLW : 1;
+		unsigned A10M : 1;
+		unsigned STRICT : 1;
+		unsigned SCLREL : 1;
+		unsigned SIDL : 1;
+		unsigned : 1;
+		unsigned ON : 1;
+	};
+
+	struct {
+		unsigned : 11;
+		unsigned IPMIEN : 1;
+		unsigned : 1;
+		unsigned I2CSIDL : 1;
+		unsigned : 1;
+		unsigned I2CEN : 1;
+	};
+
+	struct {
+		unsigned w : 32;
+	};
 } __I2CxCONbits_t;
 
 typedef union {
-  struct {
-    unsigned TBF:1;
-    unsigned RBF:1;
-    unsigned R_W:1;
-    unsigned S:1;
-    unsigned P:1;
-    unsigned D_A:1;
-    unsigned I2COV:1;
-    unsigned IWCOL:1;
-    unsigned ADD10:1;
-    unsigned GCSTAT:1;
-    unsigned BCL:1;
-    unsigned :3;
-    unsigned TRSTAT:1;
-    unsigned ACKSTAT:1;
-  };
-  struct {
-    unsigned :6;
-    unsigned I2CPOV:1;
-  };
-  struct {
-    unsigned w:32;
-  };
+
+	struct {
+		unsigned TBF : 1;
+		unsigned RBF : 1;
+		unsigned R_W : 1;
+		unsigned S : 1;
+		unsigned P : 1;
+		unsigned D_A : 1;
+		unsigned I2COV : 1;
+		unsigned IWCOL : 1;
+		unsigned ADD10 : 1;
+		unsigned GCSTAT : 1;
+		unsigned BCL : 1;
+		unsigned : 3;
+		unsigned TRSTAT : 1;
+		unsigned ACKSTAT : 1;
+	};
+
+	struct {
+		unsigned : 6;
+		unsigned I2CPOV : 1;
+	};
+
+	struct {
+		unsigned w : 32;
+	};
 } __I2CxSTATbits_t;
 
-typedef struct _i2c_registers
-{
-	union{
+typedef struct _i2c_registers {
+
+	union {
 		volatile UINT32 I2CxCON;
 		volatile __I2CxCONbits_t I2CxCONbits;
 	};
 	volatile UINT32 I2CxCONCLR;
 	volatile UINT32 I2CxCONSET;
 	volatile UINT32 I2CxCONINV;
-	union{
+
+	union {
 		volatile UINT32 I2CxSTAT;
 		volatile __I2CxSTATbits_t I2CxSTATbits;
 	};

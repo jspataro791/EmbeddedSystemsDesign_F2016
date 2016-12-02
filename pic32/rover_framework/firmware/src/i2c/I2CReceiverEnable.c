@@ -24,7 +24,7 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 
 #include <peripheral/i2c.h>
 #include "I2CPrivate.h"
@@ -48,8 +48,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     id      - Identifies the desired I2C module
     
     enable  - Determines if the receiver is to be enabled or disabled
-              * If TRUE, enables the module to receive data on the I2C
-              * If FALSE, disables the module from receiving data on the I2C
+ * If TRUE, enables the module to receive data on the I2C
+ * If FALSE, disables the module from receiving data on the I2C
 
   Returns:
     None
@@ -61,22 +61,18 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
   Remarks:
     This routine should be used by both master and slave receivers.
-  *****************************************************************************/
+ *****************************************************************************/
 
-I2C_RESULT I2CReceiverEnable ( I2C_MODULE id, BOOL enable )
-{
-	I2C_REGISTERS * const i2cRegisters = i2cBase[id];
+I2C_RESULT I2CReceiverEnable(I2C_MODULE id, BOOL enable) {
+    I2C_REGISTERS * const i2cRegisters = i2cBase[id];
 
     // Enable the receiver
-	i2cRegisters->I2CxCONbits.RCEN = enable;
-	
+    i2cRegisters->I2CxCONbits.RCEN = enable;
+
     // Check for an overflow condition
-	if(i2cRegisters->I2CxSTATbits.I2COV)
-    {
-		return(I2C_RECEIVE_OVERFLOW); 
-    }
-	else
-    {
-		return(I2C_SUCCESS);
+    if (i2cRegisters->I2CxSTATbits.I2COV) {
+        return (I2C_RECEIVE_OVERFLOW);
+    } else {
+        return (I2C_SUCCESS);
     }
 }

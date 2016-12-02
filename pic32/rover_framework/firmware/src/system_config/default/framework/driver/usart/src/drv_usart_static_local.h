@@ -12,7 +12,7 @@
 
   Description:
     Driver Local Data Structures for static implementation
-*******************************************************************************/
+ *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -36,7 +36,7 @@ INCLUDING BUT NOT LIMITED TO ANY  INCIDENTAL,  SPECIAL,  INDIRECT,  PUNITIVE  OR
 CONSEQUENTIAL DAMAGES, LOST  PROFITS  OR  LOST  DATA,  COST  OF  PROCUREMENT  OF
 SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 //DOM-IGNORE-END
 
 #ifndef _DRV_USART_STATIC_LOCAL_H
@@ -62,49 +62,46 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 
-    extern "C" {
+extern "C" {
 
 #endif
-// DOM-IGNORE-END
+	// DOM-IGNORE-END
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Data Type Definitions
-// *****************************************************************************
-// *****************************************************************************
+	// *****************************************************************************
+	// *****************************************************************************
+	// Section: Data Type Definitions
+	// *****************************************************************************
+	// *****************************************************************************
 
-// *****************************************************************************
-/* USART Static Driver Instance Object
+	// *****************************************************************************
 
-  Summary:
-    Object used to keep any data required for the static USART driver.
+	/* USART Static Driver Instance Object
 
-  Description:
-    This object is used to keep track of any data that must be maintained to
-    manage the USART static driver.
+	  Summary:
+	    Object used to keep any data required for the static USART driver.
 
-  Remarks:
-    None.
-*/
+	  Description:
+	    This object is used to keep track of any data that must be maintained to
+	    manage the USART static driver.
 
-typedef struct
-{
+	  Remarks:
+	    None.
+	 */
 
-
-
-    /* Hardware instance mutex */
-    OSAL_MUTEX_DECLARE(mutexDriverInstance);
+	typedef struct {
+		/* Hardware instance mutex */
+		OSAL_MUTEX_DECLARE(mutexDriverInstance);
 
 
-} DRV_USART_OBJ;
+	} DRV_USART_OBJ;
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Local functions.
-// *****************************************************************************
-// *****************************************************************************
+	// *****************************************************************************
+	// *****************************************************************************
+	// Section: Local functions.
+	// *****************************************************************************
+	// *****************************************************************************
 
-// DOM-IGNORE-BEGIN
+	// DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }
 #endif
@@ -114,5 +111,5 @@ typedef struct
 
 /*******************************************************************************
  End of File
-*/
+ */
 

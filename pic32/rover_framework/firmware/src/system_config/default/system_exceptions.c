@@ -63,7 +63,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     These global static items are used instead of local variables in the 
     _general_exception_handler function because the stack may not be available
     if an exception has occured.
-*/
+ */
 
 /* Code identifying the cause of the exception (CP0 Cause register). */
 static unsigned int _excep_code;
@@ -75,8 +75,7 @@ static unsigned int _excep_addr;
 static char *_cause_str;
 
 /* Array identifying the cause (indexed by _exception_code). */
-static char *cause[] = 
-{
+static char *cause[] = {
     "Interrupt",
     "Undefined",
     "Undefined",
@@ -121,23 +120,21 @@ static char *cause[] =
     Refer to the XC32 User's Guide for additional information.
  */
 
-void _general_exception_handler ( void )
-{
+void _general_exception_handler(void) {
     /* Mask off Mask of the ExcCode Field from the Cause Register
     Refer to the MIPs Software User's manual */
     _excep_code = (_CP0_GET_CAUSE() & 0x0000007C) >> 2;
     _excep_addr = _CP0_GET_EPC();
-    _cause_str  = cause[_excep_code];
+    _cause_str = cause[_excep_code];
 
-    SYS_DEBUG_PRINT(SYS_ERROR_ERROR, "\nGeneral Exception %s (cause=%d, addr=%x).\n", 
-                    _cause_str, _excep_code, _excep_addr);
+    SYS_DEBUG_PRINT(SYS_ERROR_ERROR, "\nGeneral Exception %s (cause=%d, addr=%x).\n",
+            _cause_str, _excep_code, _excep_addr);
 
-    while (1)
-    {
+    while (1) {
         SYS_DEBUG_BreakPoint();
     }
 }
 
 /*******************************************************************************
  End of File
-*/
+ */

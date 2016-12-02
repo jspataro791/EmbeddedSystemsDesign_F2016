@@ -54,7 +54,7 @@
     defined(__32MX450F256L__)||\
     defined(__32MX470F512H__)||\
     defined(__32MX470F512L__))
- #define TableB
+#define TableB
 #endif
 
 #if defined(__32MX120F064H__) || \
@@ -76,33 +76,31 @@
     defined(__32MX550F256L__) || \
     defined(__32MX570F512H__) || \
     defined(__32MX570F512L__)
-  #define TableB
+#define TableB
 #endif
 
 #ifdef _I2C1
 
 /**************************************************************************
-*    Function Name:  SlaveputsI2C1
-*    Description:    This routine is used to write out a string to the
-*                    I2C bus.If write collision occurs,-3 is sent.If
-*                    string is written and null char reached, 0 is returned.
-*    Parameters:     unsigned char * : wrptr
-*    Return Value:   unsigned int
-****************************************************************************/
-unsigned int SlaveputsI2C1(unsigned char * wrptr)
-{
-    I2C1CONbits.STREN = 1;            /* SCL clock stretch enable bit */
-    while(*wrptr)                /* transmit data until null char */
-    {
-        SlaveputcI2C1(*wrptr++);         /* Send a byte */
-        while(I2C1STATbits.TBF);         /* wait till the transmit buffer is clear */
+ *    Function Name:  SlaveputsI2C1
+ *    Description:    This routine is used to write out a string to the
+ *                    I2C bus.If write collision occurs,-3 is sent.If
+ *                    string is written and null char reached, 0 is returned.
+ *    Parameters:     unsigned char * : wrptr
+ *    Return Value:   unsigned int
+ ****************************************************************************/
+unsigned int SlaveputsI2C1(unsigned char * wrptr) {
+    I2C1CONbits.STREN = 1; /* SCL clock stretch enable bit */
+    while (*wrptr) /* transmit data until null char */ {
+        SlaveputcI2C1(*wrptr++); /* Send a byte */
+        while (I2C1STATbits.TBF); /* wait till the transmit buffer is clear */
 #if (((__PIC32_FEATURE_SET__ >= 100) && (__PIC32_FEATURE_SET__ <= 299)) || defined(__32MXGENERIC__) || defined TableB)
-        while(!IFS1bits.I2C1SIF);     /* Wait till the ACK from master is received */
+        while (!IFS1bits.I2C1SIF); /* Wait till the ACK from master is received */
 #else
-        while(!IFS0bits.I2C1SIF);     /* Wait till the ACK from master is received */
+        while (!IFS0bits.I2C1SIF); /* Wait till the ACK from master is received */
 #endif
     }
-    return 0;                        /* null char was reached */
+    return 0; /* null char was reached */
 }
 
 #endif

@@ -24,7 +24,7 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 
 #include <peripheral/i2c.h>
 #include "I2CPrivate.h"
@@ -49,8 +49,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     id      - Identifies the desired I2C module
     
     ack     - Determines how the byte should be acknoweldged
-              * If TRUE, positively acknowledges (ACK) the byte of data received
-              * If FALSE, negatively acknowledges (NAK) the byte of data received
+ * If TRUE, positively acknowledges (ACK) the byte of data received
+ * If FALSE, negatively acknowledges (NAK) the byte of data received
 
   Returns:
     None
@@ -66,22 +66,18 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
   Remarks:
     This routine can be used by both master or slave receivers.
-  *****************************************************************************/
+ *****************************************************************************/
 
-void I2CAcknowledgeByte ( I2C_MODULE id, BOOL ack )
-{
-	I2C_REGISTERS * const i2cRegisters = i2cBase[id];
+void I2CAcknowledgeByte(I2C_MODULE id, BOOL ack) {
+    I2C_REGISTERS * const i2cRegisters = i2cBase[id];
 
     // Assign the ACK/NAK value
-	if(ack == TRUE)
-    {
-		i2cRegisters->I2CxCONCLR = _I2CCON_ACKDT_MASK;
-    }
-	else
-    {
-		i2cRegisters->I2CxCONSET = _I2CCON_ACKDT_MASK;
+    if (ack == TRUE) {
+        i2cRegisters->I2CxCONCLR = _I2CCON_ACKDT_MASK;
+    } else {
+        i2cRegisters->I2CxCONSET = _I2CCON_ACKDT_MASK;
     }
 
     // Send the ACK/NAK
-	i2cRegisters->I2CxCONSET = _I2CCON_ACKEN_MASK;
+    i2cRegisters->I2CxCONSET = _I2CCON_ACKEN_MASK;
 }

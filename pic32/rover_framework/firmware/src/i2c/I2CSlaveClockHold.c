@@ -24,7 +24,7 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 
 #include <peripheral/i2c.h>
 #include "I2CPrivate.h"
@@ -58,11 +58,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
   Remarks:
     This routine will cause the SCL line to be forced low, AFTER the currently 
     transferring data byte has been received.
-  *****************************************************************************/
+ *****************************************************************************/
 
-void I2CSlaveClockHold ( I2C_MODULE id )
-{
-	I2C_REGISTERS * const i2cRegisters = i2cBase[id];
+void I2CSlaveClockHold(I2C_MODULE id) {
+    I2C_REGISTERS * const i2cRegisters = i2cBase[id];
 
-	i2cRegisters->I2CxCONCLR = _I2CCON_SCLREL_MASK;
+    i2cRegisters->I2CxCONCLR = _I2CCON_SCLREL_MASK;
 }

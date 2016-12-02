@@ -41,20 +41,19 @@
 #ifdef _I2C1
 
 /**********************************************************************
-*    Function Name:  SlaveReadI2C1
-*    Description:    This routine reads a single byte from the I2C Bus.
-*                    The RBF bit is checked until it is set.When set,
-*                    the receive register is full and it's contents are
-*                    returned.
-*    Parameters:     void
-*    Return Value:   unsigned char
-***********************************************************************/
+ *    Function Name:  SlaveReadI2C1
+ *    Description:    This routine reads a single byte from the I2C Bus.
+ *                    The RBF bit is checked until it is set.When set,
+ *                    the receive register is full and it's contents are
+ *                    returned.
+ *    Parameters:     void
+ *    Return Value:   unsigned char
+ ***********************************************************************/
 
-unsigned char SlaveReadI2C1(void)
-{
-     while(!I2C1STATbits.RBF);
-     I2C1STATbits.I2COV = 0;
-     return(I2C1RCV);
+unsigned char SlaveReadI2C1(void) {
+    while (!I2C1STATbits.RBF);
+    I2C1STATbits.I2COV = 0;
+    return (I2C1RCV);
 
 }
 

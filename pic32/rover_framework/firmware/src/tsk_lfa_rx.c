@@ -133,9 +133,8 @@ void LFA_I2C_INIT() {
     LFA_I2C_BankA();
     LFA_I2C_BankB();
     LFA_I2C_IRPower();
-    
-    if(I2C1STATbits.BCL || I2C1STATbits.IWCOL)
-    {
+
+    if (I2C1STATbits.BCL || I2C1STATbits.IWCOL) {
         sendGPIOError(ERR_I2C_BUS_COLLISION);
     }
 
@@ -201,19 +200,17 @@ void LFA_RX_Tasks(void) {
     sendGPIOStatus(STAT_LFA_TASK_ENTER);
 
     LFA_I2C_GetByte();
-    
-    if(I2C1STATbits.BCL || I2C1STATbits.IWCOL)
-    {
+
+    if (I2C1STATbits.BCL || I2C1STATbits.IWCOL) {
         sendGPIOError(ERR_I2C_BUS_COLLISION);
     }
 
     int qsendStat = xQueueSend(lfa_rx_queue, &lfa_rx_i2c_buf, 0);
-    
-    if(qsendStat != pdTRUE)
-    {
+
+    if (qsendStat != pdTRUE) {
         //sendGPIOError(ERR_BAD_MQ_SEND);
     }
-    
+
     sendLFAStatus(lfa_rx_i2c_buf);
 
     vTaskDelay(50);

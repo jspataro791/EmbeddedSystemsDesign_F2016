@@ -14,8 +14,8 @@
 extern "C" {
 #endif
 
-    void DEBUG_Initialize();
-    void DEBUG_Tasks();
+	void DEBUG_Initialize();
+	void DEBUG_Tasks();
 
 
 #ifdef	__cplusplus

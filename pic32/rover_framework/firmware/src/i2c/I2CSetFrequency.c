@@ -24,7 +24,7 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 
 #include <peripheral/i2c.h>
 #include "I2CPrivate.h"
@@ -68,13 +68,12 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     Actual frequency selected may be slightly different than frequency 
     requested due to truncation error.  Actual frequency observed on the SCL
     line may be lower due to clock stretching.
-  *****************************************************************************/
+ *****************************************************************************/
 
-UINT32 I2CSetFrequency ( I2C_MODULE id, UINT32 sourceClock, UINT32 i2cClock )
-{
-	I2C_REGISTERS * const i2cRegisters = i2cBase[id];
+UINT32 I2CSetFrequency(I2C_MODULE id, UINT32 sourceClock, UINT32 i2cClock) {
+    I2C_REGISTERS * const i2cRegisters = i2cBase[id];
 
-	i2cRegisters->I2CxBRG = ( (sourceClock/i2cClock)/2 ) - 2;
+    i2cRegisters->I2CxBRG = ((sourceClock / i2cClock) / 2) - 2;
 
-	return( ( sourceClock/(i2cRegisters->I2CxBRG + 2) )/2 );
+    return ( (sourceClock / (i2cRegisters->I2CxBRG + 2)) / 2);
 }

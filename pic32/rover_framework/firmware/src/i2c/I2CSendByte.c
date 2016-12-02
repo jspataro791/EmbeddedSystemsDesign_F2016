@@ -24,7 +24,7 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 
 #include <peripheral/i2c.h>
 #include "I2CPrivate.h"
@@ -52,8 +52,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
   Returns:
     An I2C operation result indicating if the operation succeeded or if an error
     occured.
-    * I2C_SUCCESS     - The data has been buffered to be sent on the bus
-    * I2C_ERROR       - The transmitter was not ready to accept the data
+ * I2C_SUCCESS     - The data has been buffered to be sent on the bus
+ * I2C_ERROR       - The transmitter was not ready to accept the data
 
   Example:
     <code>
@@ -65,22 +65,18 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
   Remarks:
     This routine should be used by both master and slave transmitters.
-  *****************************************************************************/
+ *****************************************************************************/
 
-I2C_RESULT I2CSendByte ( I2C_MODULE id, BYTE data )
-{
-	I2C_REGISTERS * const i2cRegisters = i2cBase[id];
+I2C_RESULT I2CSendByte(I2C_MODULE id, BYTE data) {
+    I2C_REGISTERS * const i2cRegisters = i2cBase[id];
 
     // Send the byte
     i2cRegisters->I2CxTRN = data;
 
     // Check for collisions
-	if( i2cRegisters->I2CxSTAT & (_I2CSTAT_BCL_MASK|_I2CSTAT_IWCOL_MASK) )
-    {
-		return(I2C_MASTER_BUS_COLLISION); 
-    }
-	else
-    {
-		return(I2C_SUCCESS);
+    if (i2cRegisters->I2CxSTAT & (_I2CSTAT_BCL_MASK | _I2CSTAT_IWCOL_MASK)) {
+        return (I2C_MASTER_BUS_COLLISION);
+    } else {
+        return (I2C_SUCCESS);
     }
 }

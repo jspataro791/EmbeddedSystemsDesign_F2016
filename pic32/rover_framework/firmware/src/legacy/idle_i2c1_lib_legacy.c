@@ -42,18 +42,17 @@
 #ifdef _I2C1
 
 /************************************************************************
-*    Function Name:  IdleI2C1
-*    Description:    This routine generates wait condition intil I2C
-*                    bus is Idle.
-*    Parameters:     void
-*    Return Value:   void
-*************************************************************************/
+ *    Function Name:  IdleI2C1
+ *    Description:    This routine generates wait condition intil I2C
+ *                    bus is Idle.
+ *    Parameters:     void
+ *    Return Value:   void
+ *************************************************************************/
 
 
-void IdleI2C1(void)
-{
+void IdleI2C1(void) {
     /* Wait until I2C Bus is Inactive */
-    while(I2C1CONbits.SEN || I2C1CONbits.PEN || I2C1CONbits.RSEN || I2C1CONbits.RCEN || I2C1CONbits.ACKEN || I2C1STATbits.TRSTAT);
+    while (I2C1CONbits.SEN || I2C1CONbits.PEN || I2C1CONbits.RSEN || I2C1CONbits.RCEN || I2C1CONbits.ACKEN || I2C1STATbits.TRSTAT);
 }
 
 #endif

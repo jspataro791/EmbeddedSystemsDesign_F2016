@@ -236,4 +236,5 @@ build/default/debug/_ext/1360937237/tsk_wifly_rx.o:  \
 ../src/tsk_lfa_rx.h  \
 ../src/public_vars.h  \
  ../src/serialfsm.h  \
-../src/debug.h 
+ ../../../../third_party/rtos/FreeRTOS/Source/include/list.h  \
+ ../src/debug.h 

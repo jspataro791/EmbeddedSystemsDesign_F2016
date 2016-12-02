@@ -24,7 +24,7 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 
 #include <peripheral/i2c.h>
 #include "I2CPrivate.h"
@@ -61,23 +61,19 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
   Remarks:
     Only an I2C master can start a transfer on the bus.  The bus is considered
     "busy" after a start condition.
-  *****************************************************************************/
+ *****************************************************************************/
 
-I2C_RESULT I2CStart( I2C_MODULE id )
-{
-	I2C_REGISTERS * const i2cRegisters = i2cBase[id];
+I2C_RESULT I2CStart(I2C_MODULE id) {
+    I2C_REGISTERS * const i2cRegisters = i2cBase[id];
 
 
     // Enable the Start condition
     i2cRegisters->I2CxCONSET = _I2CCON_SEN_MASK;
 
     // Check for collisions
-	if(i2cRegisters->I2CxSTATbits.BCL)
-    {
-		return(I2C_MASTER_BUS_COLLISION); 
+    if (i2cRegisters->I2CxSTATbits.BCL) {
+        return (I2C_MASTER_BUS_COLLISION);
+    } else {
+        return (I2C_SUCCESS);
     }
-	else
-    {
-		return(I2C_SUCCESS);
-    }		
 }

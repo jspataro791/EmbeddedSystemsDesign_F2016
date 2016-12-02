@@ -20,32 +20,27 @@
 extern "C" {
 #endif
 
+	typedef enum {
+		/* Application's state machine's initial state. */
+		WIFLY_RX_STATE_INIT = 0,
+		WIFLY_RX_STATE_SERVICE_TASKS,
 
-typedef enum
-{
-	/* Application's state machine's initial state. */
-	WIFLY_RX_STATE_INIT=0,
-	WIFLY_RX_STATE_SERVICE_TASKS,
+		/* TODO: Define states used by the application state machine. */
 
-	/* TODO: Define states used by the application state machine. */
+	} WIFLY_RX_STATES;
 
-} WIFLY_RX_STATES;
+	typedef struct {
+		/* The application's current state */
+		WIFLY_RX_STATES state;
 
+		/* TODO: Define any additional data used by the application. */
 
-
-typedef struct
-{
-    /* The application's current state */
-    WIFLY_RX_STATES state;
-
-    /* TODO: Define any additional data used by the application. */
-
-} WIFLY_RX_DATA;
+	} WIFLY_RX_DATA;
 
 
-void WIFLY_RX_Initialize ( void );
+	void WIFLY_RX_Initialize(void);
 
-void WIFLY_RX_Tasks( void );
+	void WIFLY_RX_Tasks(void);
 
 
 #endif

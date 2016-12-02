@@ -18,35 +18,31 @@ extern "C" {
 
 #endif
 
-typedef enum
-{
-	/* Application's state machine's initial state. */
-	LFA_RX_STATE_INIT=0,
-	LFA_RX_STATE_SERVICE_TASKS,
+	typedef enum {
+		/* Application's state machine's initial state. */
+		LFA_RX_STATE_INIT = 0,
+		LFA_RX_STATE_SERVICE_TASKS,
 
-	/* TODO: Define states used by the application state machine. */
+		/* TODO: Define states used by the application state machine. */
 
-} LFA_RX_STATES;
+	} LFA_RX_STATES;
 
+	typedef struct {
+		/* The application's current state */
+		LFA_RX_STATES state;
 
+		/* TODO: Define any additional data used by the application. */
 
-typedef struct
-{
-    /* The application's current state */
-    LFA_RX_STATES state;
+	} LFA_RX_DATA;
 
-    /* TODO: Define any additional data used by the application. */
+	void LFA_RX_Initialize(void);
 
-} LFA_RX_DATA;
-
-void LFA_RX_Initialize ( void );
-
-void LFA_RX_Tasks( void );
+	void LFA_RX_Tasks(void);
 
 
 #endif /* _LFA_RX_H */
 
-//DOM-IGNORE-BEGIN
+	//DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }
 #endif

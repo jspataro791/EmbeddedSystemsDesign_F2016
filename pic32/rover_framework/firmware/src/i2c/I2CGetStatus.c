@@ -24,7 +24,7 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 
 #include <peripheral/i2c.h>
 #include "I2CPrivate.h"
@@ -62,31 +62,28 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     </code>
 
   Remarks:
-  *****************************************************************************/
+ *****************************************************************************/
 
-I2C_STATUS I2CGetStatus ( I2C_MODULE id )
-{
-	I2C_REGISTERS * const   i2cRegisters = i2cBase[id];
-    I2C_STATUS              status;
-    UINT32                  control;
+I2C_STATUS I2CGetStatus(I2C_MODULE id) {
+    I2C_REGISTERS * const i2cRegisters = i2cBase[id];
+    I2C_STATUS status;
+    UINT32 control;
 
     // Read the status and control registers
-    status  = i2cRegisters->I2CxSTAT;
+    status = i2cRegisters->I2CxSTAT;
     control = i2cRegisters->I2CxCON;
-    
+
     // Condition the "Start" flag so it does not get set until
     // the "Start" (or "Repeated Start") signal is complete.
-    if( control & (_I2CCON_SEN_MASK | _I2CCON_RSEN_MASK) )
-    {
+    if (control & (_I2CCON_SEN_MASK | _I2CCON_RSEN_MASK)) {
         status &= ~_I2CSTAT_S_MASK;
     }
 
     // Condition the "Stop" flag so it does not get set until
     // the "Stop" signal is complete.
-    if( control & _I2CCON_PEN_MASK )
-    {
+    if (control & _I2CCON_PEN_MASK) {
         status &= ~_I2CSTAT_P_MASK;
     }
 
-	return(status);
+    return (status);
 }

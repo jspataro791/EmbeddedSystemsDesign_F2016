@@ -124,11 +124,11 @@ SYSTEM_OBJECTS sysObj;
 //<editor-fold defaultstate="collapsed" desc="SYS_DEVCON Initialization Data">
 /*******************************************************************************
   Device Control System Service Initialization Data
-*/
+ */
 
-const SYS_DEVCON_INIT sysDevconInit =
-{
-    .moduleInit = {0},
+const SYS_DEVCON_INIT sysDevconInit = {
+    .moduleInit =
+    {0},
 };
 
 // </editor-fold>
@@ -163,27 +163,26 @@ const SYS_DEVCON_INIT sysDevconInit =
     See prototype in system/common/sys_module.h.
  */
 
-void SYS_Initialize ( void* data )
-{
+void SYS_Initialize(void* data) {
     /* init gpio for debug */
     initGPIODebug();
-    
+
     /* Core Processor Initialization */
-    SYS_CLK_Initialize( NULL );
-    sysObj.sysDevcon = SYS_DEVCON_Initialize(SYS_DEVCON_INDEX_0, (SYS_MODULE_INIT*)&sysDevconInit);
+    SYS_CLK_Initialize(NULL);
+    sysObj.sysDevcon = SYS_DEVCON_Initialize(SYS_DEVCON_INDEX_0, (SYS_MODULE_INIT*) & sysDevconInit);
     SYS_DEVCON_PerformanceConfig(SYS_CLK_SystemFrequencyGet());
     SYS_DEVCON_JTAGDisable();
     SYS_PORTS_Initialize();
 
     /* Initialize Drivers */
-    sysObj.drvUsart0 = DRV_USART_Initialize(DRV_USART_INDEX_0, (SYS_MODULE_INIT *)NULL);
-    sysObj.drvUsart1 = DRV_USART_Initialize(DRV_USART_INDEX_1, (SYS_MODULE_INIT *)NULL);
+    sysObj.drvUsart0 = DRV_USART_Initialize(DRV_USART_INDEX_0, (SYS_MODULE_INIT *) NULL);
+    sysObj.drvUsart1 = DRV_USART_Initialize(DRV_USART_INDEX_1, (SYS_MODULE_INIT *) NULL);
     SYS_INT_VectorPrioritySet(INT_VECTOR_UART1, INT_PRIORITY_LEVEL1);
     SYS_INT_VectorSubprioritySet(INT_VECTOR_UART1, INT_SUBPRIORITY_LEVEL0);
     SYS_INT_VectorPrioritySet(INT_VECTOR_UART2, INT_PRIORITY_LEVEL1);
     SYS_INT_VectorSubprioritySet(INT_VECTOR_UART2, INT_SUBPRIORITY_LEVEL0);
-    
-    
+
+
     /* Custom inits */
     initPublicQueues();
     initRvrStatus();
@@ -193,7 +192,7 @@ void SYS_Initialize ( void* data )
 
     /*** Interrupt Service Initialization Code ***/
     SYS_INT_Initialize();
-  
+
     /* Initialize Middleware */
 
 
@@ -204,14 +203,14 @@ void SYS_Initialize ( void* data )
     RVRStatus_Initialize();
     DEBUG_Initialize();
     MOTOR_CTRL_Initialize();
-    
+
     /* post init GPIO status */
     sendGPIOStatus(STAT_SYS_INIT);
-    
+
 }
 
 
 /*******************************************************************************
  End of File
-*/
+ */
 

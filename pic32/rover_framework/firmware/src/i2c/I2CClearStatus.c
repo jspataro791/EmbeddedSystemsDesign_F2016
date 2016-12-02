@@ -24,7 +24,7 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 
 #include <peripheral/i2c.h>
 #include "I2CPrivate.h"
@@ -64,11 +64,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
   Remarks:
     Some status conditions are automatically cleared by hardware and it is not
     necessary for software to clear them.
-  *****************************************************************************/
+ *****************************************************************************/
 
-void I2CClearStatus ( I2C_MODULE id, I2C_STATUS status )
-{
-	I2C_REGISTERS * const i2cRegisters = i2cBase[id];
+void I2CClearStatus(I2C_MODULE id, I2C_STATUS status) {
+    I2C_REGISTERS * const i2cRegisters = i2cBase[id];
 
-	i2cRegisters->I2CxSTATCLR = status;
+    i2cRegisters->I2CxSTATCLR = status;
 }

@@ -12,8 +12,8 @@
 extern "C" {
 #endif
 
-    void RVRStatus_Initialize();
-    void RVRStatus_Tasks();
+	void RVRStatus_Initialize();
+	void RVRStatus_Tasks();
 
 
 #ifdef	__cplusplus

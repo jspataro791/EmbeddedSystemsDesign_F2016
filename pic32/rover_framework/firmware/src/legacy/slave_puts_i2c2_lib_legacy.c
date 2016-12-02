@@ -42,25 +42,23 @@
 #ifdef _I2C2
 
 /**************************************************************************
-*    Function Name:  SlaveputsI2C2
-*    Description:    This routine is used to write out a string to the
-*                    I2C bus.If write collision occurs,-3 is sent.If
-*                    string is written and null char reached, 0 is returned.
-*    Parameters:     unsigned char * : wrptr
-*    Return Value:   unsigned int
-****************************************************************************/
+ *    Function Name:  SlaveputsI2C2
+ *    Description:    This routine is used to write out a string to the
+ *                    I2C bus.If write collision occurs,-3 is sent.If
+ *                    string is written and null char reached, 0 is returned.
+ *    Parameters:     unsigned char * : wrptr
+ *    Return Value:   unsigned int
+ ****************************************************************************/
 
 
-unsigned int SlaveputsI2C2(unsigned char * wrptr)
-{
-    I2C2CONbits.STREN = 1;            /* SCL clock stretch enable bit */
-    while(*wrptr)                /* transmit data until null char */
-    {
-        SlaveputcI2C2(*wrptr++);         /* Send a byte */
-    	while(I2C2STATbits.TBF);         /* wait till the transmit buffer is clear */
-        while(!IFS1bits.I2C2SIF);     /* Wait till the ACK from master is received */
+unsigned int SlaveputsI2C2(unsigned char * wrptr) {
+    I2C2CONbits.STREN = 1; /* SCL clock stretch enable bit */
+    while (*wrptr) /* transmit data until null char */ {
+        SlaveputcI2C2(*wrptr++); /* Send a byte */
+        while (I2C2STATbits.TBF); /* wait till the transmit buffer is clear */
+        while (!IFS1bits.I2C2SIF); /* Wait till the ACK from master is received */
     }
-    return 0;                        /* null char was reached */
+    return 0; /* null char was reached */
 }
 
 #endif

@@ -22,7 +22,7 @@
     object handle.
     
     Static single-open interfaces also eliminate the need for the open handle.
-*******************************************************************************/
+ *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -46,30 +46,30 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 //DOM-IGNORE-END
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 
-    extern "C" {
+extern "C" {
 
 #endif
-// DOM-IGNORE-END 
+	// DOM-IGNORE-END 
 
 
 #ifndef _SYS_CLK_STATIC_H
 #define _SYS_CLK_STATIC_H
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: SYS CLK Module Initialization Routine (Static Version)
-// *****************************************************************************
-// *****************************************************************************
+	// *****************************************************************************
+	// *****************************************************************************
+	// Section: SYS CLK Module Initialization Routine (Static Version)
+	// *****************************************************************************
+	// *****************************************************************************
 
 #endif // #ifndef _SYS_CLK_STATIC_H
 
-//DOM-IGNORE-BEGIN
+	//DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }
 #endif
@@ -78,4 +78,4 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 /*******************************************************************************
  End of File
-*/
+ */

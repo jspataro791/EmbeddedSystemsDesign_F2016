@@ -24,7 +24,7 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 
 #include <peripheral/i2c.h>
 #include "I2CPrivate.h"
@@ -49,8 +49,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
   Returns:
     Boolean identifying if the byte received is data or an address byte
-    * TRUE    - If the byte received is an address byte
-    * FALSE   - If the byte received is a data byte
+ * TRUE    - If the byte received is an address byte
+ * FALSE   - If the byte received is a data byte
         
   Example:
     <code>
@@ -70,11 +70,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
   Remarks:
     This routine should only be used by slave receivers.
-  *****************************************************************************/
+ *****************************************************************************/
 
-BOOL I2CReceivedByteIsAnAddress ( I2C_MODULE id )
-{
-	I2C_REGISTERS * const i2cRegisters = i2cBase[id];
+BOOL I2CReceivedByteIsAnAddress(I2C_MODULE id) {
+    I2C_REGISTERS * const i2cRegisters = i2cBase[id];
 
-	return(!i2cRegisters->I2CxSTATbits.D_A);
+    return (!i2cRegisters->I2CxSTATbits.D_A);
 }

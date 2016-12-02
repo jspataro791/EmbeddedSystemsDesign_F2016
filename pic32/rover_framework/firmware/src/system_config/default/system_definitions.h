@@ -76,48 +76,48 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 extern "C" {
 
 #endif
-// DOM-IGNORE-END 
+	// DOM-IGNORE-END 
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Type Definitions
-// *****************************************************************************
-// *****************************************************************************
+	// *****************************************************************************
+	// *****************************************************************************
+	// Section: Type Definitions
+	// *****************************************************************************
+	// *****************************************************************************
 
-// *****************************************************************************
-/* System Objects
+	// *****************************************************************************
 
-  Summary:
-    Structure holding the system's object handles
+	/* System Objects
 
-  Description:
-    This structure contains the object handles for all objects in the
-    MPLAB Harmony project's system configuration.
+	  Summary:
+	    Structure holding the system's object handles
 
-  Remarks:
-    These handles are returned from the "Initialize" functions for each module
-    and must be passed into the "Tasks" function for each module.
-*/
+	  Description:
+	    This structure contains the object handles for all objects in the
+	    MPLAB Harmony project's system configuration.
 
-typedef struct
-{
-    SYS_MODULE_OBJ  sysDevcon;
-    SYS_MODULE_OBJ  drvUsart0;
-    SYS_MODULE_OBJ  drvUsart1;
+	  Remarks:
+	    These handles are returned from the "Initialize" functions for each module
+	    and must be passed into the "Tasks" function for each module.
+	 */
 
-} SYSTEM_OBJECTS;
+	typedef struct {
+		SYS_MODULE_OBJ sysDevcon;
+		SYS_MODULE_OBJ drvUsart0;
+		SYS_MODULE_OBJ drvUsart1;
 
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: extern declarations
-// *****************************************************************************
-// *****************************************************************************
-
-extern SYSTEM_OBJECTS sysObj;
+	} SYSTEM_OBJECTS;
 
 
-//DOM-IGNORE-BEGIN
+	// *****************************************************************************
+	// *****************************************************************************
+	// Section: extern declarations
+	// *****************************************************************************
+	// *****************************************************************************
+
+	extern SYSTEM_OBJECTS sysObj;
+
+
+	//DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }
 #endif
@@ -126,5 +126,5 @@ extern SYSTEM_OBJECTS sysObj;
 #endif /* _SYS_DEFINITIONS_H */
 /*******************************************************************************
  End of File
-*/
+ */
 

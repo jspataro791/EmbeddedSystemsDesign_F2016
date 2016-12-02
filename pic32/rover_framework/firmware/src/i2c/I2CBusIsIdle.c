@@ -24,7 +24,7 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 
 #include <peripheral/i2c.h>
 #include "I2CPrivate.h"
@@ -48,8 +48,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
   Returns:
     Boolean identifying if the bus is idle or not
-    * TRUE    - The bus is currently idle.  It is OK to start a master transfer.
-    * FALSE   - The bus is currently busy.  Do not start a master transfer.
+ * TRUE    - The bus is currently idle.  It is OK to start a master transfer.
+ * FALSE   - The bus is currently busy.  Do not start a master transfer.
 
   Example:
     <code>
@@ -64,13 +64,12 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     arbitration loss cannot occur.  Two or more masters can start a transfer 
     within the minimum start signal hold time.  (Refer to the I2C specification
     for a definition of the minimum start condition hold time.)
-  *****************************************************************************/
+ *****************************************************************************/
 
-BOOL I2CBusIsIdle( I2C_MODULE id )
-{
-	I2C_REGISTERS * const i2cRegisters = i2cBase[id];
-    
+BOOL I2CBusIsIdle(I2C_MODULE id) {
+    I2C_REGISTERS * const i2cRegisters = i2cBase[id];
+
     // Check the status of the Start & Stop bits to determine if the bus is idle.
-    return ( (i2cRegisters->I2CxSTATbits.S == 0 && i2cRegisters->I2CxSTATbits.P == 0 ) ||
-             (i2cRegisters->I2CxSTATbits.S == 0 && i2cRegisters->I2CxSTATbits.P == 1 )   );
+    return ( (i2cRegisters->I2CxSTATbits.S == 0 && i2cRegisters->I2CxSTATbits.P == 0) ||
+            (i2cRegisters->I2CxSTATbits.S == 0 && i2cRegisters->I2CxSTATbits.P == 1));
 }

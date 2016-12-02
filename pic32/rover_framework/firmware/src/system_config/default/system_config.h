@@ -19,7 +19,7 @@
     until used by another MPLAB Harmony module or application.
 
     Created with MPLAB Harmony Version 1.08.01
-*******************************************************************************/
+ *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -43,7 +43,7 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 // DOM-IGNORE-END
 
 #ifndef _SYSTEM_CONFIG_H
@@ -56,7 +56,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 /*  This section Includes other configuration headers necessary to completely
     define this configuration.
-*/
+ */
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -64,45 +64,45 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 extern "C" {
 
 #endif
-// DOM-IGNORE-END
+	// DOM-IGNORE-END
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: System Service Configuration
-// *****************************************************************************
-// *****************************************************************************
-// *****************************************************************************
-/* Common System Service Configuration Options
-*/
+	// *****************************************************************************
+	// *****************************************************************************
+	// Section: System Service Configuration
+	// *****************************************************************************
+	// *****************************************************************************
+	// *****************************************************************************
+	/* Common System Service Configuration Options
+	 */
 #define SYS_VERSION_STR           "1.08.01"
 #define SYS_VERSION               10801
 
-// *****************************************************************************
-/* Clock System Service Configuration Options
-*/
+	// *****************************************************************************
+	/* Clock System Service Configuration Options
+	 */
 #define SYS_CLK_FREQ                        80000000ul
 #define SYS_CLK_BUS_PERIPHERAL_1            80000000ul
 #define SYS_CLK_UPLL_BEFORE_DIV2_FREQ       48000000ul
 #define SYS_CLK_CONFIG_PRIMARY_XTAL         8000000ul
 #define SYS_CLK_CONFIG_SECONDARY_XTAL       0ul
-   
-/*** Interrupt System Service Configuration ***/
+
+	/*** Interrupt System Service Configuration ***/
 #define SYS_INT                     true
 
-/*** Ports System Service Configuration ***/
+	/*** Ports System Service Configuration ***/
 #define SYS_PORT_AD1PCFG        ~0xffff
 #define SYS_PORT_CNPUE          0x0
 #define SYS_PORT_CNEN           0x0
 
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Driver Configuration
-// *****************************************************************************
-// *****************************************************************************
-// *****************************************************************************
-/* USART Driver Configuration Options
-*/
+	// *****************************************************************************
+	// *****************************************************************************
+	// Section: Driver Configuration
+	// *****************************************************************************
+	// *****************************************************************************
+	// *****************************************************************************
+	/* USART Driver Configuration Options
+	 */
 #define DRV_USART_INSTANCES_NUMBER                  2
 #define DRV_USART_CLIENTS_NUMBER                    2
 #define DRV_USART_INTERRUPT_MODE                    true
@@ -112,29 +112,29 @@ extern "C" {
 #define DRV_USART_SUPPORT_TRANSMIT_DMA              false
 #define DRV_USART_SUPPORT_RECEIVE_DMA               false
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Middleware & Other Library Configuration
-// *****************************************************************************
-// *****************************************************************************
-/*** OSAL Configuration ***/
+	// *****************************************************************************
+	// *****************************************************************************
+	// Section: Middleware & Other Library Configuration
+	// *****************************************************************************
+	// *****************************************************************************
+	/*** OSAL Configuration ***/
 #define OSAL_USE_RTOS          1
 
 
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Application Configuration
-// *****************************************************************************
-// *****************************************************************************
+	// *****************************************************************************
+	// *****************************************************************************
+	// Section: Application Configuration
+	// *****************************************************************************
+	// *****************************************************************************
 
-/*** Application Instance 0 Configuration ***/
+	/*** Application Instance 0 Configuration ***/
 
-/*** Application Instance 1 Configuration ***/
+	/*** Application Instance 1 Configuration ***/
 
-/*** Application Instance 2 Configuration ***/
+	/*** Application Instance 2 Configuration ***/
 
-//DOM-IGNORE-BEGIN
+	//DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }
 #endif
@@ -144,5 +144,5 @@ extern "C" {
 #endif // _SYSTEM_CONFIG_H
 /*******************************************************************************
  End of File
-*/
+ */
 

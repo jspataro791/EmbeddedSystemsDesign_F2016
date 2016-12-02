@@ -24,7 +24,7 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 
 #include <peripheral/i2c.h>
 #include "I2CPrivate.h"
@@ -58,22 +58,18 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
   Remarks:
     Only an I2C master that has already started a transfer can send a repeated-
     start condition.
-  *****************************************************************************/
+ *****************************************************************************/
 
-I2C_RESULT I2CRepeatStart ( I2C_MODULE id )
-{
-	I2C_REGISTERS * const i2cRegisters = i2cBase[id];
+I2C_RESULT I2CRepeatStart(I2C_MODULE id) {
+    I2C_REGISTERS * const i2cRegisters = i2cBase[id];
 
     // Send the repeated Start
-	i2cRegisters->I2CxCONSET = _I2CCON_RSEN_MASK;
-	
+    i2cRegisters->I2CxCONSET = _I2CCON_RSEN_MASK;
+
     // Check for collisions
-	if( i2cRegisters->I2CxSTAT & (_I2CSTAT_BCL_MASK|_I2CSTAT_IWCOL_MASK) )
-    {
-		return(I2C_MASTER_BUS_COLLISION); 
-    }
-	else
-    {
-		return(I2C_SUCCESS);
+    if (i2cRegisters->I2CxSTAT & (_I2CSTAT_BCL_MASK | _I2CSTAT_IWCOL_MASK)) {
+        return (I2C_MASTER_BUS_COLLISION);
+    } else {
+        return (I2C_SUCCESS);
     }
 }

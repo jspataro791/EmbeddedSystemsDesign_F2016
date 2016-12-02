@@ -24,7 +24,7 @@ INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
 CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+ *******************************************************************************/
 
 #include <peripheral/i2c.h>
 #include "I2CPrivate.h"
@@ -49,8 +49,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
   Returns:
     Boolean identifying if data is availble or not
-    * TRUE    - If the receiver has data available
-    * FALSE   - If the receiver does not have data availble
+ * TRUE    - If the receiver has data available
+ * FALSE   - If the receiver does not have data availble
     
   Example:
     <code>
@@ -62,11 +62,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
   Remarks:
     This routine should be used by both master and slave receivers.
-  *****************************************************************************/
+ *****************************************************************************/
 
-BOOL I2CReceivedDataIsAvailable ( I2C_MODULE id )
-{
-	I2C_REGISTERS * const i2cRegisters = i2cBase[id];
+BOOL I2CReceivedDataIsAvailable(I2C_MODULE id) {
+    I2C_REGISTERS * const i2cRegisters = i2cBase[id];
 
-	return(i2cRegisters->I2CxSTATbits.RBF);
+    return (i2cRegisters->I2CxSTATbits.RBF);
 }
