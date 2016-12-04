@@ -3,6 +3,7 @@
 
 # # IMPORTS ##
 from PyQt4 import Qt as qt
+from NodeList import *
 import numpy as np
 import serial
 import os
@@ -11,6 +12,7 @@ import time
 import datetime
 import threading
 import socketsvr
+import socket
 
 
 
@@ -31,7 +33,16 @@ GST_IP = "10.0.0.192"
 GST_PORT = 2000
 GST_SOCK_SRV = socketsvr.RoverSocketServer(GST_IP, GST_PORT, "GHOST")
 
+# Node view parameters
+horizontal_nodes = 10
+vertical_nodes = 10
+HORIZONTAL_PIXELS = 600
+VERTICAL_PIXELS = 600
 
+node_width = 30
+node_height = 30
+pacman = [0,0]
+ghost = [4,2]
 
 class MainApplication():
     
@@ -387,12 +398,103 @@ class TabDebug(qt.QWidget):
 
             self._line.clear()
             self._line.setText(repr(msg))
-        
-        
+
 class TabNodeView(qt.QWidget):
-    
     def __init__(self, parent=None):
         super(self.__class__, self).__init__(parent)
+        self.nodeList = NodeList()
+        self.nodeList.from_file('nodes2.txt')
+        self.pacman = pacman
+        self.ghost = ghost
+
+        try:
+            self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            self.s.bind(('',3000))
+            self.s.setblocking(0)
+        except socket.error as message:
+            if self.s:
+                self.s.close()
+            print ("Could not open Node socket: " + str(message))
+            sys.exit(1)
+        
+        UpdTimer = qt.QTimer(self)
+        UpdTimer.setInterval(50)
+        UpdTimer.setSingleShot(False)
+        UpdTimer.timeout.connect(self.updNodeData)
+        UpdTimer.start()
+
+        self.setup()
+
+    def updNodeData(self):
+        try:
+            data, address = self.s.recvfrom(1024)
+            if data:
+                self.pacman[0], self.pacman[1], self.ghost[0], self.ghost[1], = map(int, data.split(' '))
+                print(self.pacman, self.ghost)
+                self.update()
+        except socket.error:
+            pass
+
+    def setup(self):
+        self.setGeometry(0, 0, HORIZONTAL_PIXELS, VERTICAL_PIXELS)
+        self.setWindowTitle('Node List')
+        self.show()
+
+    def paintEvent(self, e):
+        my_node_painter = qt.QPainter()
+        my_rover_painter = qt.QPainter()
+        
+        my_node_painter.begin(self)
+        my_rover_painter.begin(self)
+        
+        self.draw_rovers(my_rover_painter)
+        self.draw_nodes(my_node_painter)
+        
+        my_node_painter.end()
+        my_rover_painter.end()
+
+    def draw_rovers(self, my_painter):
+        node_color = qt.QColor(255,255,255)
+        my_painter.fillRect(0, 0, horizontal_nodes * node_width, vertical_nodes * node_height, node_color)
+        for y in range(vertical_nodes):
+            for x in range(horizontal_nodes):
+                if self.pacman == [x,y]:
+                    print(time.time(),": Found pacman at ", self.pacman)
+                    node_color = qt.QColor(243,243,21)
+                elif self.ghost == [x,y]:
+                    print(time.time(),": Found ghost at ", self.ghost)
+                    node_color = qt.QColor(252,90,184)
+                else:
+                    node_color = qt.QColor(255,255,255)
+                my_painter.fillRect(x * node_width, y * node_height, node_width, node_height, node_color)
+
+    def draw_nodes(self, my_painter):
+        if self.nodeList is None:
+            return
+
+        for y in range(vertical_nodes):
+            for x in range(horizontal_nodes):
+                my_painter.setPen(qt.QColor(0, 0, 0))
+                my_painter.drawRect(x * node_width, y * node_height, node_width, node_height)
+                try:
+                    node = self.nodeList.coordinates['%d, %d' % (x, y)]
+                except:
+                    continue
+                mid_x = (x * node_width) + (node_width / 2)
+                mid_y = (y * node_height) + (node_height / 2)
+                my_painter.setPen(qt.QColor(255, 0, 0))
+                if node.neighbors['North'] is not None:
+                    # draw top half of a vertical line
+                    my_painter.drawLine(mid_x, y * node_height, mid_x, mid_y)
+                if node.neighbors['East'] is not None:
+                    # draw right half of horizontal line
+                    my_painter.drawLine(mid_x, mid_y, (x + 1) * node_width, mid_y)
+                if node.neighbors['South'] is not None:
+                    # draw bottom half of a vertical line
+                    my_painter.drawLine(mid_x, mid_y, mid_x, (y + 1) * node_height)
+                if node.neighbors['West'] is not None:
+                    # draw left half of horizontal line
+                    my_painter.drawLine(x * node_width, mid_y, mid_x, mid_y)
         
       
        
