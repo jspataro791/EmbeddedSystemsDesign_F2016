@@ -87,9 +87,9 @@ class Pathfinder(object):
         """
         orientation = start_orientation
         directions = []
-        for i in range(len(path)-1):
-            source = path[i]
-            destination = path[i+1]
+        for i in range(1, len(path)):
+            source = path[i-1]
+            destination = path[i]
             orientation = self.node_list.get_relative_direction(source, destination, orientation)
             directions.append(orientation)
         return directions
@@ -102,13 +102,20 @@ class Pathfinder(object):
                 return
         if self.ui_socket is None:
             return
-        self.ui_socket.send(command)
+        try:
+            self.ui_socket.send(command)
+        except:
+            pass
 
     def update_locations(self, locations):
         ghost_x = locations[0]
         ghost_y = locations[1]
         user_x = locations[2]
         user_y = locations[3]
+        #for each in range(len(locations)):
+        #    if each < 0:
+        #        print("NEGATIVE COORDINATE VALUE!!!")
+        #        raise Exception()
         self.last_node = self.current_node
         self.current_node = self.node_list.coordinates['%d, %d' % (ghost_x, ghost_y)]
         # update rover orientation, if this isn't our first move
