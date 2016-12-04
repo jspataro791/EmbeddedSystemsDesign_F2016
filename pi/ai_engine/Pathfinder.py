@@ -25,7 +25,11 @@ class Pathfinder(object):
         self.last_node = None
         self.current_node = None
         self.current_orientation  = 'North'
-        self.open_socket()
+        self.ui_socket = None
+        try:
+            self.open_socket()
+        except:
+            return
 
     def open_socket(self):
         self.ui_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -83,28 +87,45 @@ class Pathfinder(object):
         """
         orientation = start_orientation
         directions = []
-        for i in range(len(path)):
-            source = path[i]
-            destination = path[i+1]
+        for i in range(1, len(path)):
+            source = path[i-1]
+            destination = path[i]
             orientation = self.node_list.get_relative_direction(source, destination, orientation)
             directions.append(orientation)
         return directions
+
+    def send_command(self, command):
+        if self.ui_socket is None:
+            try:
+                self.open_socket()
+            except:
+                return
+        if self.ui_socket is None:
+            return
+        try:
+            self.ui_socket.send(command)
+        except:
+            pass
 
     def update_locations(self, locations):
         ghost_x = locations[0]
         ghost_y = locations[1]
         user_x = locations[2]
         user_y = locations[3]
+        for each in locations:
+            if each < 0:
+                print("NEGATIVE COORDINATE VALUE!!!")
+                raise Exception()
         self.last_node = self.current_node
-        self.current_node = Node(ghost_x, ghost_y)
+        self.current_node = self.node_list.coordinates['%d, %d' % (ghost_x, ghost_y)]
         # update rover orientation, if this isn't our first move
         if self.last_node is not None:
             self.current_orientation = self.node_list.get_relative_direction(self.last_node, self.current_node, self.current_orientation)
         # get the shortest path to the user rover
-        path = self.bfs(self.current_node, self.last_node, Node(user_x, user_y))
+        path = self.bfs(self.current_node, self.last_node, self.node_list.coordinates['%d, %d' % (user_x, user_y)])
         # translate the path into actual directions
         relative_path = self.get_relative_path(path, self.current_orientation)
-        self.ui_socket.send(relative_path[0])
+        self.send_command(relative_path[0])
 
     def captured(self):
         self.ui_socket.send('Captured')
@@ -114,7 +135,6 @@ class Pathfinder(object):
     def bfs(self, start_node, previous_node, destination_node):
         queue = []
         queue.append([start_node])
-        path = None
         while queue:
             path = queue.pop(0)
             my_node = path[-1]
@@ -130,7 +150,7 @@ class Pathfinder(object):
                 child_path = list(path)
                 child_path.append(each)
                 queue.append(child_path)
-        return path
+        return None
 
     def find_path(self, start_node, previous_node, destination_node):
         """
