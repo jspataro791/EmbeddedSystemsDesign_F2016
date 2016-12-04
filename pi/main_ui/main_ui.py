@@ -1,4 +1,3 @@
-
 #!/usr/bin/python2.7
 
 # # IMPORTS ##
@@ -430,7 +429,7 @@ class TabNodeView(qt.QWidget):
             data, address = self.s.recvfrom(1024)
             if data:
                 self.pacman[0], self.pacman[1], self.ghost[0], self.ghost[1], = map(int, data.split(' '))
-                print(self.pacman, self.ghost)
+                #print(self.pacman, self.ghost)
                 self.update()
         except socket.error:
             pass
@@ -459,10 +458,10 @@ class TabNodeView(qt.QWidget):
         for y in range(vertical_nodes):
             for x in range(horizontal_nodes):
                 if self.pacman == [x,y]:
-                    print(time.time(),": Found pacman at ", self.pacman)
+                    #print(time.time(),": Found pacman at ", self.pacman)
                     node_color = qt.QColor(243,243,21)
                 elif self.ghost == [x,y]:
-                    print(time.time(),": Found ghost at ", self.ghost)
+                    #print(time.time(),": Found ghost at ", self.ghost)
                     node_color = qt.QColor(252,90,184)
                 else:
                     node_color = qt.QColor(255,255,255)
