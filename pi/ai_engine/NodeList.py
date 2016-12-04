@@ -176,6 +176,8 @@ class NodeList(object):
         if orientation == final_orientation:
             return 'Straight'
         else:
+            print orientation
+            print final_orientation
             return direction[orientation][final_orientation]
 
 
