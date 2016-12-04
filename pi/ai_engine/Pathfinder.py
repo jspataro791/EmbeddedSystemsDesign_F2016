@@ -135,17 +135,23 @@ class Pathfinder(object):
         user_y = locations[3]
         for each in locations:
             if each < 0:
-                print("NEGATIVE COORDINATE VALUE!!!")
+                print('NEGATIVE COORDINATE VALUE!!!')
                 raise Exception()
+        if self.current_node is not None:
+            # make sure we're not dealing with a weird jitter
+            if self.node_list.get_orientation_from_to(self.current_node, self.node_list.coordinates['%d, %d' % (ghost_x, ghost_y)]) is None:
+                print('New node and old node are not adjacent!')
+                print('Gracefully skipping this update')
+                return
         # update viewer
         self.send_locations([locations[2], locations[3], locations[0], locations[1]])
-        # update internal variables
+        # update internal variables if position has changed
         if self.current_node != self.node_list.coordinates['%d, %d' % (ghost_x, ghost_y)]:
             self.last_node = self.current_node
             self.current_node = self.node_list.coordinates['%d, %d' % (ghost_x, ghost_y)]
-        # update rover orientation, if this isn't our first move
-        if self.last_node is not None:
-            self.current_orientation = self.node_list.get_orientation_from_to(self.last_node, self.current_node)
+            # update rover orientation, if this isn't our first move
+            if self.last_node is not None:
+                self.current_orientation = self.node_list.get_orientation_from_to(self.last_node, self.current_node)
         # get the shortest path to the user rover
         path = self.bfs(self.current_node, self.last_node, self.node_list.coordinates['%d, %d' % (user_x, user_y)])
         if path is None:
