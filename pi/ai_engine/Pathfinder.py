@@ -14,6 +14,7 @@ FLEE_START_TIME = None
 
 nodelist_file = 'nodes.txt'
 ui_port = 7668
+viewer_port = 3000
 host = '127.0.0.1'
 default_orientation = 'North'
 
@@ -26,14 +27,23 @@ class Pathfinder(object):
         self.current_node = None
         self.current_orientation  = 'North'
         self.ui_socket = None
+        self.viewer_socket = None
         try:
-            self.open_socket()
+            self.open_ui_socket()
         except:
-            return
+            self.ui_socket = None
+        try:
+            self.open_viewer_socket()
+        except:
+            self.viewer_socket = None
 
-    def open_socket(self):
+    def open_ui_socket(self):
         self.ui_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.ui_socket.connect((host,ui_port))
+        self.ui_socket.connect((host, ui_port))
+
+    def open_viewer_socket(self):
+        self.viewer_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.viewer_socket.connect((host, viewer_port))
 
     @staticmethod
     def get_estimated_cost(start_node, destination_node):
@@ -76,34 +86,46 @@ class Pathfinder(object):
 
     def get_relative_path(self, path, start_orientation):
         """
-        Given a list of nodes and a starting orientation, returns a list of turning directions (straight, left, or
+        Given a list of nodes, returns a list of turning directions (straight, left, or
         right).
         :param path: list of nodes.
         :type path: list
-        :param start_orientation: Starting orientation ('Straight', 'Left' or 'Right'.)
-        :type start_orientation: str
         :return: List of turns.
         :rtype: list
         """
-        orientation = start_orientation
         directions = []
+        orientation = start_orientation
         for i in range(1, len(path)):
             source = path[i-1]
             destination = path[i]
-            orientation = self.node_list.get_relative_direction(source, destination, orientation)
-            directions.append(orientation)
+            direction = self.node_list.get_relative_direction(source, destination, orientation)
+            orientation = self.node_list.get_orientation_from_to(source, destination)
+            directions.append(direction)
         return directions
 
     def send_command(self, command):
         if self.ui_socket is None:
             try:
-                self.open_socket()
+                self.open_ui_socket()
             except:
                 return
         if self.ui_socket is None:
             return
         try:
             self.ui_socket.send(command)
+        except:
+            pass
+
+    def send_locations(self, locations):
+        if self.viewer_socket is None:
+            try:
+                self.open_viewer_socket()
+            except:
+                return
+        if self.viewer_socket is None:
+            return
+        try:
+            self.viewer_socket.send(' '.join([str(x) for x in locations]))
         except:
             pass
 
@@ -116,6 +138,9 @@ class Pathfinder(object):
             if each < 0:
                 print("NEGATIVE COORDINATE VALUE!!!")
                 raise Exception()
+        # update viewer
+        self.send_locations([locations[2], locations[3], locations[0], locations[1]])
+        # update internal variables
         self.last_node = self.current_node
         self.current_node = self.node_list.coordinates['%d, %d' % (ghost_x, ghost_y)]
         # update rover orientation, if this isn't our first move
@@ -136,6 +161,7 @@ class Pathfinder(object):
         self.ui_socket = None # to make sure an exception is thrown if any more communication is attempted
 
     def bfs(self, start_node, previous_node, destination_node):
+        #self.current_orientation = self.node_list.get_orientation_from_to(previous_node, start_node)
         queue = []
         queue.append([start_node])
         while queue:
