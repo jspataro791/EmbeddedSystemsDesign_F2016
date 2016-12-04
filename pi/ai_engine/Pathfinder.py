@@ -106,6 +106,11 @@ class Pathfinder(object):
         relative_path = self.get_relative_path(path, self.current_orientation)
         self.ui_socket.send(relative_path[0])
 
+    def captured(self):
+        self.ui_socket.send('Captured')
+        self.ui_socket.close()
+        self.ui_socket = None # to make sure an exception is thrown if any more communication is attempted
+
     def bfs(self, start_node, previous_node, destination_node):
         queue = []
         queue.append([start_node])
@@ -115,7 +120,13 @@ class Pathfinder(object):
             my_node = path[-1]
             if my_node == destination_node:
                 return path
-            for each in [x for x in my_node.neighbors.values() if x is not None]:
+            # get neighbors
+            candidates = [x for x in my_node.neighbors.values() if x is not None]
+            # remove previous node from neighbors, because we can't turn 180
+            if my_node == start_node and previous_node is not None:
+                candidates.remove(previous_node)
+            # add a branch to explore for each child node
+            for each in candidates:
                 child_path = list(path)
                 child_path.append(each)
                 queue.append(child_path)
@@ -179,8 +190,10 @@ class Pathfinder(object):
 
 
 def main():
-    pass
-
+    # p = Pathfinder()
+    # p.node_list.from_file('nodes2.txt')
+    # p.current_orientation = 'East'
+    # p.update_locations([0, 0, 4, 5])
 
 if __name__ == '__main__':
     main()
