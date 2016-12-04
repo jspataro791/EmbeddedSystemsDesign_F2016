@@ -59,8 +59,8 @@ corner2 = Corner() # Corner 2 Object for bottom right, ID 1 in data
 #
 #Keep track of ghost and user rover's location, node, and caught status
 class Rover:
-	X = 0
-	Y = 0
+	X = None
+	Y = None
 	nX = -1
 	nY = -1
 	C = False
@@ -166,12 +166,12 @@ def checkForCapture():
 		if(abs(ghost.X - user.X) < CAUGHT_DIST and abs(ghost.Y - user.Y) < CAUGHT_DIST):
 			user.C = True
 			print "Captured"
+			pathfinder.captured()
 
 		else:
 			user.C = False
 			print "Not Captured"
-		
-s = raw_input("Press Enter To Begin")
+			
 pathfinder = Pathfinder()
 # Wait for blocks #
 while 1:
@@ -185,7 +185,9 @@ while 1:
 		print "Raw Data:"
 		print '[BLOCK_TYPE=%d SIG=%d X=%3d Y=%3d WIDTH=%3d HEIGHT=%3d]' % (blocks[index].type, blocks[index].signature, blocks[index].x, blocks[index].y, blocks[index].width, blocks[index].height)
 		convertRawData(index)
-		checkForCapture()
+		if(user.nX is not None and ghost.nX is not None){
+			checkForCapture()
+		}
 		d = [ghost.nX, ghost.nY, user.nX, user.nY]
 		pathfinder.update_locations(d)
 

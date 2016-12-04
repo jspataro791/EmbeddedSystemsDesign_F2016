@@ -4,7 +4,7 @@
 #
 # Created by: Benjamin M. Singleton
 # Created: 10-10-2016
-# Modified: 10-18-2016
+# Modified: 12-04-2016
 
 
 class Node(object):
@@ -155,15 +155,19 @@ class NodeList(object):
         """
         direction = {}
         direction['North'] = {}
+        direction['North']['North'] = 'Straight'
         direction['North']['East'] = 'Right'
         direction['North']['West'] = 'Left'
         direction['East'] = {}
+        direction['East']['East'] = 'Straight'
         direction['East']['North'] = 'Left'
         direction['East']['South'] = 'Right'
         direction['South'] = {}
+        direction['South']['South'] = 'Straight'
         direction['South']['East'] = 'Left'
         direction['South']['West'] = 'Right'
         direction['West'] = {}
+        direction['West']['West'] = 'Straight'
         direction['West']['South'] = 'Left'
         direction['West']['North'] = 'Right'
         if type(orientation) != str or orientation not in ['North', 'East', 'South', 'West']:
@@ -177,8 +181,10 @@ class NodeList(object):
 
 def main():
     my_nodelist = NodeList()
-    my_nodelist.from_file('nodes.txt')
-    print(my_nodelist)
+    my_nodelist.generate_grid(6)
+    my_nodelist.save_to_file('nodes3.txt')
+    # my_nodelist.from_file('nodes.txt')
+    # print(my_nodelist)
 
 
 if __name__ == '__main__':
