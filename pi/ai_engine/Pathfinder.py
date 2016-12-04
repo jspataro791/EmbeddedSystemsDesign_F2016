@@ -42,8 +42,7 @@ class Pathfinder(object):
         self.ui_socket.connect((host, ui_port))
 
     def open_viewer_socket(self):
-        self.viewer_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.viewer_socket.connect((host, viewer_port))
+        self.viewer_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     @staticmethod
     def get_estimated_cost(start_node, destination_node):
@@ -125,7 +124,7 @@ class Pathfinder(object):
         if self.viewer_socket is None:
             return
         try:
-            self.viewer_socket.send(' '.join([str(x) for x in locations]))
+            self.viewer_socket.sendto(' '.join([str(x) for x in locations]), (host, viewer_port))
         except:
             pass
 
