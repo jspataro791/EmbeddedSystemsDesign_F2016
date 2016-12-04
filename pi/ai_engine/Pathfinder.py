@@ -112,10 +112,10 @@ class Pathfinder(object):
         ghost_y = locations[1]
         user_x = locations[2]
         user_y = locations[3]
-        #for each in range(len(locations)):
-        #    if each < 0:
-        #        print("NEGATIVE COORDINATE VALUE!!!")
-        #        raise Exception()
+        for each in locations:
+            if each < 0:
+                print("NEGATIVE COORDINATE VALUE!!!")
+                raise Exception()
         self.last_node = self.current_node
         self.current_node = self.node_list.coordinates['%d, %d' % (ghost_x, ghost_y)]
         # update rover orientation, if this isn't our first move
