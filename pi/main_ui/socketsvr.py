@@ -161,13 +161,6 @@ class RoverDataObj():
         
     def __repr__(self):
         
-        global TX_START_SEQ
-        global TX_MSG_LENGTH
-        global TX_SPD_CHAR
-        global TX_DIR_CHAR
-        global TX_DBG_CHAR
-        global TX_END_CHAR
-        global TX_END_SEQ
         msg = (TX_START_SEQ +  TX_MSG_LENGTH + TX_SPD_CHAR + chr(self._spd) + TX_DIR_CHAR 
                 + chr(self._dir) + TX_DBG_CHAR + chr(self._debug) + TX_END_CHAR + TX_END_SEQ)
         return msg

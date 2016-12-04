@@ -70,7 +70,7 @@ class MainWindow(qt.QMainWindow):
        self.setGeometry(MAINWIN_DEF_LOC_X, MAINWIN_DEF_LOC_Y, MAINWIN_DEF_SIZE_X, MAINWIN_DEF_SIZE_Y)
        self.setWindowTitle("Embedded Main Window")
        self.setCentralWidget(self._main)
-       self.showMaximized()
+       self.setWindowIcon(qt.QIcon('graphics/pacman.png'))
        
        self.printer = socketsvr.PRINT
        self.printer.setCallback(self._debugConsole.addMsgEvent)
@@ -101,7 +101,7 @@ class TabbedView(qt.QTabWidget):
         self._dbg = TabDebug(self)
         self._node = TabNodeView(self)
         
-        self.addTab(self._ctrl, "PACMAN Control")
+        self.addTab(self._ctrl, qt.QIcon('graphics/pacman.png'), "PACMAN Control")
         self.addTab(self._dbg, "Debugging")
         self.addTab(self._node, "Node View")
        
@@ -111,6 +111,7 @@ class TabControl(qt.QWidget):
     
     def __init__(self, parent=None):
         super(TabControl, self).__init__(parent) 
+        
         
         self._mainLayout = qt.QVBoxLayout()
                 
@@ -169,8 +170,7 @@ class TabControl(qt.QWidget):
         if self._started and self._dirStat != "LEFT":
             self.util_setButtonColors("LEFT")
             self.window()._debugConsole.addMsgEvent("Left")
-            global PAC_DATA_OBJ
-            global PAC_SOCK_SRV
+            global PAC_DATA_OBJ,PAC_SOCK_SRV
             PAC_DATA_OBJ.setDir("LEFT")
             PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))
         
@@ -178,8 +178,7 @@ class TabControl(qt.QWidget):
         if self._started and self._dirStat != "RIGHT":
             self.util_setButtonColors("RIGHT")
             self.window()._debugConsole.addMsgEvent("Right")
-            global PAC_DATA_OBJ
-            global PAC_SOCK_SRV
+            global PAC_DATA_OBJ,PAC_SOCK_SRV
             PAC_DATA_OBJ.setDir("RIGHT")
             PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))
         
@@ -187,8 +186,7 @@ class TabControl(qt.QWidget):
         if self._started and self._dirStat != "STRAIGHT":
             self.util_setButtonColors("STRAIGHT")
             self.window()._debugConsole.addMsgEvent("Straight")
-            global PAC_DATA_OBJ
-            global PAC_SOCK_SRV
+            global PAC_DATA_OBJ,PAC_SOCK_SRV
             PAC_DATA_OBJ.setDir("STRAIGHT")
             PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))
         
@@ -196,6 +194,7 @@ class TabControl(qt.QWidget):
         
         if not self._started:
             self.window()._debugConsole.addMsgEvent("STARTING!")
+            global PAC_DATA_OBJ,PAC_SOCK_SRV
             PAC_DATA_OBJ.setSpeed(16)
             PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))
             self._started = True
@@ -204,12 +203,14 @@ class TabControl(qt.QWidget):
         
         if self._started:
             self.window()._debugConsole.addMsgEvent("STOPPING!")
+            global PAC_DATA_OBJ,PAC_SOCK_SRV
             PAC_DATA_OBJ.setSpeed(0)
             PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))
             self._started = False
             
     def reconnect(self):
         
+        global GST_SOCK_SRV,PAC_SOCK_SRV
         PAC_SOCK_SRV.reconnect()
         GST_SOCK_SRV.reconnect()
             
@@ -394,9 +395,7 @@ class TabNodeView(qt.QWidget):
     def __init__(self, parent=None):
         super(self.__class__, self).__init__(parent)
         
-        
-
-        
+      
        
 if __name__ == "__main__":
     
