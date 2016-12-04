@@ -120,7 +120,7 @@ class Pathfinder(object):
         self.current_node = self.node_list.coordinates['%d, %d' % (ghost_x, ghost_y)]
         # update rover orientation, if this isn't our first move
         if self.last_node is not None:
-            self.current_orientation = self.node_list.get_relative_direction(self.last_node, self.current_node, self.current_orientation)
+            self.current_orientation = self.node_list.get_orientation_from_to(self.last_node, self.current_node)
         # get the shortest path to the user rover
         path = self.bfs(self.current_node, self.last_node, self.node_list.coordinates['%d, %d' % (user_x, user_y)])
         if path is None:
