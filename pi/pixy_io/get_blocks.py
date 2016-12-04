@@ -18,6 +18,8 @@ import time
 from pixy import *
 from ctypes import *
 
+from Pathfinder import *
+
 # Initialize Pixy Interpreter thread #
 pixy_init()
 
@@ -35,11 +37,11 @@ BOARD_HEIGHT = 24
 #Flag to signal update
 UPDATE = False
 #Inches the corner markers are from the board
-DIST_MARKER_FROM_BOARD = 2 
+DIST_MARKER_FROM_BOARD = 0
 #Number of rows of nodes (5 gives one every 6")
-NUM_ROW = 5
+NUM_ROW = 6
 #Number of columns of nodes (5 gives one every 6") 
-NUM_COL = 5
+NUM_COL = 6
 #Distance required for ghost to capture user
 CAUGHT_DIST = 30
 
@@ -169,6 +171,8 @@ def checkForCapture():
 			user.C = False
 			print "Not Captured"
 		
+s = raw_input("Press Enter To Begin")
+pathfinder = Pathfinder()
 # Wait for blocks #
 while 1:
 
@@ -177,8 +181,11 @@ while 1:
   if count > 0:
     # Blocks found #
     for index in range (0, count):
+		print"Message Queue Size %d" % count
 		print "Raw Data:"
 		print '[BLOCK_TYPE=%d SIG=%d X=%3d Y=%3d WIDTH=%3d HEIGHT=%3d]' % (blocks[index].type, blocks[index].signature, blocks[index].x, blocks[index].y, blocks[index].width, blocks[index].height)
-		convertRawData(index);
+		convertRawData(index)
 		checkForCapture()
+		d = [ghost.nX, ghost.nY, user.nX, user.nY]
+		pathfinder.update_locations(d)
 
