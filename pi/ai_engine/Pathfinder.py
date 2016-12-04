@@ -109,6 +109,7 @@ class Pathfinder(object):
     def bfs(self, start_node, previous_node, destination_node):
         queue = []
         queue.append([start_node])
+        path = None
         while queue:
             path = queue.pop(0)
             my_node = path[-1]
@@ -118,6 +119,7 @@ class Pathfinder(object):
                 child_path = list(path)
                 child_path.append(each)
                 queue.append(child_path)
+        return path
 
     def find_path(self, start_node, previous_node, destination_node):
         """
