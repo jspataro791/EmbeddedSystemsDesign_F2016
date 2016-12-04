@@ -140,8 +140,9 @@ class Pathfinder(object):
         # update viewer
         self.send_locations([locations[2], locations[3], locations[0], locations[1]])
         # update internal variables
-        self.last_node = self.current_node
-        self.current_node = self.node_list.coordinates['%d, %d' % (ghost_x, ghost_y)]
+        if self.current_node != self.node_list.coordinates['%d, %d' % (ghost_x, ghost_y)]:
+            self.last_node = self.current_node
+            self.current_node = self.node_list.coordinates['%d, %d' % (ghost_x, ghost_y)]
         # update rover orientation, if this isn't our first move
         if self.last_node is not None:
             self.current_orientation = self.node_list.get_orientation_from_to(self.last_node, self.current_node)
