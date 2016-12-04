@@ -123,6 +123,9 @@ class Pathfinder(object):
             self.current_orientation = self.node_list.get_relative_direction(self.last_node, self.current_node, self.current_orientation)
         # get the shortest path to the user rover
         path = self.bfs(self.current_node, self.last_node, self.node_list.coordinates['%d, %d' % (user_x, user_y)])
+        if path is None:
+            print('Could not find path between (%d, %d) and (%d, %d)' % (ghost_x, ghost_y, user_x, user_y))
+            raise Exception()
         # translate the path into actual directions
         relative_path = self.get_relative_path(path, self.current_orientation)
         self.send_command(relative_path[0])
