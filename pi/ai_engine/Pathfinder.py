@@ -190,10 +190,7 @@ class Pathfinder(object):
 
 
 def main():
-    # p = Pathfinder()
-    # p.node_list.from_file('nodes2.txt')
-    # p.current_orientation = 'East'
-    # p.update_locations([0, 0, 4, 5])
+    pass
 
 if __name__ == '__main__':
     main()
