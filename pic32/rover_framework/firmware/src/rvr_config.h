@@ -33,11 +33,21 @@
 #define MAX_QUEUE_ITEM_SIZE  32
 #define MAX_QUEUE_LENGTH      64
 
+//* LFA CONTROL *//
+#define LFA_STRAIGHT 0x18
+#define LFA_TWOWAY 0xFF
+#define LFA_LEFT 0xF0
+#define LFA_RIGHT 0x0F
 
 //* MOTOR CONTROL *//
 
 //* see: motor control task
 
+#define MOTOR_CTRL_LEFT 'L'
+#define MOTOR_CTRL_RIGHT 'R'
+#define MOTOR_CTRL_STRAIGHT 'F'
+#define MOTOR_CTRL_REVERSE 'B'
+#define MOTOR_CTRL_STOP 'S'
 
 
 //* DEBUG STUFF *//

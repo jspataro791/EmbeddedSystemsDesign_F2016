@@ -240,4 +240,5 @@ build/default/production/_ext/1688732426/system_init.o:  \
  ../src/tsk_rvrstatus.h  \
 ../src/debug.h  \
 ../src/tsk_debug.h  \
- ../src/tsk_motorctrl.h 
+ ../src/tsk_motorctrl.h  \
+../src/tsk_lfa_decision.h 

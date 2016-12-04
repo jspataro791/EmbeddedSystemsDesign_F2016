@@ -76,6 +76,7 @@ static void _LFA_RX_Tasks(void);
 static void _RVRSTATUS_Tasks(void);
 static void _DEBUG_Tasks(void);
 static void _MOTOR_CTRL_Tasks(void);
+static void _LFA_DECISION_Tasks(void);
 
 
 // *****************************************************************************
@@ -128,6 +129,11 @@ void SYS_Tasks(void) {
     xTaskCreate((TaskFunction_t) _MOTOR_CTRL_Tasks,
             "MOTOR CTRL Tasks",
             1024, NULL, 3, NULL);
+    
+    /* Create OS Thread for LFA DECISION Tasks. */
+    xTaskCreate((TaskFunction_t) _LFA_DECISION_Tasks,
+            "LFA DECISION Tasks",
+            1024, NULL, 2, NULL);
 
     /* post GPIO status */
     sendGPIOStatus(STAT_SYS_TASK_CREATE);
@@ -243,6 +249,19 @@ static void _MOTOR_CTRL_Tasks(void) {
 }
 
 
+/*******************************************************************************
+  Function:
+    void _LFA_DECISION_Tasks ( void )
+
+  Summary:
+    Maintains state machine of MOTOR_CTRL task.
+ */
+
+static void _LFA_DECISION_Tasks(void) {
+    while (1) {
+        LFA_DECISION_Tasks();
+    }
+}
 
 
 

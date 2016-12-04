@@ -81,16 +81,15 @@ void MOTOR_CTRL_Tasks() {
     /* if queue rcv was successful */
     if (QRcvChk == pdTRUE) {
 
-        if (mtrCtrlBuffer == 'L') {
+        if (mtrCtrlBuffer == MOTOR_CTRL_LEFT) {
             LeftMotors();
-        } else if (mtrCtrlBuffer == 'R') {
+        } else if (mtrCtrlBuffer == MOTOR_CTRL_RIGHT) {
             RightMotors();
-        } else if (mtrCtrlBuffer == 'F') {
+        } else if (mtrCtrlBuffer == MOTOR_CTRL_RIGHT) {
             ForwardMotors();
-        } else if (mtrCtrlBuffer == 'B') {
+        } else if (mtrCtrlBuffer == MOTOR_CTRL_REVERSE) {
             ReverseMotors();
-        }
-        else if (mtrCtrlBuffer == 'S') {
+        } else if (mtrCtrlBuffer == MOTOR_CTRL_STOP) {
             StopMotors();
         }
     } else {

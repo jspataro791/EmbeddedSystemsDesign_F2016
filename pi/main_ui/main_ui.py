@@ -11,8 +11,7 @@ import time
 import datetime
 import threading
 import socketsvr
-from PIL.ImageQt import qt_is_installed
-from pip.utils.outdated import SELFCHECK_DATE_FMT
+
 
 
 MAINWIN_DEF_LOC_X = 300
