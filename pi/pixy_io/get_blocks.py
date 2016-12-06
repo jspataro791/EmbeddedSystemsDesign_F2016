@@ -20,6 +20,8 @@ from ctypes import *
 
 from Pathfinder import *
 
+logFile = open("pixy_log_file.txt", 'w') 
+
 # Initialize Pixy Interpreter thread #
 pixy_init()
 
@@ -59,8 +61,8 @@ corner2 = Corner() # Corner 2 Object for bottom right, ID 1 in data
 #
 #Keep track of ghost and user rover's location, node, and caught status
 class Rover:
-	X = None
-	Y = None
+	X = -1
+	Y = -1
 	nX = -1
 	nY = -1
 	C = False
@@ -78,6 +80,8 @@ class Board:
 	height = 0 #Height of playing field in image
 	col_dist = 0 #distance between columns in image
 	row_dist = 0 #distance between rows in image
+	#Distance required for ghost to capture user
+	CAUGHT_DIST = (col_dist + row_dist)/4
 	
 board = Board() #Playing Board Object
 
@@ -128,6 +132,8 @@ def convertRawData(index):
 		print"Updated Corner 1 Data X: %i, Y: %i" %(corner1.X, corner1.Y)
 		calc_board()
 		print"Updated Board Center: (%i, %i)\n" %(board.center_X, board.center_Y)
+		logFile.write("Updated Corner 1 Data X: %i, Y: %i" %(corner1.X, corner1.Y))
+		logFile.write("Updated Board Center: (%i, %i)\n" %(board.center_X, board.center_Y))
 		
 	#Update Corner 2
 	elif(blocks[index].signature == 2):
@@ -136,6 +142,8 @@ def convertRawData(index):
 		print"Updated Corner 2 Data X: %i, Y: %i" %(corner2.X, corner2.Y)
 		calc_board()
 		print"Updated Board Center: (%i, %i)\n" %(board.center_X, board.center_Y)
+		logFile.write("Updated Corner 2 Data X: %i, Y: %i" %(corner2.X, corner2.Y))
+		logFile.write("Updated Board Center: (%i, %i)\n" %(board.center_X, board.center_Y))
 		
 	#Update Ghost Rover
 	elif(blocks[index].signature == 3):
@@ -146,7 +154,8 @@ def convertRawData(index):
 		ghost.nY = node1[1]
 		print"Updated Ghost Rover Data X: %i, Y: %i" %(ghost.X, ghost.Y)
 		print"Ghost Rover Node Is: (%i, %i)\n" %(ghost.nX, ghost.nY)
-		
+		logFile.write("Updated Ghost Rover Data X: %i, Y: %i" %(ghost.X, ghost.Y))
+		logFile.write("Ghost Rover Node Is: (%i, %i)\n" %(ghost.nX, ghost.nY))
 		
 	#Update User Rover
 	elif(blocks[index].signature == 4):
@@ -157,7 +166,9 @@ def convertRawData(index):
 		user.nY = node2[1]
 		print"Updated User Rover Data X: %i, Y: %i" %(user.X, user.Y)
 		print"User Rover Node Is: (%i, %i)\n" %(user.nX, user.nY)
-		
+		logFile.write("Updated User Rover Data X: %i, Y: %i" %(user.X, user.Y))
+		logFile.write("User Rover Node Is: (%i, %i)\n" %(user.nX, user.nY))
+				
 #	name: checkForCapture
 #	@param NONE
 #	@return NONE
@@ -185,9 +196,10 @@ while 1:
 		print "Raw Data:"
 		print '[BLOCK_TYPE=%d SIG=%d X=%3d Y=%3d WIDTH=%3d HEIGHT=%3d]' % (blocks[index].type, blocks[index].signature, blocks[index].x, blocks[index].y, blocks[index].width, blocks[index].height)
 		convertRawData(index)
-		if(user.nX is not None and ghost.nX is not None){
+		if((user.X >= 0) and (ghost.X >= 0)):
+			print"Here \n"
 			checkForCapture()
-		}
-		d = [ghost.nX, ghost.nY, user.nX, user.nY]
-		pathfinder.update_locations(d)
-
+			d = [ghost.nX, ghost.nY, user.nX, user.nY]
+			
+			pathfinder.update_locations(d)
+			

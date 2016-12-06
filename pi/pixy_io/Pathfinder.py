@@ -14,6 +14,7 @@ FLEE_START_TIME = None
 
 nodelist_file = 'nodes.txt'
 ui_port = 7668
+viewer_port = 3000
 host = '127.0.0.1'
 default_orientation = 'North'
 
@@ -25,11 +26,23 @@ class Pathfinder(object):
         self.last_node = None
         self.current_node = None
         self.current_orientation  = 'North'
-        self.open_socket()
+        self.ui_socket = None
+        self.viewer_socket = None
+        try:
+            self.open_ui_socket()
+        except:
+            self.ui_socket = None
+        try:
+            self.open_viewer_socket()
+        except:
+            self.viewer_socket = None
 
-    def open_socket(self):
+    def open_ui_socket(self):
         self.ui_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.ui_socket.connect((host,ui_port))
+        self.ui_socket.connect((host, ui_port))
+
+    def open_viewer_socket(self):
+        self.viewer_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     @staticmethod
     def get_estimated_cost(start_node, destination_node):
@@ -72,41 +85,89 @@ class Pathfinder(object):
 
     def get_relative_path(self, path, start_orientation):
         """
-        Given a list of nodes and a starting orientation, returns a list of turning directions (straight, left, or
+        Given a list of nodes, returns a list of turning directions (straight, left, or
         right).
         :param path: list of nodes.
         :type path: list
-        :param start_orientation: Starting orientation ('Straight', 'Left' or 'Right'.)
-        :type start_orientation: str
         :return: List of turns.
         :rtype: list
         """
-        orientation = start_orientation
         directions = []
-        for i in range(len(path)):
-            source = path[i]
-            destination = path[i+1]
-            orientation = self.node_list.get_relative_direction(source, destination, orientation)
-            directions.append(orientation)
+        orientation = start_orientation
+        for i in range(1, len(path)):
+            source = path[i-1]
+            destination = path[i]
+            direction = self.node_list.get_relative_direction(source, destination, orientation)
+            orientation = self.node_list.get_orientation_from_to(source, destination)
+            directions.append(direction)
         return directions
+
+    def send_command(self, command):
+        if self.ui_socket is None:
+            try:
+                self.open_ui_socket()
+            except:
+                return
+        if self.ui_socket is None:
+            return
+        try:
+            self.ui_socket.send(command)
+        except:
+            pass
+
+    def send_locations(self, locations):
+        if self.viewer_socket is None:
+            try:
+                self.open_viewer_socket()
+            except:
+                return
+        if self.viewer_socket is None:
+            return
+        try:
+            self.viewer_socket.sendto(' '.join([str(x) for x in locations]), (host, viewer_port))
+        except:
+            pass
 
     def update_locations(self, locations):
         ghost_x = locations[0]
         ghost_y = locations[1]
         user_x = locations[2]
         user_y = locations[3]
-        self.last_node = self.current_node
-        self.current_node = Node(ghost_x, ghost_y)
-        # update rover orientation, if this isn't our first move
-        if self.last_node is not None:
-            self.current_orientation = self.node_list.get_relative_direction(self.last_node, self.current_node, self.current_orientation)
+        for each in locations:
+            if each < 0:
+                print('NEGATIVE COORDINATE VALUE!!!')
+                raise Exception()
+        if self.current_node is not None:
+            # make sure we're not dealing with a weird jitter
+            if self.node_list.get_orientation_from_to(self.current_node, self.node_list.coordinates['%d, %d' % (ghost_x, ghost_y)]) is None:
+                print('New node and old node are not adjacent!')
+                print('Gracefully skipping this update')
+                return
+        # update viewer
+        self.send_locations([locations[2], locations[3], locations[0], locations[1]])
+        # update internal variables if position has changed
+        if self.current_node != self.node_list.coordinates['%d, %d' % (ghost_x, ghost_y)]:
+            self.last_node = self.current_node
+            self.current_node = self.node_list.coordinates['%d, %d' % (ghost_x, ghost_y)]
+            # update rover orientation, if this isn't our first move
+            if self.last_node is not None:
+                self.current_orientation = self.node_list.get_orientation_from_to(self.last_node, self.current_node)
         # get the shortest path to the user rover
-        path = self.bfs(self.current_node, self.last_node, Node(user_x, user_y))
+        path = self.bfs(self.current_node, self.last_node, self.node_list.coordinates['%d, %d' % (user_x, user_y)])
+        if path is None:
+            print('Could not find path between (%d, %d) and (%d, %d)' % (ghost_x, ghost_y, user_x, user_y))
+            raise Exception()
         # translate the path into actual directions
         relative_path = self.get_relative_path(path, self.current_orientation)
-        self.ui_socket.send(relative_path[0])
+        self.send_command(relative_path[0])
+
+    def captured(self):
+        self.ui_socket.send('Captured')
+        self.ui_socket.close()
+        self.ui_socket = None # to make sure an exception is thrown if any more communication is attempted
 
     def bfs(self, start_node, previous_node, destination_node):
+        #self.current_orientation = self.node_list.get_orientation_from_to(previous_node, start_node)
         queue = []
         queue.append([start_node])
         while queue:
@@ -114,10 +175,17 @@ class Pathfinder(object):
             my_node = path[-1]
             if my_node == destination_node:
                 return path
-            for each in [x for x in my_node.neighbors.values() if x is not None]:
+            # get neighbors
+            candidates = [x for x in my_node.neighbors.values() if x is not None]
+            # remove previous node from neighbors, because we can't turn 180
+            if my_node == start_node and previous_node is not None:
+                candidates.remove(previous_node)
+            # add a branch to explore for each child node
+            for each in candidates:
                 child_path = list(path)
                 child_path.append(each)
                 queue.append(child_path)
+        return None
 
     def find_path(self, start_node, previous_node, destination_node):
         """
@@ -178,7 +246,6 @@ class Pathfinder(object):
 
 def main():
     pass
-
 
 if __name__ == '__main__':
     main()
