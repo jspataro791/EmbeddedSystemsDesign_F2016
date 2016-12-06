@@ -132,7 +132,7 @@ def convertRawData(index):
 		print"Updated Corner 1 Data X: %i, Y: %i" %(corner1.X, corner1.Y)
 		calc_board()
 		print"Updated Board Center: (%i, %i)\n" %(board.center_X, board.center_Y)
-		logFile.write("Updated Corner 1 Data X: %i, Y: %i" %(corner1.X, corner1.Y))
+		logFile.write("Updated Corner 1 Data X: %i, Y: %i\n" %(corner1.X, corner1.Y))
 		logFile.write("Updated Board Center: (%i, %i)\n" %(board.center_X, board.center_Y))
 		
 	#Update Corner 2
@@ -142,7 +142,7 @@ def convertRawData(index):
 		print"Updated Corner 2 Data X: %i, Y: %i" %(corner2.X, corner2.Y)
 		calc_board()
 		print"Updated Board Center: (%i, %i)\n" %(board.center_X, board.center_Y)
-		logFile.write("Updated Corner 2 Data X: %i, Y: %i" %(corner2.X, corner2.Y))
+		logFile.write("Updated Corner 2 Data X: %i, Y: %i\n" %(corner2.X, corner2.Y))
 		logFile.write("Updated Board Center: (%i, %i)\n" %(board.center_X, board.center_Y))
 		
 	#Update Ghost Rover
@@ -154,7 +154,7 @@ def convertRawData(index):
 		ghost.nY = node1[1]
 		print"Updated Ghost Rover Data X: %i, Y: %i" %(ghost.X, ghost.Y)
 		print"Ghost Rover Node Is: (%i, %i)\n" %(ghost.nX, ghost.nY)
-		logFile.write("Updated Ghost Rover Data X: %i, Y: %i" %(ghost.X, ghost.Y))
+		logFile.write("Updated Ghost Rover Data X: %i, Y: %i \n" %(ghost.X, ghost.Y))
 		logFile.write("Ghost Rover Node Is: (%i, %i)\n" %(ghost.nX, ghost.nY))
 		
 	#Update User Rover
@@ -166,7 +166,7 @@ def convertRawData(index):
 		user.nY = node2[1]
 		print"Updated User Rover Data X: %i, Y: %i" %(user.X, user.Y)
 		print"User Rover Node Is: (%i, %i)\n" %(user.nX, user.nY)
-		logFile.write("Updated User Rover Data X: %i, Y: %i" %(user.X, user.Y))
+		logFile.write("Updated User Rover Data X: %i, Y: %i \n" %(user.X, user.Y))
 		logFile.write("User Rover Node Is: (%i, %i)\n" %(user.nX, user.nY))
 				
 #	name: checkForCapture
