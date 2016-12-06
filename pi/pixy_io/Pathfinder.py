@@ -8,6 +8,7 @@ from NodeList import Node, NodeList
 import math
 import socket
 
+
 FLEE_TIME_DURATION = 5000  # 5000 ms = 1 s
 FLEE_ENABLED = False
 FLEE_START_TIME = None
@@ -137,12 +138,12 @@ class Pathfinder(object):
             if each < 0:
                 print('NEGATIVE COORDINATE VALUE!!!')
                 raise Exception()
-        if self.current_node is not None:
+#        if self.current_node is not None:
             # make sure we're not dealing with a weird jitter
-            if self.node_list.get_orientation_from_to(self.current_node, self.node_list.coordinates['%d, %d' % (ghost_x, ghost_y)]) is None:
-                print('New node and old node are not adjacent!')
-                print('Gracefully skipping this update')
-                return
+#            if self.node_list.get_orientation_from_to(self.current_node, self.node_list.coordinates['%d, %d' % (ghost_x, ghost_y)]) is None:
+#                print('New node and old node are not adjacent!')
+#                print('Gracefully skipping this update')
+#                return
         # update viewer
         self.send_locations([locations[2], locations[3], locations[0], locations[1]])
         # update internal variables if position has changed
