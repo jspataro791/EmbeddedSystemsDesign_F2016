@@ -25,6 +25,8 @@ void sendGPIOError(uint8_t errCode) {
         while (1) {
 
             PLIB_PORTS_Toggle(PORTS_ID_0, ERR_GPIO_PORT, errCode);
+            
+            RSWRSTbits.SWRST = 1;
 
             int x = 0;
             while (x < 1000000) {
