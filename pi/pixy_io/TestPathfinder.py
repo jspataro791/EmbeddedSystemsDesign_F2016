@@ -3,7 +3,7 @@
 #
 # Created by: Benjamin M. Singleton
 # Created: 10-10-2016
-# Modified: 12-01-2016
+# Modified:
 
 import unittest
 from Pathfinder import Pathfinder
