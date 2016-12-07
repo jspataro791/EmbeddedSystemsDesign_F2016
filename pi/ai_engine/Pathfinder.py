@@ -111,7 +111,7 @@ class Pathfinder(object):
         if self.ui_socket is None:
             return
         try:
-            self.ui_socket.send(command)
+            self.ui_socket.send(command + '|')
         except:
             pass
 
@@ -162,9 +162,19 @@ class Pathfinder(object):
         self.send_command(relative_path[0])
 
     def captured(self):
-        self.ui_socket.send('Captured')
-        self.ui_socket.close()
-        self.ui_socket = None # to make sure an exception is thrown if any more communication is attempted
+        if self.ui_socket is None:
+            try:
+                self.open_ui_socket()
+            except:
+                return
+        if self.ui_socket is None:
+            return
+        try:
+            self.ui_socket.send('Captured' + '|')
+            self.ui_socket.close()
+            self.ui_socket = None # to make sure an exception is thrown if any more communication is attempted
+        except:
+            pass
 
     def bfs(self, start_node, previous_node, destination_node):
         #self.current_orientation = self.node_list.get_orientation_from_to(previous_node, start_node)
