@@ -197,7 +197,6 @@ while 1:
 		print '[BLOCK_TYPE=%d SIG=%d X=%3d Y=%3d WIDTH=%3d HEIGHT=%3d]' % (blocks[index].type, blocks[index].signature, blocks[index].x, blocks[index].y, blocks[index].width, blocks[index].height)
 		convertRawData(index)
 		if((user.X >= 0) and (ghost.X >= 0)):
-			print"Here \n"
 			checkForCapture()
 			d = [ghost.nX, ghost.nY, user.nX, user.nY]
 			

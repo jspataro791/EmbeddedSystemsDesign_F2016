@@ -32,7 +32,14 @@ class Node(object):
                     neighbors_string += each_key
         return ("%d, %d, " % (self.x, self.y)) + neighbors_string
 
-
+    def __eq__(self, other):
+        if self is not None and other is not None:
+                if self.x == other.x and self.y == other.y :
+                        return True
+                else:
+                        return False
+        else:
+                return False
 
     def get_neighbors(self):
         return [x for x in [y for y in self.neighbors.values()] if x is not None]
