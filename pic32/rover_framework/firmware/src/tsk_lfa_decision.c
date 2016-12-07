@@ -59,9 +59,9 @@ LFA_DECISION_Tasks() {
                 break;
             }
 
-            if (lfa & 0b10000001 ) {
+            if (lfa & 0b10000001) {
                 lfaDecData.decState = TWOWAY_TURN;
-            } else if ((lfa & 0b11000000) && !(lfa & 0b00000011 )) {
+            } else if ((lfa & 0b11000000) && !(lfa & 0b00000011)) {
                 lfaDecData.decState = LEFT_TURN;
             } else if ((lfa & 0b00000011) && !(lfa & 0b11000000)) {
                 lfaDecData.decState = RIGHT_TURN;
@@ -198,9 +198,17 @@ LFA_DECISION_Tasks() {
 
             if (lfa & (uint8_t) 0b00011000) {
                 lfaDecData.decState = STRAIGHT;
-                    leftTurnAvailable = pdFALSE;
-                    rightTurnAvailable = pdFALSE;   
-                    straightAvailable = pdFALSE;
+                leftTurnAvailable = pdFALSE;
+                rightTurnAvailable = pdFALSE;
+                straightAvailable = pdFALSE;
+
+                time = 0;
+                while (time < ((-188 * (RVR_CurSpeed + 1)) + 3196)) {
+                    lfa_recv();
+                    time += 50;
+                }
+
+
             }
             break;
 

@@ -13,8 +13,6 @@ import threading
 import socketsvr
 import socket
 
-
-
 MAINWIN_DEF_LOC_X = 300
 MAINWIN_DEF_LOC_Y = 300
 MAINWIN_DEF_SIZE_X = 640
@@ -82,7 +80,11 @@ class MainWindow(qt.QMainWindow):
        self.setWindowIcon(qt.QIcon('graphics/pacman.png'))
        
        self.printer = socketsvr.PRINT
-       #self.printer.setCallback(self._debugConsole.addMsgEvent)
+       
+       def printer(msg):
+           print(msg)
+       
+       self.printer.setCallback(printer)
         
         
 class DebugConsole(qt.QTextBrowser):
