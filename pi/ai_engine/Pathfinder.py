@@ -137,7 +137,7 @@ class Pathfinder(object):
             if each < 0:
                 print('NEGATIVE COORDINATE VALUE!!!')
                 raise Exception()
-        if self.current_node is not None:
+        if self.current_node is not None and self.current_node != self.node_list.coordinates['%d, %d' % (ghost_x, ghost_y)]:
             # make sure we're not dealing with a weird jitter
             if self.node_list.get_orientation_from_to(self.current_node, self.node_list.coordinates['%d, %d' % (ghost_x, ghost_y)]) is None:
                 print('New node and old node are not adjacent!')
