@@ -47,6 +47,7 @@ int time = 0;
 
 void
 LFA_DECISION_Tasks() {
+
     switch (lfaDecData.decState) {
 
         case STRAIGHT:
@@ -59,13 +60,16 @@ LFA_DECISION_Tasks() {
                 break;
             }
 
-            if (lfa & 0b10000001) {
+            if (((lfa <<1) >>1) & 0b11000011) {
                 lfaDecData.decState = TWOWAY_TURN;
-            } else if ((lfa & 0b11000000) && !(lfa & 0b00000011)) {
+            }
+            if ((lfa & 0b11000000) && !(lfa & 0b00000111)) {
                 lfaDecData.decState = LEFT_TURN;
-            } else if ((lfa & 0b00000011) && !(lfa & 0b11000000)) {
+            } else if ((lfa & 0b00000011) && !(lfa & 0b11100000)) {
                 lfaDecData.decState = RIGHT_TURN;
-            } else if (lfa == LFA_LEFTISH) {
+            } 
+
+            else if (lfa == LFA_LEFTISH) {
                 mtr_send(MOTOR_CTRL_RIGHT);
             } else if (lfa == LFA_RIGHTISH) {
                 mtr_send(MOTOR_CTRL_LEFT);

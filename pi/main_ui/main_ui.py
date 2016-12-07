@@ -21,12 +21,12 @@ MAINWIN_DEF_SIZE_Y = 480
 BUTTON_HEIGHT = 150
 
 PAC_DATA_OBJ = socketsvr.RoverDataObj()
-PAC_IP = "10.0.0.191"
+PAC_IP = "192.168.43.102"
 PAC_PORT = 2000
 PAC_SOCK_SRV = socketsvr.RoverSocketServer(PAC_IP, PAC_PORT, "PACMAN")
 
 GST_DATA_OBJ = socketsvr.RoverDataObj()
-GST_IP = "10.0.0.192"
+GST_IP = "192.168.43.88"
 GST_PORT = 2000
 GST_SOCK_SRV = socketsvr.RoverSocketServer(GST_IP, GST_PORT, "GHOST")
 
@@ -63,6 +63,9 @@ class MainWindow(qt.QMainWindow):
     def __init__(self):
        super(MainWindow, self).__init__()
        
+       
+       self.gstWriterInTheSky = GstDirectionReceiver()
+       
        # setup subwidgets
        self._main = qt.QSplitter(self)
        self._tabbedView = TabbedView(self)
@@ -79,13 +82,15 @@ class MainWindow(qt.QMainWindow):
        self.setCentralWidget(self._main)
        self.setWindowIcon(qt.QIcon('graphics/pacman.png'))
        
-       self.printer = socketsvr.PRINT
+       self.gstWriterInTheSky.stopped.connect(self.stopAll)
        
-       def printer(msg):
-           print(msg)
+    def stopAll(self):
+       self._tabbedView._ctrl.stop()
+       self._debugConsole.addMsgEvent("GAME OVER!")
        
-       self.printer.setCallback(printer)
-        
+    
+       
+       
         
 class DebugConsole(qt.QTextBrowser):
     
@@ -115,6 +120,18 @@ class TabbedView(qt.QTabWidget):
         self.addTab(self._ctrl, qt.QIcon('graphics/pacman.png'), "PACMAN Control")
         self.addTab(self._dbg, "Debugging")
         self.addTab(self._node, "Node View")
+        
+    def keyPressEvent(self, evt):
+    
+        key = evt.key()
+
+        
+        if key == qt.Qt.Key_A:
+            self._ctrl.sendLeftSignal()
+        elif key == qt.Qt.Key_D:
+            self._ctrl.sendRightSignal()
+        elif key == qt.Qt.Key_W:
+            self._ctrl.sendStraightSignal()
        
        
 
@@ -177,15 +194,33 @@ class TabControl(qt.QWidget):
         # status
         self._dirStat = "NONE"
         
-        #update timer
+        #gst difficulty timer
+        self.diffUpdTimer = qt.QTimer(self)
+        self.diffUpdTimer.setInterval(1000)
+        self.diffUpdTimer.setSingleShot(False)
+        self.diffUpdTimer.timeout.connect(self.increaseDifficulty)
+        
+        self.gstSpeed = 0
+        
+        # update timer
         UpdTimer = qt.QTimer(self)
         UpdTimer.setInterval(500)
         UpdTimer.setSingleShot(False)
-        UpdTimer.timeout.connect(self.updPacRvrData)
+        UpdTimer.timeout.connect(self.updRvrData)
         UpdTimer.start()
         
-    def updPacRvrData(self):
+    def increaseDifficulty(self):
+        if self.gstSpeed == 16:
+            return
+        
+        GST_DATA_OBJ.setSpeed(self.gstSpeed)
+        print("Increased Ghost Difficulty")
+        
+        self.gstSpeed += 1  
+        
+    def updRvrData(self):
         PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))
+        GST_SOCK_SRV.write(repr(GST_DATA_OBJ))
         
     def sendLeftSignal(self):
         if self._started and self._dirStat != "LEFT":
@@ -213,8 +248,11 @@ class TabControl(qt.QWidget):
         if not self._started:
             self.window()._debugConsole.addMsgEvent("STARTING!")
             global PAC_DATA_OBJ,PAC_SOCK_SRV
+            
             PAC_DATA_OBJ.setSpeed(16)
             self._started = True
+            self.diffUpdTimer.start()
+            self.gstSpeed = 0
             
     def stop(self):
         
@@ -222,7 +260,11 @@ class TabControl(qt.QWidget):
             self.window()._debugConsole.addMsgEvent("STOPPING!")
             global PAC_DATA_OBJ,PAC_SOCK_SRV
             PAC_DATA_OBJ.setSpeed(0)
+            global GST_DATA_OBJ
+            GST_DATA_OBJ.setSpeed(0)
             self._started = False
+            self.diffUpdTimer.stop()
+            self.gstSpeed = 0
             
     def reconnect(self):
         
@@ -500,7 +542,66 @@ class TabNodeView(qt.QWidget):
                 if node.neighbors['West'] is not None:
                     # draw left half of horizontal line
                     my_painter.drawLine(x * node_width, mid_y, mid_x, mid_y)
+                    
+class GstDirectionReceiver(qt.QObject):
+    
+    stopped = qt.pyqtSignal()
+    
+    def __init__(self):
+        super(GstDirectionReceiver, self).__init__(None)
         
+        print("Opening AI receive socket")
+        try:
+            self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.s.connect(('127.0.0.1',2176))
+            self.s.settimeout(0.01)
+        except socket.error as message:
+            if self.s:
+                self.s.close()
+            print ("Could not open Node socket: " + str(message))
+            sys.exit(1)
+            
+        print("Socket Opened")
+            
+        
+        ## timer
+        UpdTimer = qt.QTimer(self)
+        UpdTimer.setInterval(50)
+        UpdTimer.setSingleShot(False)
+        UpdTimer.timeout.connect(self.getData)
+        UpdTimer.start()            
+            
+    def getData(self):
+            
+            try:
+                rcv = self.s.recv(65536)
+            except socket.error:
+                return None
+            except socket.timeout:
+                return None
+            
+            msgs = rcv.split('|')
+            msgs.remove('')
+            
+            print(msgs)
+            
+            for msg in msgs:
+                if msg == "Left":
+                    GST_DATA_OBJ.setDir("LEFT")
+                    print("Got LEFT from AI engine")
+                elif msg == "Right":
+                    GST_DATA_OBJ.setDir("STRAIGHT")
+                    print("Got STRAIGHT from AI engine")
+                elif msg == "Right":
+                    GST_DATA_OBJ.setDir("RIGHT")
+                    print("Got RIGHT from AI engine")
+                elif msg == "Captured":
+                    self.stopped.emit()
+                else:
+                    print("Got invalid direction from AI engine") 
+                    
+            
+   
       
        
 if __name__ == "__main__":
