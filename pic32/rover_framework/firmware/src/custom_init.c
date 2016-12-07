@@ -21,7 +21,7 @@ void initPublicQueues() {
 
 void initRvrStatus() {
     RVR_CurDirection = RVR_STRAIGHT; // straight
-    RVR_CurSpeed = 16; // max speed
+    RVR_CurSpeed = 0;
     RVR_Dbg = 0;
 
     sendDirStatus((uint8_t) RVR_CurDirection);

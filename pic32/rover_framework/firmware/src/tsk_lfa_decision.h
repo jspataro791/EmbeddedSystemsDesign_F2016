@@ -11,21 +11,29 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
-	
 
-	
-	typedef enum 
-	{
-		RECEIVING,
-		PROCESSING,
+	typedef enum {
+		/* line following*/
+		STRAIGHT,
+
+		/* intersection detection */
+		LEFT_TURN,
+		RIGHT_TURN,
+		TWOWAY_TURN,
+		TURN_STAGING,
+		TURN_EXECUTE,
+		TURN_FINISH_LEFT,
+		TURN_FINISH_RIGHT,
+                TURN_STRAIGHTEN
+
+
 	} LFA_DECISION_STATES;
-	
-	typedef struct
-	{
+
+	typedef struct {
 		LFA_DECISION_STATES decState;
-		
-		
-	}LFA_DECISION_DATA;
+
+
+	} LFA_DECISION_DATA;
 
 	void LFA_DECISION_Initialize();
 	void LFA_DECISION_Tasks();

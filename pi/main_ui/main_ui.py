@@ -82,7 +82,7 @@ class MainWindow(qt.QMainWindow):
        self.setWindowIcon(qt.QIcon('graphics/pacman.png'))
        
        self.printer = socketsvr.PRINT
-       self.printer.setCallback(self._debugConsole.addMsgEvent)
+       #self.printer.setCallback(self._debugConsole.addMsgEvent)
         
         
 class DebugConsole(qt.QTextBrowser):
@@ -175,13 +175,22 @@ class TabControl(qt.QWidget):
         # status
         self._dirStat = "NONE"
         
+        #update timer
+        UpdTimer = qt.QTimer(self)
+        UpdTimer.setInterval(500)
+        UpdTimer.setSingleShot(False)
+        UpdTimer.timeout.connect(self.updPacRvrData)
+        UpdTimer.start()
+        
+    def updPacRvrData(self):
+        PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))
+        
     def sendLeftSignal(self):
         if self._started and self._dirStat != "LEFT":
             self.util_setButtonColors("LEFT")
             self.window()._debugConsole.addMsgEvent("Left")
             global PAC_DATA_OBJ,PAC_SOCK_SRV
             PAC_DATA_OBJ.setDir("LEFT")
-            PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))
         
     def sendRightSignal(self):
         if self._started and self._dirStat != "RIGHT":
@@ -189,7 +198,6 @@ class TabControl(qt.QWidget):
             self.window()._debugConsole.addMsgEvent("Right")
             global PAC_DATA_OBJ,PAC_SOCK_SRV
             PAC_DATA_OBJ.setDir("RIGHT")
-            PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))
         
     def sendStraightSignal(self):
         if self._started and self._dirStat != "STRAIGHT":
@@ -197,7 +205,6 @@ class TabControl(qt.QWidget):
             self.window()._debugConsole.addMsgEvent("Straight")
             global PAC_DATA_OBJ,PAC_SOCK_SRV
             PAC_DATA_OBJ.setDir("STRAIGHT")
-            PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))
         
     def start(self):
         
@@ -205,7 +212,6 @@ class TabControl(qt.QWidget):
             self.window()._debugConsole.addMsgEvent("STARTING!")
             global PAC_DATA_OBJ,PAC_SOCK_SRV
             PAC_DATA_OBJ.setSpeed(16)
-            PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))
             self._started = True
             
     def stop(self):
@@ -214,7 +220,6 @@ class TabControl(qt.QWidget):
             self.window()._debugConsole.addMsgEvent("STOPPING!")
             global PAC_DATA_OBJ,PAC_SOCK_SRV
             PAC_DATA_OBJ.setSpeed(0)
-            PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))
             self._started = False
             
     def reconnect(self):
@@ -351,13 +356,11 @@ class TabDebug(qt.QWidget):
         
         if chkd:
             self.window()._debugConsole.addMsgEvent("PACMAN Debugging Enabled")
-            PAC_DATA_OBJ.setDbg(True)
-            PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))      
+            PAC_DATA_OBJ.setDbg(True)  
             
         else:
             self.window()._debugConsole.addMsgEvent("PACMAN Debugging Disabled")
-            PAC_DATA_OBJ.setDbg(False)
-            PAC_SOCK_SRV.write(repr(PAC_DATA_OBJ))   
+            PAC_DATA_OBJ.setDbg(False) 
     
     
     def setGstDebugging(self):
@@ -423,7 +426,7 @@ class TabNodeView(qt.QWidget):
         UpdTimer.start()
 
         self.setup()
-
+        
     def updNodeData(self):
         try:
             data, address = self.s.recvfrom(1024)
@@ -431,7 +434,7 @@ class TabNodeView(qt.QWidget):
                 self.pacman[0], self.pacman[1], self.ghost[0], self.ghost[1], = map(int, data.split(' '))
                 #print(self.pacman, self.ghost)
                 self.update()
-        except socket.error:
+        except socket.error as e:
             pass
 
     def setup(self):
@@ -469,6 +472,7 @@ class TabNodeView(qt.QWidget):
 
     def draw_nodes(self, my_painter):
         if self.nodeList is None:
+            print("No node list to show")
             return
 
         for y in range(vertical_nodes):

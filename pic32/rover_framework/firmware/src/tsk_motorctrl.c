@@ -16,47 +16,47 @@ void InitMotorPins() {
 
 void StopMotors() {
     /* enable = disabled*/
-    PORTDbits.RD0 = 0;
+    LATDbits.LATD0 = 0;
 }
 
 void ForwardMotors() {
     /* enable = disabled*/
-    PORTDbits.RD0 = 1;
+    LATDbits.LATD0 = 1;
 
     /* motor1 = forward */
-    PORTCbits.RC14 = 0;
+    LATCbits.LATC14 = 0;
     /* motor2 = forward */
-    PORTGbits.RG1 = 0;
+    LATGbits.LATG1 = 0;
 }
 
 void ReverseMotors() {
     /* enable = disabled*/
-    PORTDbits.RD0 = 1;
+    LATDbits.LATD0 = 1;
 
     /* motor1 = reversed */
-    PORTCbits.RC14 = 1;
+    LATCbits.LATC14 = 1;
     /* motor2 = reversed */
-    PORTGbits.RG1 = 1;
+    LATGbits.LATG1 = 1;
 }
 
 void LeftMotors() {
     /* enable = disabled*/
-    PORTDbits.RD0 = 1;
+    LATDbits.LATD0 = 1;
 
     /* motor1 = forward */
-    PORTCbits.RC14 = 0;
+    LATCbits.LATC14 = 0;
     /* motor2 = reversed */
-    PORTGbits.RG1 = 1;
+    LATGbits.LATG1 = 1;
 }
 
 void RightMotors() {
     /* enable = disabled*/
-    PORTDbits.RD0 = 1;
+    LATDbits.LATD0 = 1;
 
     /* motor1 = reversed */
-    PORTCbits.RC14 = 1;
+    LATCbits.LATC14 = 1;
     /* motor2 = forward */
-    PORTGbits.RG1 = 0;
+    LATGbits.LATG1 = 0;
 }
 
 void MOTOR_CTRL_Initialize() {
@@ -67,6 +67,8 @@ void MOTOR_CTRL_Initialize() {
     /* init and stop motors*/
     InitMotorPins();
     StopMotors();
+    LeftMotors();
+    RightMotors();
 }
 
 char mtrCtrlBuffer;
@@ -85,7 +87,7 @@ void MOTOR_CTRL_Tasks() {
             LeftMotors();
         } else if (mtrCtrlBuffer == MOTOR_CTRL_RIGHT) {
             RightMotors();
-        } else if (mtrCtrlBuffer == MOTOR_CTRL_RIGHT) {
+        } else if (mtrCtrlBuffer == MOTOR_CTRL_STRAIGHT) {
             ForwardMotors();
         } else if (mtrCtrlBuffer == MOTOR_CTRL_REVERSE) {
             ReverseMotors();

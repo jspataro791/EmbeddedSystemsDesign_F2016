@@ -34,10 +34,14 @@
 #define MAX_QUEUE_LENGTH      64
 
 //* LFA CONTROL *//
-#define LFA_STRAIGHT 0x18
-#define LFA_TWOWAY 0xFF
-#define LFA_LEFT 0xF0
-#define LFA_RIGHT 0x0F
+#define LFA_STRAIGHT  0b00011000
+#define LFA_RIGHTISH   0b00110000
+#define LFA_LEFTISH     0b00001100
+#define LFA_NONE	0x00
+
+#define LFA_TWOWAY_TURN 0xFF
+#define LFA_LEFT_TURN 0xF0
+#define LFA_RIGHT_TURN 0x0F
 
 //* MOTOR CONTROL *//
 

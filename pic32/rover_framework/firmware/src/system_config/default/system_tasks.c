@@ -102,38 +102,38 @@ void SYS_Tasks(void) {
     /* Create OS Thread for WIFLY_RX Tasks. */
     xTaskCreate((TaskFunction_t) _WIFLY_RX_Tasks,
             "WIFLY_RX Tasks",
-            1024, NULL, 3, NULL);
+            1024, NULL, 4, NULL);
 
     /* Create OS Thread for WIFLY_TX Tasks. */
     xTaskCreate((TaskFunction_t) _WIFLY_TX_Tasks,
             "WIFLY_TX Tasks",
-            1024, NULL, 2, NULL);
+            1024, NULL, 4, NULL);
 
     /* Create OS Thread for LFA_RX Tasks. */
     xTaskCreate((TaskFunction_t) _LFA_RX_Tasks,
             "LFA_RX Tasks",
-            1024, NULL, 4, NULL);
+            1024, NULL, 1, NULL);
     
  
     /* Create OS Thread for RVRSTATUS Tasks. */
     xTaskCreate((TaskFunction_t) _RVRSTATUS_Tasks,
             "RVRSTATUS Tasks",
-            1024, NULL, 1, NULL);
+            1024, NULL, 4, NULL);
 
     /* Create OS Thread for DEBUG Tasks. */
     xTaskCreate((TaskFunction_t) _DEBUG_Tasks,
             "DEBUG Tasks",
-            1024, NULL, 1, NULL);
+            1024, NULL, 4, NULL);
 
     /* Create OS Thread for MOTOR CONTROL Tasks. */
     xTaskCreate((TaskFunction_t) _MOTOR_CTRL_Tasks,
             "MOTOR CTRL Tasks",
-            1024, NULL, 3, NULL);
+            1024, NULL, 1, NULL);
     
     /* Create OS Thread for LFA DECISION Tasks. */
     xTaskCreate((TaskFunction_t) _LFA_DECISION_Tasks,
             "LFA DECISION Tasks",
-            1024, NULL, 2, NULL);
+            1024, NULL, 1, NULL);
 
     /* post GPIO status */
     sendGPIOStatus(STAT_SYS_TASK_CREATE);
