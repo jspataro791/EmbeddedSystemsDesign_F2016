@@ -13,7 +13,7 @@ FLEE_ENABLED = False
 FLEE_START_TIME = None
 
 nodelist_file = 'nodes.txt'
-ui_port = 7668
+ui_port = 2176
 viewer_port = 3000
 host = '127.0.0.1'
 default_orientation = 'North'
@@ -38,7 +38,7 @@ class Pathfinder(object):
             self.viewer_socket = None
 
     def open_ui_socket(self):
-        self.ui_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.ui_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.ui_socket.connect((host, ui_port))
 
     def open_viewer_socket(self):
@@ -111,7 +111,7 @@ class Pathfinder(object):
         if self.ui_socket is None:
             return
         try:
-            self.ui_socket.send(command)
+            self.ui_socket.send(command + '|')
         except:
             pass
 
@@ -159,12 +159,19 @@ class Pathfinder(object):
             raise Exception()
         # translate the path into actual directions
         relative_path = self.get_relative_path(path, self.current_orientation)
-        self.send_command(relative_path[0])
+        try: 
+                self.send_command(relative_path[0])
+        except:
+                pass
 
     def captured(self):
-        self.ui_socket.send('Captured')
-        self.ui_socket.close()
-        self.ui_socket = None # to make sure an exception is thrown if any more communication is attempted
+
+        try:
+            print("Captured at PATHFINDER")
+            
+            self.ui_socket.send('Captured' + '|')
+        except:
+            print("Could not send captured")
 
     def bfs(self, start_node, previous_node, destination_node):
         #self.current_orientation = self.node_list.get_orientation_from_to(previous_node, start_node)

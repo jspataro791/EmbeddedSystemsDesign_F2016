@@ -12,6 +12,7 @@ import datetime
 import threading
 import socketsvr
 import socket
+from Queue import Queue as queue
 
 MAINWIN_DEF_LOC_X = 300
 MAINWIN_DEF_LOC_Y = 300
@@ -196,7 +197,7 @@ class TabControl(qt.QWidget):
         
         #gst difficulty timer
         self.diffUpdTimer = qt.QTimer(self)
-        self.diffUpdTimer.setInterval(1000)
+        self.diffUpdTimer.setInterval(10000)
         self.diffUpdTimer.setSingleShot(False)
         self.diffUpdTimer.timeout.connect(self.increaseDifficulty)
         
@@ -248,11 +249,12 @@ class TabControl(qt.QWidget):
         if not self._started:
             self.window()._debugConsole.addMsgEvent("STARTING!")
             global PAC_DATA_OBJ,PAC_SOCK_SRV
-            
+            global GST_DATA_OBJ
             PAC_DATA_OBJ.setSpeed(16)
+            GST_DATA_OBJ.setSpeed(16)
             self._started = True
-            self.diffUpdTimer.start()
-            self.gstSpeed = 0
+            #self.diffUpdTimer.start()
+            self.gstSpeed = 1
             
     def stop(self):
         
@@ -449,7 +451,7 @@ class TabNodeView(qt.QWidget):
     def __init__(self, parent=None):
         super(self.__class__, self).__init__(parent)
         self.nodeList = NodeList()
-        self.nodeList.from_file('nodes2.txt')
+        self.nodeList.from_file('nodes.txt')
         self.pacman = pacman
         self.ghost = ghost
 
@@ -552,8 +554,8 @@ class GstDirectionReceiver(qt.QObject):
         
         print("Opening AI receive socket")
         try:
-            self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.s.connect(('127.0.0.1',2176))
+            self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            self.s.bind(('127.0.0.1',2176))
             self.s.settimeout(0.01)
         except socket.error as message:
             if self.s:
@@ -562,11 +564,11 @@ class GstDirectionReceiver(qt.QObject):
             sys.exit(1)
             
         print("Socket Opened")
-            
         
+
         ## timer
         UpdTimer = qt.QTimer(self)
-        UpdTimer.setInterval(50)
+        UpdTimer.setInterval(2)
         UpdTimer.setSingleShot(False)
         UpdTimer.timeout.connect(self.getData)
         UpdTimer.start()            
@@ -574,13 +576,13 @@ class GstDirectionReceiver(qt.QObject):
     def getData(self):
             
             try:
-                rcv = self.s.recv(65536)
+                data_received, addr_from = self.s.recvfrom(1024)
             except socket.error:
                 return None
             except socket.timeout:
                 return None
             
-            msgs = rcv.split('|')
+            msgs = data_received.split('|')
             msgs.remove('')
             
             print(msgs)
@@ -589,7 +591,7 @@ class GstDirectionReceiver(qt.QObject):
                 if msg == "Left":
                     GST_DATA_OBJ.setDir("LEFT")
                     print("Got LEFT from AI engine")
-                elif msg == "Right":
+                elif msg == "Straight":
                     GST_DATA_OBJ.setDir("STRAIGHT")
                     print("Got STRAIGHT from AI engine")
                 elif msg == "Right":
